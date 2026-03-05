@@ -1,0 +1,307 @@
+/* ========================================================
+   FP CTA Bar – Frontend
+   ======================================================== */
+
+/* --- Reset & Base --- */
+
+.fpctabar,
+.fpctabar *,
+.fpctabar *::before,
+.fpctabar *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.fpctabar {
+    font-family: 'Playfair Display', Georgia, serif;
+    z-index: var(--fpctabar-z, 99999);
+    -webkit-font-smoothing: antialiased;
+}
+
+.fpctabar--mobile-only { display: block; }
+@media (min-width: 768px) {
+    .fpctabar--mobile-only { display: none !important; }
+}
+
+.fpctabar--desktop-only { display: none; }
+@media (min-width: 768px) {
+    .fpctabar--desktop-only { display: block !important; }
+}
+
+@media (max-width: 767px) {
+    .fpctabar--desktop-only { display: none !important; }
+}
+
+.fpctabar--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.fpctabar--anim-slide .fpctabar__panel,
+.fpctabar--anim-fade .fpctabar__panel,
+.fpctabar--anim-bounce .fpctabar__panel {
+    transition-duration: 0.3s;
+}
+
+.fpctabar--anim-bounce.fpctabar--open .fpctabar__panel {
+    animation: fpctabar-bounce 0.4s ease;
+}
+
+@keyframes fpctabar-bounce {
+    0% { transform: translateY(8px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fpctabar,
+    .fpctabar *,
+    .fpctabar--hidden {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+.fpctabar__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --- Icons --- */
+
+.fpctabar__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fpctabar__icon--img img {
+    max-height: 1.2em;
+    width: auto;
+    vertical-align: middle;
+}
+
+.fpctabar__icon--class {
+    font-size: 1em;
+    line-height: 1;
+}
+
+.fpctabar__bar .fpctabar__icon,
+.fpctabar__btn .fpctabar__icon {
+    margin-right: 6px;
+}
+
+.fpctabar a .fpctabar__icon {
+    margin-right: 6px;
+}
+
+.fpctabar a {
+    color: var(--fpctabar-text);
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-size: var(--fpctabar-font-size-link, 15px);
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.fpctabar a:hover {
+    opacity: 0.7;
+}
+
+/* ========================================================
+   FULL-WIDTH MODE
+   ======================================================== */
+
+.fpctabar--fullwidth {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.fpctabar--fullwidth .fpctabar__bar {
+    background: var(--fpctabar-bg);
+    border-top: 1px solid var(--fpctabar-border);
+    text-align: center;
+    padding: 18px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.fpctabar--fullwidth .fpctabar__label {
+    color: var(--fpctabar-text);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: var(--fpctabar-font-size-label, 18px);
+    text-transform: uppercase;
+}
+
+.fpctabar--fullwidth .fpctabar__arrow {
+    color: var(--fpctabar-text);
+    font-size: 12px;
+    transition: transform 0.3s;
+    display: inline-block;
+}
+
+.fpctabar--fullwidth.fpctabar--open .fpctabar__arrow {
+    transform: rotate(180deg);
+}
+
+.fpctabar--fullwidth .fpctabar__panel {
+    position: fixed;
+    bottom: -200px;
+    left: 0;
+    width: 100%;
+    background: var(--fpctabar-panel-bg);
+    border-top: 1px solid var(--fpctabar-border);
+    padding: 25px 0;
+    text-align: center;
+    transition: bottom 0.3s ease;
+    z-index: -1;
+}
+
+.fpctabar--fullwidth.fpctabar--open .fpctabar__panel {
+    bottom: 57px;
+}
+
+.fpctabar--fullwidth .fpctabar__panel a {
+    display: inline-block;
+    margin: 0 25px;
+}
+
+/* Body padding for full-width */
+body.fpctabar-body--fullwidth {
+    padding-bottom: 60px !important;
+}
+
+/* ========================================================
+   BUTTON MODE (left & right)
+   ======================================================== */
+
+.fpctabar--button {
+    position: fixed;
+    bottom: 24px;
+    z-index: var(--fpctabar-z, 99999);
+}
+
+.fpctabar--left {
+    left: 24px;
+}
+
+.fpctabar--right {
+    right: 24px;
+}
+
+.fpctabar__btn {
+    background: var(--fpctabar-bg);
+    color: var(--fpctabar-text);
+    border: 1px solid var(--fpctabar-border);
+    padding: 14px 28px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: var(--fpctabar-font-size-label, 15px);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    border-radius: var(--fpctabar-btn-radius, 4px);
+    white-space: nowrap;
+}
+
+.fpctabar__btn:hover {
+    opacity: 0.85;
+}
+
+.fpctabar--button .fpctabar__panel {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    background: var(--fpctabar-panel-bg);
+    border: 1px solid var(--fpctabar-border);
+    border-radius: var(--fpctabar-btn-radius, 6px);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+}
+
+.fpctabar--left .fpctabar__panel {
+    left: 0;
+}
+
+.fpctabar--right .fpctabar__panel {
+    right: 0;
+}
+
+.fpctabar--button.fpctabar--open .fpctabar__panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.fpctabar--button .fpctabar__panel a {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fpctabar--button .fpctabar__panel a:last-child {
+    border-bottom: none;
+}
+
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
+
+@media (max-width: 600px) {
+    .fpctabar--fullwidth .fpctabar__panel {
+        padding: 20px 16px;
+    }
+
+    .fpctabar--fullwidth .fpctabar__panel a {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .fpctabar--button {
+        bottom: 16px;
+    }
+
+    .fpctabar--left {
+        left: 16px;
+    }
+
+    .fpctabar--right {
+        right: 16px;
+    }
+
+    .fpctabar__btn {
+        padding: 12px 22px;
+        font-size: 14px;
+    }
+
+    .fpctabar--button .fpctabar__panel {
+        min-width: 160px;
+    }
+}

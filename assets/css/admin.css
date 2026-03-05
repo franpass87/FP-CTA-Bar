@@ -1,0 +1,195 @@
+/* ========================================================
+   FP CTA Bar – Admin
+   ======================================================== */
+
+.fp-cta-bar-admin h2 {
+    margin-top: 2em;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid #ccd0d4;
+}
+
+/* --- Mode Picker --- */
+
+.fp-cta-bar-modes {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.fp-cta-bar-mode-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.fp-cta-bar-mode-option input[type="radio"] {
+    display: none;
+}
+
+.fp-cta-bar-mode-preview {
+    width: 120px;
+    height: 80px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    position: relative;
+    background: #f9f9f9;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.fp-cta-bar-mode-option input[type="radio"]:checked + .fp-cta-bar-mode-preview {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.3);
+}
+
+.fp-cta-bar-mode-preview--full-width .fp-cta-bar-mode-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 16px;
+    background: #333;
+}
+
+.fp-cta-bar-mode-preview--button-left .fp-cta-bar-mode-icon {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    width: 36px;
+    height: 18px;
+    background: #333;
+    border-radius: 3px;
+}
+
+.fp-cta-bar-mode-preview--button-right .fp-cta-bar-mode-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 36px;
+    height: 18px;
+    background: #333;
+    border-radius: 3px;
+}
+
+.fp-cta-bar-mode-label {
+    font-size: 12px;
+    color: #50575e;
+    text-align: center;
+}
+
+/* --- Links Repeater --- */
+
+#fp-cta-bar-links {
+    margin-bottom: 12px;
+}
+
+.fp-cta-bar-link-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    margin-bottom: 8px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: box-shadow 0.15s;
+}
+
+.fp-cta-bar-link-row:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.fp-cta-bar-link-handle {
+    cursor: grab;
+    font-size: 18px;
+    color: #999;
+    padding: 6px 4px 0 0;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.fp-cta-bar-link-handle:active {
+    cursor: grabbing;
+}
+
+.fp-cta-bar-link-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+}
+
+.fp-cta-bar-link-field {
+    flex: 1 1 180px;
+}
+
+.fp-cta-bar-link-field--small {
+    flex: 0 0 100px;
+}
+
+.fp-cta-bar-link-field label {
+    display: block;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fp-cta-bar-link-field input,
+.fp-cta-bar-link-field select {
+    width: 100%;
+}
+
+.fp-cta-bar-link-remove {
+    flex-shrink: 0;
+    color: #a00 !important;
+    font-size: 20px;
+    line-height: 1;
+    border: none !important;
+    background: none !important;
+    cursor: pointer;
+    padding: 4px 8px !important;
+    margin-top: 2px;
+}
+
+.fp-cta-bar-link-remove:hover {
+    color: #dc3232 !important;
+}
+
+/* Sortable placeholder */
+.fp-cta-bar-link-row.ui-sortable-placeholder {
+    visibility: visible !important;
+    background: #f0f6fc;
+    border: 2px dashed #2271b1;
+    border-radius: 4px;
+}
+
+/* Color picker alignment */
+.fp-cta-bar-admin .wp-picker-container {
+    display: inline-block;
+}
+
+/* Preview */
+.fp-cta-bar-preview-wrap {
+    background: #f0f0f1;
+    padding: 24px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.fp-cta-bar-preview-wrap .fpctabar--preview {
+    transform: scale(0.85);
+    transform-origin: bottom center;
+}
+
+.fp-cta-bar-preview-wrap .fpctabar--button {
+    position: relative;
+    bottom: auto;
+}
+
+.fp-cta-bar-link-duplicate {
+    margin-right: 4px !important;
+}
