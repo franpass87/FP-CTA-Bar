@@ -72,22 +72,25 @@
         scrollHandler();
     }
 
-    function track(action, label) {
+    function track(action, label, linkEl) {
         var cfg = typeof fpCtaBarTrack !== 'undefined' ? fpCtaBarTrack : {};
-        if (cfg.ga4 && cfg.ga4.enabled && typeof gtag === 'function') {
-            gtag('event', cfg.ga4.eventName, { event_action: action, event_label: label || '' });
-        }
-        if (cfg.gtm && cfg.gtm.enabled) {
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: cfg.gtm.eventName,
-                cta_bar_action: action,
-                cta_bar_label: label || ''
-            });
-        }
-        if (cfg.meta && cfg.meta.enabled && typeof fbq === 'function') {
-            fbq('trackCustom', cfg.meta.eventName, { action: action, label: label || '' });
-        }
+
+        // Read tracking data from the link element (set by PHP when "Traccia click" is enabled)
+        var trackLabel    = (linkEl && linkEl.getAttribute('data-fp-track-label'))    || label || '';
+        var trackCategory = (linkEl && linkEl.getAttribute('data-fp-track-category')) || '';
+        var isTracked     = linkEl && linkEl.getAttribute('data-fp-track') === '1';
+
+        // Route through FP-Marketing-Tracking-Layer via DOM event (always fires for fp-tracking.js)
+        document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
+            detail: {
+                label:    trackLabel,
+                action:   action || '',
+                url:      (linkEl && linkEl.getAttribute('href')) || '',
+                category: trackCategory,
+            }
+        }));
+
+        // cta_bar_click is handled by fp-tracking.js listening to the fpCtaBarClick CustomEvent above.
     }
 
     function getLinkTarget(e) {
@@ -104,7 +107,7 @@
         panel.addEventListener('click', function (e) {
             var link = getLinkTarget(e);
             if (link) {
-                track('link_click', link.textContent.trim());
+                track('link_click', link.textContent.trim(), link);
                 close();
             }
         });
@@ -112,7 +115,7 @@
         panel.addEventListener('click', function (e) {
             var link = getLinkTarget(e);
             if (link) {
-                track('link_click', link.textContent.trim());
+                track('link_click', link.textContent.trim(), link);
             }
         });
     }
@@ -151,7 +154,7 @@
 
     trigger.addEventListener('click', function (e) {
         e.stopPropagation();
-        track('bar_click');
+        track('bar_click', '', null);
         toggle();
     });
 
