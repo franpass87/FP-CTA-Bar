@@ -118,19 +118,10 @@ class Frontend {
             true
         );
 
+        // Tracking delegated to FP-Marketing-Tracking-Layer via fpCtaBarClick DOM event
         wp_localize_script('fp-cta-bar-front', 'fpCtaBarTrack', [
-            'ga4'  => [
-                'enabled'    => !empty($this->settings['ga4_enabled']),
-                'eventName'  => $this->settings['ga4_event_name'] ?? 'cta_bar_click',
-            ],
-            'gtm'  => [
-                'enabled'    => !empty($this->settings['gtm_enabled']),
-                'eventName'  => $this->settings['gtm_event_name'] ?? 'cta_bar_click',
-            ],
-            'meta' => [
-                'enabled'    => !empty($this->settings['meta_enabled']),
-                'eventName'  => $this->settings['meta_event_name'] ?? 'cta_bar_click',
-            ],
+            'eventName' => $this->settings['gtm_event_name'] ?? $this->settings['ga4_event_name'] ?? 'cta_bar_click',
+            'useFpLayer' => true,
         ]);
     }
 
@@ -251,12 +242,25 @@ class Frontend {
                 continue;
             }
 
+            // Tracking data attributes (only if tracking is enabled for this link)
+            $track_attrs = '';
+            if (!empty($link['track'])) {
+                $track_label    = !empty($link['track_label']) ? $link['track_label'] : $label;
+                $track_category = !empty($link['track_category']) ? $link['track_category'] : '';
+                $track_attrs = sprintf(
+                    ' data-fp-track="1" data-fp-track-label="%s" data-fp-track-category="%s"',
+                    esc_attr($track_label),
+                    esc_attr($track_category)
+                );
+            }
+
             $inner = $icon . esc_html($label);
             $html .= sprintf(
-                '<a href="%s" target="%s" rel="%s">%s</a>',
+                '<a href="%s" target="%s" rel="%s"%s>%s</a>',
                 esc_url($url),
                 esc_attr($target),
                 esc_attr($rel),
+                $track_attrs,
                 $inner
             );
         }

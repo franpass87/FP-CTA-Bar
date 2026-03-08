@@ -253,6 +253,28 @@ $opt      = \FP\CtaBar\Plugin::OPTION_KEY;
                                     <option value="_self" <?php selected($link['target'], '_self'); ?>>_self</option>
                                 </select>
                             </div>
+                            <div class="fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
+                                <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:#2271b1;">
+                                    <input type="checkbox"
+                                           name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track]"
+                                           value="1"
+                                           <?php checked(!empty($link['track'])); ?>>
+                                    📊 <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>
+                                </label>
+                                <div class="fp-cta-bar-track-fields" style="<?php echo empty($link['track']) ? 'display:none;' : ''; ?>margin-top:6px;">
+                                    <input type="text"
+                                           name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track_label]"
+                                           value="<?php echo esc_attr($link['track_label'] ?? ''); ?>"
+                                           placeholder="<?php esc_attr_e('Label evento (es. Prenota Tavolo)', 'fp-cta-bar'); ?>"
+                                           class="regular-text"
+                                           style="margin-bottom:4px;">
+                                    <input type="text"
+                                           name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track_category]"
+                                           value="<?php echo esc_attr($link['track_category'] ?? ''); ?>"
+                                           placeholder="<?php esc_attr_e('Categoria (es. prenotazione, contatto)', 'fp-cta-bar'); ?>"
+                                           class="regular-text">
+                                </div>
+                            </div>
                         </div>
                         <button type="button" class="button fp-cta-bar-link-duplicate" title="<?php esc_attr_e('Duplica', 'fp-cta-bar'); ?>"><?php esc_html_e('Duplica', 'fp-cta-bar'); ?></button>
                         <button type="button" class="button fp-cta-bar-link-remove" title="<?php esc_attr_e('Rimuovi', 'fp-cta-bar'); ?>">&times;</button>
@@ -299,6 +321,25 @@ $opt      = \FP\CtaBar\Plugin::OPTION_KEY;
                             <option value="_self">_self</option>
                         </select>
                     </div>
+                    <div class="fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
+                        <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:#2271b1;">
+                            <input type="checkbox" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track]" value="1" class="fp-cta-bar-track-toggle">
+                            📊 <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>
+                        </label>
+                        <div class="fp-cta-bar-track-fields" style="display:none;margin-top:6px;">
+                            <input type="text"
+                                   name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track_label]"
+                                   value=""
+                                   placeholder="<?php esc_attr_e('Label evento (es. Prenota Tavolo)', 'fp-cta-bar'); ?>"
+                                   class="regular-text"
+                                   style="margin-bottom:4px;">
+                            <input type="text"
+                                   name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track_category]"
+                                   value=""
+                                   placeholder="<?php esc_attr_e('Categoria (es. prenotazione, contatto)', 'fp-cta-bar'); ?>"
+                                   class="regular-text">
+                        </div>
+                    </div>
                 </div>
                 <button type="button" class="button fp-cta-bar-link-duplicate" title="<?php esc_attr_e('Duplica', 'fp-cta-bar'); ?>"><?php esc_html_e('Duplica', 'fp-cta-bar'); ?></button>
                 <button type="button" class="button fp-cta-bar-link-remove" title="<?php esc_attr_e('Rimuovi', 'fp-cta-bar'); ?>">&times;</button>
@@ -344,3 +385,11 @@ $opt      = \FP\CtaBar\Plugin::OPTION_KEY;
         <?php submit_button(); ?>
     </form>
 </div>
+<script>
+(function($){
+    // Toggle tracking fields visibility when checkbox changes
+    $(document).on('change', '.fp-cta-bar-link-field--tracking input[type="checkbox"]', function(){
+        $(this).closest('.fp-cta-bar-link-field--tracking').find('.fp-cta-bar-track-fields').toggle(this.checked);
+    });
+})(jQuery);
+</script>

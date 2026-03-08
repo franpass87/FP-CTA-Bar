@@ -130,12 +130,16 @@ class Settings {
                 }
 
                 $clean['links'][] = [
-                    'label_it' => isset($link['label_it']) ? sanitize_text_field($link['label_it']) : '',
-                    'label_en' => isset($link['label_en']) ? sanitize_text_field($link['label_en']) : '',
-                    'url_it'   => $url_it,
-                    'url_en'   => $url_en,
-                    'target'   => (isset($link['target']) && $link['target'] === '_self') ? '_self' : '_blank',
-                    'icon'     => isset($link['icon']) ? $this->sanitize_icon($link['icon']) : '',
+                    'label_it'       => isset($link['label_it']) ? sanitize_text_field($link['label_it']) : '',
+                    'label_en'       => isset($link['label_en']) ? sanitize_text_field($link['label_en']) : '',
+                    'url_it'         => $url_it,
+                    'url_en'         => $url_en,
+                    'target'         => (isset($link['target']) && $link['target'] === '_self') ? '_self' : '_blank',
+                    'icon'           => isset($link['icon']) ? $this->sanitize_icon($link['icon']) : '',
+                    // Tracking fields
+                    'track'          => !empty($link['track']),
+                    'track_label'    => isset($link['track_label']) ? sanitize_text_field($link['track_label']) : '',
+                    'track_category' => isset($link['track_category']) ? sanitize_text_field($link['track_category']) : '',
                 ];
             }
         }
