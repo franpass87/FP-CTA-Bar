@@ -8,7 +8,7 @@
         // Sortable links
         $('#fp-cta-bar-links').sortable({
             handle: '.fp-cta-bar-link-handle',
-            placeholder: 'fp-cta-bar-link-row ui-sortable-placeholder',
+            placeholder: 'fpctabar-link-row ui-sortable-placeholder',
             tolerance: 'pointer',
             update: reindexLinks
         });

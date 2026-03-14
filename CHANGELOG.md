@@ -2,6 +2,13 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.0.2] - 2026-03-14
+### Changed
+- Pagina admin adattata al design system FP (header gradiente, card, toggle, badge, bottoni)
+- Token CSS e componenti unificati con FP Digital Marketing Suite
+- Status bar con pill (barra attiva, tracking)
+- Griglia campi al posto di form-table, submit_button sostituito con fpctabar-btn
+
 ## [1.0.1] - 2026-03-09
 ### Changed
 - Aggiornamenti settings e README
