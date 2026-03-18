@@ -16,6 +16,9 @@ class Plugin {
     }
 
     private function __construct() {
+        add_action('rest_api_init', [$this, 'register_rest_routes']);
+        add_action('init', [Block::class, 'register']);
+
         if (is_admin()) {
             Admin::get_instance();
             Settings::get_instance();
@@ -25,6 +28,16 @@ class Plugin {
             add_shortcode('fp_cta_bar', [Shortcode::class, 'render']);
             Frontend::get_instance();
         }
+    }
+
+    /**
+     * Registra le route REST (click, settings).
+     */
+    public function register_rest_routes(): void {
+        $click = new \FP\CtaBar\Rest\ClickController();
+        $click->register_routes();
+        $settings = new \FP\CtaBar\Rest\SettingsController();
+        $settings->register_routes();
     }
 
     private function __clone() {}
@@ -61,6 +74,10 @@ class Plugin {
             'use_shortcode'          => false,
             'cookie_consent_required' => false,
             'custom_css'             => '',
+            'schedule_start'         => '',
+            'schedule_end'           => '',
+            'post_type_visibility'   => [],
+            'term_visibility'        => [],
         ];
     }
 

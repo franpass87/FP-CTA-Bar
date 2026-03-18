@@ -117,6 +117,30 @@ class Settings {
         $clean['use_shortcode'] = !empty($input['use_shortcode']);
         $clean['cookie_consent_required'] = !empty($input['cookie_consent_required']);
 
+        $clean['schedule_start'] = $this->sanitize_date($input['schedule_start'] ?? '');
+        $clean['schedule_end']   = $this->sanitize_date($input['schedule_end'] ?? '');
+
+        $allowed_post_types = array_keys(get_post_types(['public' => true], 'names'));
+        $clean['post_type_visibility'] = [];
+        if (!empty($input['post_type_visibility']) && is_array($input['post_type_visibility'])) {
+            foreach ($input['post_type_visibility'] as $pt) {
+                if (is_string($pt) && in_array($pt, $allowed_post_types, true)) {
+                    $clean['post_type_visibility'][] = $pt;
+                }
+            }
+        }
+        $clean['term_visibility'] = [];
+        if (!empty($input['term_visibility_raw']) && is_string($input['term_visibility_raw'])) {
+            $parts = array_map('trim', explode(',', $input['term_visibility_raw']));
+            foreach ($parts as $tid) {
+                $tid = absint($tid);
+                if ($tid > 0) {
+                    $clean['term_visibility'][] = $tid;
+                }
+            }
+            $clean['term_visibility'] = array_values(array_unique($clean['term_visibility']));
+        }
+
         $clean['custom_css'] = isset($input['custom_css']) ? wp_strip_all_tags($input['custom_css']) : '';
 
         $clean['links'] = [];
@@ -164,5 +188,20 @@ class Settings {
             return $color;
         }
         return '#000000';
+    }
+
+    /**
+     * Sanitizza una data in formato Y-m-d; restituisce stringa vuota se non valida.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function sanitize_date($value): string {
+        $value = is_string($value) ? trim($value) : '';
+        if ($value === '') {
+            return '';
+        }
+        $d = \DateTime::createFromFormat('Y-m-d', $value);
+        return $d && $d->format('Y-m-d') === $value ? $value : '';
     }
 }

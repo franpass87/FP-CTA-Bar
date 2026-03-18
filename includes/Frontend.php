@@ -70,7 +70,42 @@ class Frontend {
         $instance->render();
     }
 
+    /**
+     * Determina se la barra deve essere mostrata in base a visibilità e contesto.
+     *
+     * @return bool
+     */
     private function should_show() {
+        $today = gmdate('Y-m-d');
+        $start = trim($this->settings['schedule_start'] ?? '');
+        $end   = trim($this->settings['schedule_end'] ?? '');
+        if ($start !== '' && $today < $start) {
+            return false;
+        }
+        if ($end !== '' && $today > $end) {
+            return false;
+        }
+
+        $context = [
+            'is_front_page' => is_front_page(),
+            'is_singular'   => is_singular(),
+            'post_type'     => is_singular() ? get_post_type() : null,
+            'is_archive'    => is_archive(),
+            'is_search'     => is_search(),
+            'is_404'        => is_404(),
+        ];
+        if (is_archive()) {
+            $context['taxonomy'] = get_queried_object() instanceof \WP_Term ? get_queried_object()->taxonomy : null;
+            $context['term_id']  = get_queried_object() instanceof \WP_Term ? get_queried_object()->term_id : null;
+        }
+        $show = apply_filters('fp_cta_bar_visibility_context', null, $context);
+        if ($show === true) {
+            return true;
+        }
+        if ($show === false) {
+            return false;
+        }
+
         $visibility = $this->settings['visibility'] ?? ['home', 'single', 'page', 'archive'];
         if (empty($visibility)) {
             return true;
@@ -80,10 +115,10 @@ class Frontend {
             return true;
         }
         if (is_singular('post') && in_array('single', $visibility, true)) {
-            return true;
+            return $this->passes_advanced_visibility_singular();
         }
         if (is_singular('page') && in_array('page', $visibility, true)) {
-            return true;
+            return $this->passes_advanced_visibility_singular();
         }
         if (is_archive() && in_array('archive', $visibility, true)) {
             return true;
@@ -96,6 +131,44 @@ class Frontend {
         }
 
         return false;
+    }
+
+    /**
+     * Verifica visibilità avanzata su singoli: post type e/o term in whitelist.
+     *
+     * @return bool
+     */
+    private function passes_advanced_visibility_singular(): bool {
+        $post_types = $this->settings['post_type_visibility'] ?? [];
+        if (is_array($post_types) && !empty($post_types)) {
+            if (!in_array(get_post_type(), $post_types, true)) {
+                return false;
+            }
+        }
+        $term_ids = $this->settings['term_visibility'] ?? [];
+        if (is_array($term_ids) && !empty($term_ids)) {
+            $post_id = get_the_ID();
+            if (!$post_id) {
+                return false;
+            }
+            $taxonomies = get_object_taxonomies(get_post_type(), 'names');
+            $found = false;
+            foreach ($taxonomies as $tax) {
+                $terms = wp_get_object_terms($post_id, $tax);
+                if (is_array($terms) && !is_wp_error($terms)) {
+                    foreach ($terms as $t) {
+                        if (in_array((int) $t->term_id, $term_ids, true)) {
+                            $found = true;
+                            break 2;
+                        }
+                    }
+                }
+            }
+            if (!$found) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function enqueue_assets() {
@@ -118,10 +191,15 @@ class Frontend {
             true
         );
 
+        $lang = $this->detect_lang();
+        $click_endpoint = rest_url('fp/ctabar/v1/click');
+        $click_nonce    = wp_create_nonce('fp_cta_bar_click');
         // Tracking delegated to FP-Marketing-Tracking-Layer via fpCtaBarClick DOM event
         wp_localize_script('fp-cta-bar-front', 'fpCtaBarTrack', [
-            'eventName' => $this->settings['gtm_event_name'] ?? $this->settings['ga4_event_name'] ?? 'cta_bar_click',
-            'useFpLayer' => true,
+            'eventName'     => $this->settings['gtm_event_name'] ?? $this->settings['ga4_event_name'] ?? 'cta_bar_click',
+            'useFpLayer'    => true,
+            'clickEndpoint' => $click_endpoint,
+            'clickNonce'    => $click_nonce,
         ]);
     }
 
@@ -138,7 +216,23 @@ class Frontend {
         return false;
     }
 
+    /**
+     * Determina la lingua corrente per label e link (ITA/ENG).
+     * Utilizzabile via filtro fp_cta_bar_lang o FP-Multilanguage se attivo.
+     *
+     * @return string Codice lingua a 2 caratteri (es. 'it', 'en')
+     */
     private function detect_lang() {
+        $lang = apply_filters('fp_cta_bar_lang', null);
+        if (is_string($lang) && strlen($lang) === 2) {
+            return strtolower($lang);
+        }
+        if (defined('FP_ML_VERSION') && function_exists('apply_filters')) {
+            $ml_lang = apply_filters('fp_ml_current_language', '');
+            if (is_string($ml_lang) && strlen($ml_lang) >= 2) {
+                return strtolower(substr($ml_lang, 0, 2));
+            }
+        }
         if (defined('ICL_LANGUAGE_CODE') && ICL_LANGUAGE_CODE) {
             return substr(ICL_LANGUAGE_CODE, 0, 2);
         }
@@ -195,7 +289,8 @@ class Frontend {
 
         $close_on_click = !empty($s['close_on_link_click']);
         $data_attrs = sprintf(
-            'data-delay="%d" data-scroll-percent="%d" data-panel-open="%s" data-dismiss-hours="%d" data-animation="%s" data-aria-open="%s" data-aria-closed="%s"',
+            'data-lang="%s" data-delay="%d" data-scroll-percent="%d" data-panel-open="%s" data-dismiss-hours="%d" data-animation="%s" data-aria-open="%s" data-aria-closed="%s"',
+            esc_attr($lang),
             (int) ($s['delay_seconds'] ?? 0),
             (int) ($s['show_after_scroll_percent'] ?? 0),
             !empty($s['panel_open_by_default']) ? '1' : '0',
@@ -254,12 +349,14 @@ class Frontend {
                 );
             }
 
+            $aria_label = sprintf(/* translators: link purpose for screen readers */ __('Apri link: %s', 'fp-cta-bar'), $label);
             $inner = $icon . esc_html($label);
             $html .= sprintf(
-                '<a href="%s" target="%s" rel="%s"%s>%s</a>',
+                '<a href="%s" target="%s" rel="%s" aria-label="%s"%s>%s</a>',
                 esc_url($url),
                 esc_attr($target),
                 esc_attr($rel),
+                esc_attr($aria_label),
                 $track_attrs,
                 $inner
             );

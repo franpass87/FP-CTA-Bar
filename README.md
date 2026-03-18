@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -60,6 +60,22 @@ document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
 |--------|-------------|
 | `fp_cta_bar_settings` | Modifica le impostazioni prima del rendering |
 | `fp_cta_bar_html` | Modifica l'HTML della barra |
+| `fp_cta_bar_lang` | Sovrascrive la lingua (2 caratteri, es. `it`/`en`) |
+| `fp_cta_bar_visibility_context` | Mostra/nascondi in base al contesto (riceve array `is_front_page`, `post_type`, ecc.) |
+
+### Action disponibili
+| Action | Parametri | Descrizione |
+|--------|-----------|-------------|
+| `fp_cta_bar_clicked` | `$url`, `$label`, `$lang` | Invocata al click su un link della barra (via REST o hook) |
+
+### REST API
+| Metodo | Route | Permessi | Descrizione |
+|--------|-------|----------|-------------|
+| GET | `fp/ctabar/v1/settings` | `manage_options` | Lettura impostazioni |
+| POST | `fp/ctabar/v1/click` | nonce `fp_cta_bar_click` | Registra click (invoca `fp_cta_bar_clicked`) |
+
+### Blocco Gutenberg
+- **Nome**: `fp/cta-bar` — Inserisce la barra CTA nel punto scelto (equivalente allo shortcode `[fp_cta_bar]`). Richiede "Solo shortcode" attivo nelle impostazioni.
 
 ### Installazione sviluppo
 ```bash

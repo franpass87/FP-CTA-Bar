@@ -90,7 +90,23 @@
             }
         }));
 
-        // cta_bar_click is handled by fp-tracking.js listening to the fpCtaBarClick CustomEvent above.
+        // Notify backend for do_action('fp_cta_bar_clicked') when a link is clicked
+        if (linkEl && cfg.clickEndpoint && cfg.clickNonce) {
+            var url   = linkEl.getAttribute('href') || '';
+            var lbl   = trackLabel || (typeof label === 'string' ? label : '') || linkEl.textContent.trim();
+            var lang  = container.getAttribute('data-lang') || '';
+            var body  = JSON.stringify({ url: url, label: lbl, lang: lang, nonce: cfg.clickNonce });
+            if (typeof navigator.sendBeacon === 'function') {
+                navigator.sendBeacon(cfg.clickEndpoint, new Blob([body], { type: 'application/json' }));
+            } else {
+                fetch(cfg.clickEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': cfg.clickNonce },
+                    body: body,
+                    keepalive: true
+                }).catch(function () {});
+            }
+        }
     }
 
     function getLinkTarget(e) {
@@ -130,11 +146,49 @@
         }
     }
 
+    function getFocusables() {
+        var sel = 'button, [href], [tabindex]:not([tabindex="-1"])';
+        var inPanel = panel.querySelectorAll(sel);
+        var arr = [trigger];
+        for (var i = 0; i < inPanel.length; i++) {
+            arr.push(inPanel[i]);
+        }
+        return arr;
+    }
+
+    function trapFocus(e) {
+        if (e.key !== 'Tab' || !isOpen) return;
+        var focusables = getFocusables();
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    }
+
     function toggle() {
         isOpen = !isOpen;
         container.classList.toggle('fpctabar--open', isOpen);
         trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        if (isOpen) {
+            var focusables = getFocusables();
+            if (focusables.length > 1) {
+                focusables[1].focus();
+            } else {
+                trigger.focus();
+            }
+        } else {
+            trigger.focus();
+        }
         announce(isOpen ? (container.getAttribute('data-aria-open') || 'Pannello aperto') : (container.getAttribute('data-aria-closed') || 'Pannello chiuso'));
     }
 
@@ -176,4 +230,6 @@
             close();
         }
     });
+
+    container.addEventListener('keydown', trapFocus);
 })();

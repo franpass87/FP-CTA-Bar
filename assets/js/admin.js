@@ -78,13 +78,16 @@
             });
         });
 
-        // Preview update (debounced)
+        // Preview update (debounced) + lingua anteprima ITA/ENG
         var previewTimeout;
         function updatePreview() {
             var opt = 'fp_cta_bar_settings';
             var bg = $('input[name="' + opt + '[bg_color]"]').val() || '#000000';
             var text = $('input[name="' + opt + '[text_color]"]').val() || '#ffffff';
             var labelIt = $('input[name="fp_cta_bar_settings[main_label_it]"]').val() || 'PRENOTA';
+            var labelEn = $('input[name="fp_cta_bar_settings[main_label_en]"]').val() || 'BOOK NOW';
+            var previewLang = ($('#fp-cta-bar-preview-lang').val() || 'it') === 'en' ? 'en' : 'it';
+            var mainLabel = previewLang === 'en' ? labelEn : labelIt;
             var mode = $('input[name="fp_cta_bar_settings[display_mode]"]:checked').val();
             var $box = $('#fp-cta-bar-preview-box');
             $box.attr('style', '--fpctabar-bg:' + bg + ';--fpctabar-text:' + text + ';--fpctabar-border:' + text + ';--fpctabar-panel-bg:#111;');
@@ -94,8 +97,16 @@
             } else {
                 $box.addClass('fpctabar--fullwidth');
             }
-            $('#fp-cta-bar-preview-label').text(labelIt);
+            $('#fp-cta-bar-preview-label').text(mainLabel);
+            var $firstRow = $('#fp-cta-bar-links .fp-cta-bar-link-row').first();
+            var firstLabelIt = $firstRow.find('input[name*="[label_it]"]').val() || '';
+            var firstLabelEn = $firstRow.find('input[name*="[label_en]"]').val() || '';
+            var firstLinkLabel = previewLang === 'en' ? (firstLabelEn || firstLabelIt || 'LINK') : (firstLabelIt || firstLabelEn || 'LINK');
+            $('#fp-cta-bar-preview-link').text(firstLinkLabel);
         }
+        $('#fp-cta-bar-preview-lang').on('change', function () {
+            updatePreview();
+        });
         $('input, select').on('change input', function () {
             clearTimeout(previewTimeout);
             previewTimeout = setTimeout(updatePreview, 200);
