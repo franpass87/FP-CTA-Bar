@@ -328,9 +328,10 @@ class Frontend {
         $bs = $button_sizes[$s['button_size'] ?? 'medium'] ?? $button_sizes['medium'];
 
         $css_vars = sprintf(
-            '--fpctabar-bg:%s;--fpctabar-text:%s;--fpctabar-border:%s;--fpctabar-panel-bg:%s;--fpctabar-z:%d;--fpctabar-font-size-label:%s;--fpctabar-font-size-link:%s;--fpctabar-btn-radius:%dpx;--fpctabar-btn-pad-y:%s;--fpctabar-btn-pad-x:%s;--fpctabar-btn-icon-only-pad:%s;--fpctabar-btn-circle-size:%s;',
+            '--fpctabar-bg:%s;--fpctabar-text:%s;--fpctabar-panel-text:%s;--fpctabar-border:%s;--fpctabar-panel-bg:%s;--fpctabar-z:%d;--fpctabar-font-size-label:%s;--fpctabar-font-size-link:%s;--fpctabar-btn-radius:%dpx;--fpctabar-btn-pad-y:%s;--fpctabar-btn-pad-x:%s;--fpctabar-btn-icon-only-pad:%s;--fpctabar-btn-circle-size:%s;',
             esc_attr($s['bg_color']),
             esc_attr($s['text_color']),
+            esc_attr($s['panel_text_color'] ?? $s['text_color']),
             esc_attr($s['border_color']),
             esc_attr($s['panel_bg_color']),
             (int) ($s['z_index'] ?? 99999),

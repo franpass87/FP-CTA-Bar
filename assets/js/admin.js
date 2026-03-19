@@ -112,10 +112,13 @@
             var opt = 'fp_cta_bar_settings';
             var bg = $('input[name="' + opt + '[bg_color]"]').val() || '#000000';
             var text = $('input[name="' + opt + '[text_color]"]').val() || '#ffffff';
+            var panelText = $('input[name="' + opt + '[panel_text_color]"]').val() || text;
+            var panelBg = $('input[name="' + opt + '[panel_bg_color]"]').val() || '#111111';
+            var border = $('input[name="' + opt + '[border_color]"]').val() || text;
             var labelIt = $('input[name="fp_cta_bar_settings[main_label_it]"]').val() || 'PRENOTA';
             var mode = $('input[name="fp_cta_bar_settings[display_mode]"]:checked').val();
             var $box = $('#fp-cta-bar-preview-box');
-            $box.attr('style', '--fpctabar-bg:' + bg + ';--fpctabar-text:' + text + ';--fpctabar-border:' + text + ';--fpctabar-panel-bg:#111;');
+            $box.attr('style', '--fpctabar-bg:' + bg + ';--fpctabar-text:' + text + ';--fpctabar-panel-text:' + panelText + ';--fpctabar-border:' + border + ';--fpctabar-panel-bg:' + panelBg + ';');
             $box.removeClass('fpctabar--fullwidth fpctabar--button fpctabar--left fpctabar--right');
             if (mode === 'button-left' || mode === 'button-right') {
                 $box.addClass('fpctabar--button fpctabar--' + (mode === 'button-left' ? 'left' : 'right'));

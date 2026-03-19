@@ -212,8 +212,14 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                         <input type="text" name="<?php echo esc_attr($opt); ?>[bg_color]" value="<?php echo esc_attr($settings['bg_color']); ?>" class="fp-cta-bar-color">
                     </div>
                     <div class="fpctabar-field">
-                        <label><?php esc_html_e('Testo', 'fp-cta-bar'); ?></label>
+                        <label><?php esc_html_e('Testo e icona barra / bottone', 'fp-cta-bar'); ?></label>
                         <input type="text" name="<?php echo esc_attr($opt); ?>[text_color]" value="<?php echo esc_attr($settings['text_color']); ?>" class="fp-cta-bar-color">
+                        <span class="fpctabar-hint"><?php esc_html_e('Si applica al bottone o alla barra principale (etichetta, icona principale, freccia).', 'fp-cta-bar'); ?></span>
+                    </div>
+                    <div class="fpctabar-field">
+                        <label><?php esc_html_e('Testo e icone nel pannello link', 'fp-cta-bar'); ?></label>
+                        <input type="text" name="<?php echo esc_attr($opt); ?>[panel_text_color]" value="<?php echo esc_attr($settings['panel_text_color'] ?? '#ffffff'); ?>" class="fp-cta-bar-color">
+                        <span class="fpctabar-hint"><?php esc_html_e('Colore dei link nel menu aperto (testo e icone). Puoi tenerlo scuro su sfondo chiaro e lasciare il bottone principale chiaro.', 'fp-cta-bar'); ?></span>
                     </div>
                     <div class="fpctabar-field">
                         <label><?php esc_html_e('Bordo', 'fp-cta-bar'); ?></label>

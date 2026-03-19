@@ -140,7 +140,6 @@
 }
 
 .fpctabar a {
-    color: var(--fpctabar-text);
     text-decoration: none;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
@@ -153,6 +152,7 @@
     letter-spacing: 0.01em;
     font-size: var(--fpctabar-font-size-link, 15px);
     border-radius: 10px;
+    color: var(--fpctabar-panel-text, var(--fpctabar-text));
 }
 
 .fpctabar__panel a:hover,
@@ -297,7 +297,7 @@ body.fpctabar-body--fullwidth {
     position: absolute;
     bottom: calc(100% + 14px);
     background: var(--fpctabar-panel-bg);
-    color: var(--fpctabar-text);
+    color: var(--fpctabar-panel-text, var(--fpctabar-text));
     border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
     border-radius: max(12px, var(--fpctabar-btn-radius, 12px));
     padding: 10px 8px;

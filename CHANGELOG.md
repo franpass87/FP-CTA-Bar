@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.3] - 2026-03-19
+### Added
+- Nuovo colore **Testo e icone nel pannello link** (`panel_text_color`), separato dal colore barra/bottone principale (`text_color`): puoi avere testo nero nel menu aperto e icona/etichetta chiare sul bottone
+
+### Changed
+- Admin: etichetta "Testo" rinominata in "Testo e icona barra / bottone" con hint esplicativo
+- Migrazione automatica: alle installazioni esistenti viene copiato il vecchio `text_color` in `panel_text_color` così il comportamento resta identico finché non modifichi i colori
+
 ## [1.3.2] - 2026-03-19
 ### Changed
 - Frontend: tipografia con stack di sistema (niente Playfair non caricata → fallback serif brutto)

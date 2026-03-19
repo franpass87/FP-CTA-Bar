@@ -53,6 +53,7 @@ class Plugin {
             'main_icon_circle'       => false,
             'bg_color'               => '#000000',
             'text_color'             => '#ffffff',
+            'panel_text_color'       => '#ffffff',
             'border_color'           => '#ffffff',
             'panel_bg_color'         => '#111111',
             'links'                  => [],
@@ -87,6 +88,32 @@ class Plugin {
     public static function get_settings() {
         $saved = get_option(self::OPTION_KEY, []);
         return wp_parse_args($saved, self::get_defaults());
+    }
+
+    /**
+     * Copia il vecchio colore "Testo" nel nuovo campo pannello se mancante (retrocompatibilità).
+     *
+     * @return void
+     */
+    public static function maybe_migrate_panel_text_color(): void {
+        if (get_option('fp_cta_bar_migrated_panel_text_v1')) {
+            return;
+        }
+        $saved = get_option(self::OPTION_KEY);
+        if (!is_array($saved)) {
+            update_option('fp_cta_bar_migrated_panel_text_v1', 1);
+            return;
+        }
+        if (array_key_exists('panel_text_color', $saved)) {
+            update_option('fp_cta_bar_migrated_panel_text_v1', 1);
+            return;
+        }
+        $tc = isset($saved['text_color']) && is_string($saved['text_color']) && preg_match('/^#[a-fA-F0-9]{6}$/', $saved['text_color'])
+            ? $saved['text_color']
+            : '#ffffff';
+        $saved['panel_text_color'] = $tc;
+        update_option(self::OPTION_KEY, $saved);
+        update_option('fp_cta_bar_migrated_panel_text_v1', 1);
     }
 
     public static function activate() {

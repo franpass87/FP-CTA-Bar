@@ -48,6 +48,9 @@ class Admin {
         }
         $defaults = Plugin::get_defaults();
         $merged = wp_parse_args($data, $defaults);
+        if (!array_key_exists('panel_text_color', $data) || trim((string) ($data['panel_text_color'] ?? '')) === '') {
+            $merged['panel_text_color'] = $merged['text_color'] ?? $defaults['panel_text_color'];
+        }
         update_option(Plugin::OPTION_KEY, $merged);
         wp_send_json_success(['redirect' => admin_url('options-general.php?page=fp-cta-bar&imported=1')]);
     }

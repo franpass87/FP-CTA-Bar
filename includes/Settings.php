@@ -48,6 +48,7 @@ class Settings {
         $clean['main_icon_circle'] = !empty($input['main_icon_circle']);
         $clean['bg_color']       = $this->sanitize_hex($input['bg_color'] ?? $defaults['bg_color']);
         $clean['text_color']     = $this->sanitize_hex($input['text_color'] ?? $defaults['text_color']);
+        $clean['panel_text_color'] = $this->sanitize_hex($input['panel_text_color'] ?? $defaults['panel_text_color']);
         $clean['border_color']   = $this->sanitize_hex($input['border_color'] ?? $defaults['border_color']);
         $clean['panel_bg_color'] = $this->sanitize_hex($input['panel_bg_color'] ?? $defaults['panel_bg_color']);
 
