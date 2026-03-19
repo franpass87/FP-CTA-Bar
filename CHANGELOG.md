@@ -2,6 +2,13 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.8.1] - 2026-03-19
+### Fixed
+- Admin: rimosso `display:flex` / `order` su `#wpbody-content` che portava le **notice WordPress sotto** il contenuto del plugin (effetto “dentro” l’header viola); flusso DOM naturale + `margin-top` sul `.wrap` per menu top-level e sotto Impostazioni
+
+### Changed (documentazione)
+- Allineata la regola in `fp-admin-ui-design-system.mdc` (workspace): niente flex+order errato sulle notice
+
 ## [1.8.0] - 2026-03-19
 ### Added
 - `IconSvg::settings_main_icon_options()` — catalogo **SVG line-art** per il **bottone principale** con etichette esplicative (categorie: Principale, Prenota, Contatti, Vendita, Media, ecc.)

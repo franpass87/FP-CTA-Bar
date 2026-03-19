@@ -54,19 +54,13 @@
 
 /* ============================================================
    PAGE WRAPPER
-   ============================================================ */
-body.settings_page_fp-cta-bar #wpbody-content {
-    display: flex;
-    flex-direction: column;
-}
+   ============================================================
+   NON usare flex + order su #wpbody-content: con order più basso sul .wrap
+   le notice di WordPress finivano sotto o in layout confuso (sembravano “dentro” l’header).
+   Core stampa admin_notices prima del callback: flusso naturale = notice sopra, .wrap sotto. */
+body.toplevel_page_fp-cta-bar #wpbody-content > .wrap.fpctabar-admin-page,
 body.settings_page_fp-cta-bar #wpbody-content > .wrap.fpctabar-admin-page {
-    order: 1;
-}
-body.settings_page_fp-cta-bar #wpbody-content > .notice,
-body.settings_page_fp-cta-bar #wpbody-content > .updated,
-body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
-    order: 2;
-    margin: 0 20px 20px;
+    margin-top: 12px;
 }
 
 .wrap.fpctabar-admin-page {
