@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.4] - 2026-03-19
+### Changed
+- Frontend: pannello floating con angoli più morbidi, ombre stratificate e leggero highlight interno
+- Frontend: link del menu senza righe “tagliate”; hover con bordo interno sottile e freccia `›` animata (solo modalità bottone)
+- Frontend: bottone principale con ombra più naturale, stato `:active` e transizioni con curve easing
+- Frontend: barra full-width con hover leggero (`brightness`) e ombre sul pannello aperto
+- Frontend: rispetto `prefers-reduced-motion` su hover che usano `transform`
+
 ## [1.3.3] - 2026-03-19
 ### Added
 - Nuovo colore **Testo e icone nel pannello link** (`panel_text_color`), separato dal colore barra/bottone principale (`text_color`): puoi avere testo nero nel menu aperto e icona/etichetta chiare sul bottone

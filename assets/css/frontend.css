@@ -15,6 +15,8 @@
 }
 
 .fpctabar {
+    --fpctabar-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --fpctabar-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     z-index: var(--fpctabar-z, 99999);
     -webkit-font-smoothing: antialiased;
@@ -40,7 +42,7 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.4s ease, visibility 0.4s;
+    transition: opacity 0.4s var(--fpctabar-ease-soft), visibility 0.4s;
 }
 
 .fpctabar--anim-slide .fpctabar__panel,
@@ -65,6 +67,11 @@
     .fpctabar--hidden {
         transition: none !important;
         animation: none !important;
+    }
+
+    .fpctabar__panel a:hover,
+    .fpctabar__btn:hover {
+        transform: none !important;
     }
 }
 
@@ -131,7 +138,7 @@
 .fpctabar__link-label {
     flex: 1;
     min-width: 0;
-    line-height: 1.4;
+    line-height: 1.45;
     font-weight: 500;
     letter-spacing: 0.01em;
     text-align: left;
@@ -141,7 +148,11 @@
 
 .fpctabar a {
     text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    transition:
+        background-color 0.22s var(--fpctabar-ease-soft),
+        color 0.22s var(--fpctabar-ease-soft),
+        transform 0.22s var(--fpctabar-ease-out),
+        box-shadow 0.22s var(--fpctabar-ease-soft);
 }
 
 .fpctabar__panel a {
@@ -151,18 +162,40 @@
     text-align: left;
     letter-spacing: 0.01em;
     font-size: var(--fpctabar-font-size-link, 15px);
-    border-radius: 10px;
+    border-radius: 12px;
     color: var(--fpctabar-panel-text, var(--fpctabar-text));
 }
 
 .fpctabar__panel a:hover,
 .fpctabar__panel a:focus-visible {
     outline: none;
-    background-color: color-mix(in srgb, currentColor 8%, transparent);
+    background-color: color-mix(in srgb, currentColor 9%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .fpctabar__panel a:focus-visible {
-    box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 35%, transparent);
+    box-shadow:
+        0 0 0 2px color-mix(in srgb, currentColor 28%, transparent),
+        inset 0 0 0 1px color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* Freccia leggera solo in modalità bottone (menu verticale) */
+.fpctabar--button .fpctabar__panel a::after {
+    content: "\203A";
+    font-size: 1.35em;
+    font-weight: 300;
+    line-height: 1;
+    opacity: 0.28;
+    margin-left: auto;
+    padding-left: 0.35rem;
+    align-self: center;
+    transition: opacity 0.2s var(--fpctabar-ease-soft), transform 0.22s var(--fpctabar-ease-out);
+}
+
+.fpctabar--button .fpctabar__panel a:hover::after,
+.fpctabar--button .fpctabar__panel a:focus-visible::after {
+    opacity: 0.75;
+    transform: translateX(3px);
 }
 
 /* ========================================================
@@ -178,7 +211,8 @@
 
 .fpctabar--fullwidth .fpctabar__bar {
     background: var(--fpctabar-bg);
-    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 70%, transparent);
+    color: var(--fpctabar-text);
+    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 65%, transparent);
     text-align: center;
     padding: 18px 16px;
     cursor: pointer;
@@ -188,6 +222,12 @@
     gap: 10px;
     user-select: none;
     font-family: inherit;
+    transition: filter 0.2s var(--fpctabar-ease-soft), box-shadow 0.2s var(--fpctabar-ease-soft);
+    box-shadow: 0 -1px 0 color-mix(in srgb, var(--fpctabar-text) 6%, transparent);
+}
+
+.fpctabar--fullwidth .fpctabar__bar:hover {
+    filter: brightness(1.04);
 }
 
 .fpctabar--fullwidth .fpctabar__label {
@@ -201,8 +241,9 @@
 .fpctabar--fullwidth .fpctabar__arrow {
     color: var(--fpctabar-text);
     font-size: 12px;
-    transition: transform 0.3s;
+    transition: transform 0.35s var(--fpctabar-ease-out);
     display: inline-block;
+    opacity: 0.85;
 }
 
 .fpctabar--fullwidth.fpctabar--open .fpctabar__arrow {
@@ -215,12 +256,14 @@
     left: 0;
     width: 100%;
     background: var(--fpctabar-panel-bg);
-    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 55%, transparent);
-    padding: 20px 18px 24px;
+    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 45%, transparent);
+    padding: 22px 20px 26px;
     text-align: center;
-    transition: bottom 0.3s ease;
+    transition: bottom 0.32s var(--fpctabar-ease-out);
     z-index: -1;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 -20px 50px rgba(0, 0, 0, 0.07),
+        0 -8px 24px rgba(0, 0, 0, 0.04);
 }
 
 .fpctabar--fullwidth.fpctabar--open .fpctabar__panel {
@@ -230,8 +273,8 @@
 .fpctabar--fullwidth .fpctabar__panel a {
     display: inline-flex;
     max-width: 100%;
-    margin: 0 12px 8px;
-    padding: 10px 14px;
+    margin: 0 10px 10px;
+    padding: 12px 16px;
     vertical-align: middle;
     justify-content: center;
     align-items: flex-start;
@@ -254,7 +297,7 @@ body.fpctabar-body--fullwidth {
     position: fixed;
     bottom: 24px;
     z-index: var(--fpctabar-z, 99999);
-    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.1));
 }
 
 .fpctabar--left {
@@ -268,7 +311,7 @@ body.fpctabar-body--fullwidth {
 .fpctabar__btn {
     background: var(--fpctabar-bg);
     color: var(--fpctabar-text);
-    border: 1px solid color-mix(in srgb, var(--fpctabar-border) 65%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fpctabar-border) 55%, transparent);
     padding: var(--fpctabar-btn-pad-y, 14px) var(--fpctabar-btn-pad-x, 28px);
     font-family: inherit;
     font-size: var(--fpctabar-font-size-label, 15px);
@@ -276,66 +319,81 @@ body.fpctabar-body--fullwidth {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
-    border-radius: var(--fpctabar-btn-radius, 10px);
+    transition:
+        transform 0.25s var(--fpctabar-ease-out),
+        box-shadow 0.25s var(--fpctabar-ease-soft),
+        border-color 0.2s ease,
+        filter 0.2s ease;
+    border-radius: var(--fpctabar-btn-radius, 12px);
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow:
+        0 1px 0 color-mix(in srgb, var(--fpctabar-text) 12%, transparent),
+        0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .fpctabar__btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
-    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow:
+        0 1px 0 color-mix(in srgb, var(--fpctabar-text) 18%, transparent),
+        0 12px 32px rgba(0, 0, 0, 0.12);
+    filter: brightness(1.03);
+}
+
+.fpctabar__btn:active {
+    transform: translateY(-1px);
 }
 
 .fpctabar__btn:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--fpctabar-text) 45%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--fpctabar-text) 40%, transparent);
     outline-offset: 3px;
 }
 
 .fpctabar--button .fpctabar__panel {
     position: absolute;
-    bottom: calc(100% + 14px);
+    bottom: calc(100% + 16px);
     background: var(--fpctabar-panel-bg);
     color: var(--fpctabar-panel-text, var(--fpctabar-text));
-    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-    border-radius: max(12px, var(--fpctabar-btn-radius, 12px));
-    padding: 10px 8px;
+    border: 1px solid color-mix(in srgb, currentColor 11%, transparent);
+    border-radius: max(16px, var(--fpctabar-btn-radius, 16px));
+    padding: 8px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    min-width: min(280px, calc(100vw - 48px));
-    max-width: min(320px, calc(100vw - 32px));
+    gap: 4px;
+    min-width: min(288px, calc(100vw - 48px));
+    max-width: min(340px, calc(100vw - 32px));
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+    transform: translateY(12px) scale(0.98);
+    transform-origin: bottom center;
+    transition:
+        opacity 0.3s var(--fpctabar-ease-out),
+        transform 0.3s var(--fpctabar-ease-out),
+        visibility 0.3s;
     box-shadow:
-        0 16px 48px rgba(0, 0, 0, 0.14),
-        0 4px 12px rgba(0, 0, 0, 0.08);
+        0 24px 56px rgba(0, 0, 0, 0.12),
+        0 8px 20px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .fpctabar--left .fpctabar__panel {
     left: 0;
+    transform-origin: bottom left;
 }
 
 .fpctabar--right .fpctabar__panel {
     right: 0;
+    transform-origin: bottom right;
 }
 
 .fpctabar--button.fpctabar--open .fpctabar__panel {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 .fpctabar--button .fpctabar__panel a {
-    padding: 12px 14px;
-    margin: 0 4px;
-    border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-}
-
-.fpctabar--button .fpctabar__panel a:last-child {
+    padding: 13px 14px;
+    margin: 0;
     border-bottom: none;
 }
 
@@ -372,7 +430,7 @@ body.fpctabar-body--fullwidth {
 
 @media (max-width: 600px) {
     .fpctabar--fullwidth .fpctabar__panel {
-        padding: 18px 14px 22px;
+        padding: 20px 16px 24px;
     }
 
     .fpctabar--fullwidth .fpctabar__panel a {
@@ -399,6 +457,6 @@ body.fpctabar-body--fullwidth {
     }
 
     .fpctabar--button .fpctabar__panel {
-        min-width: min(260px, calc(100vw - 32px));
+        min-width: min(268px, calc(100vw - 32px));
     }
 }
