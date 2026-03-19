@@ -673,6 +673,11 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     padding: 8px;
 }
 
+/* Rispetta l'attributo hidden: evita griglie icone sempre aperte */
+.fp-cta-bar-icon-grid[hidden] {
+    display: none !important;
+}
+
 .fp-cta-bar-icon-option {
     border: 1px solid var(--fpdms-border);
     border-radius: var(--radius-sm);

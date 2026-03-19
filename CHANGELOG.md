@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.2.3] - 2026-03-19
+### Fixed
+- Admin UI: risolto bug del picker icone che mostrava le griglie sempre aperte (layout "a cascata" sulle righe Link)
+
 ## [1.2.2] - 2026-03-19
 ### Fixed
 - Frontend: supporto link "solo icona" (URL + icona) anche senza etichetta, evitando che la CTA venga nascosta
