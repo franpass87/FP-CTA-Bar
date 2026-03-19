@@ -79,19 +79,31 @@
         var trackLabel    = (linkEl && linkEl.getAttribute('data-fp-track-label'))    || label || '';
         var trackCategory = (linkEl && linkEl.getAttribute('data-fp-track-category')) || '';
         var isTracked     = linkEl && linkEl.getAttribute('data-fp-track') === '1';
+        var href          = (linkEl && linkEl.getAttribute('href')) || '';
 
-        // Route through FP-Marketing-Tracking-Layer via DOM event (always fires for fp-tracking.js)
-        document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
-            detail: {
-                label:    trackLabel,
-                action:   action || '',
-                url:      (linkEl && linkEl.getAttribute('href')) || '',
-                category: trackCategory,
-            }
-        }));
+        // FP Marketing Tracking Layer (fp-tracking.js): solo click barra sempre; click su link solo se «Traccia click» attivo
+        if (!linkEl) {
+            document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
+                detail: {
+                    label:    typeof label === 'string' ? label : '',
+                    action:   action || '',
+                    url:      '',
+                    category: '',
+                }
+            }));
+        } else if (isTracked) {
+            document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
+                detail: {
+                    label:    trackLabel || (typeof label === 'string' ? label : '') || '',
+                    action:   action || '',
+                    url:      href,
+                    category: trackCategory,
+                }
+            }));
+        }
 
-        // Notify backend for do_action('fp_cta_bar_clicked') when a link is clicked
-        if (linkEl && cfg.clickEndpoint && cfg.clickNonce) {
+        // Notify backend for do_action('fp_cta_bar_clicked') when a tracked link is clicked
+        if (linkEl && isTracked && cfg.clickEndpoint && cfg.clickNonce) {
             var url   = linkEl.getAttribute('href') || '';
             var lbl   = trackLabel || (typeof label === 'string' ? label : '') || linkEl.textContent.trim();
             var lang  = container.getAttribute('data-lang') || '';

@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.8.4] - 2026-03-19
+### Fixed
+- Admin: checkbox «Traccia click» non usa più `width:100%` ereditata dai campi link (layout compatto, label + icona allineati).
+### Changed
+- Frontend: evento `fpCtaBarClick` verso FP Marketing Tracking Layer solo sui link con «Traccia click» attivo; apertura barra continua a emettere l’evento. REST click beacon solo per link tracciati.
+
 ## [1.8.3] - 2026-03-19
 ### Fixed
 - Admin: anteprima CTA (full-width e modalità bottone) contenuta nel box «Anteprima» invece di agganciarsi al footer del viewport (`position: fixed` del frontend sovrascritto nel wrapper `.fpctabar-preview-wrap`).

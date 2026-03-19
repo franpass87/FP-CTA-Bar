@@ -460,9 +460,9 @@ $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$m
                                         <input type="url" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][url_en]" value="<?php echo esc_attr($link['url_en']); ?>">
                                     </div>
                                     <div class="fpctabar-link-field fpctabar-link-field--tracking fpctabar-link-field--cell-tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
-                                        <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--fpdms-info);">
+                                        <label class="fpctabar-track-toggle">
                                             <input type="checkbox" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track]" value="1" <?php checked(!empty($link['track'])); ?>>
-                                            &#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>
+                                            <span class="fpctabar-track-toggle__text">&#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?></span>
                                         </label>
                                         <div class="fp-cta-bar-track-fields" style="<?php echo empty($link['track']) ? 'display:none;' : ''; ?>margin-top:6px;">
                                             <input type="text" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track_label]" value="<?php echo esc_attr($link['track_label'] ?? ''); ?>" placeholder="<?php esc_attr_e('Label evento (es. Prenota Tavolo)', 'fp-cta-bar'); ?>" style="margin-bottom:4px;">
@@ -530,9 +530,9 @@ $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$m
                                 <input type="url" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][url_en]" value="">
                             </div>
                             <div class="fpctabar-link-field fpctabar-link-field--tracking fpctabar-link-field--cell-tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
-                                <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--fpdms-info);">
+                                <label class="fpctabar-track-toggle">
                                     <input type="checkbox" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track]" value="1" class="fp-cta-bar-track-toggle">
-                                    &#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>
+                                    <span class="fpctabar-track-toggle__text">&#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?></span>
                                 </label>
                                 <div class="fp-cta-bar-track-fields" style="display:none;margin-top:6px;">
                                     <input type="text" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track_label]" value="" placeholder="<?php esc_attr_e('Label evento (es. Prenota Tavolo)', 'fp-cta-bar'); ?>" style="margin-bottom:4px;">

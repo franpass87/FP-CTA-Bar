@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.8.3-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.8.4-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -48,12 +48,11 @@ FP-CTA-Bar/
 ```
 
 ### Tracking
-Il plugin emette un `CustomEvent` JavaScript `fpCtaBarClick` al click sul bottone. L'evento viene intercettato da `fp-tracking.js` (FP Marketing Tracking Layer) che lo instrada verso GTM/Meta/GA4.
+Il plugin emette un `CustomEvent` JavaScript `fpCtaBarClick` all’apertura della barra/bottone e, **per ogni link con «Traccia click» attivo**, al click sul link. `fp-tracking.js` (FP Marketing Tracking Layer) intercetta l’evento e fa `dataLayer.push` con `cta_label`, `cta_action`, `cta_url`, `cta_category`.
 
 ```javascript
-// Evento emesso al click
 document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
-    detail: { url: '...', label: '...' }
+    detail: { label: '...', action: '...', url: '...', category: '...' }
 }));
 ```
 
