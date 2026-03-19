@@ -22,9 +22,10 @@ if (!empty($settings['links'])) {
     }
 }
 $bar_will_show = !$use_shortcode && $valid_links > 0;
-$icon_options  = \FP\CtaBar\IconSvg::settings_icon_options();
+$link_icon_options = \FP\CtaBar\IconSvg::settings_link_icon_options();
+$main_icon_options = \FP\CtaBar\IconSvg::settings_main_icon_options();
 $main_icon = (string) ($settings['main_icon'] ?? '');
-$main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] : __('Personalizzata salvata', 'fp-cta-bar');
+$main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$main_icon] : __('Icona personalizzata (URL o valore precedente)', 'fp-cta-bar');
 ?>
 <div class="wrap fpctabar-admin-page">
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
@@ -124,8 +125,8 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                 <span class="fp-cta-bar-icon-trigger-label"><?php echo esc_html($main_icon_label); ?></span>
                                 <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
                             </button>
-                            <div class="fp-cta-bar-icon-grid" hidden>
-                                <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                            <div class="fp-cta-bar-icon-grid fp-cta-bar-icon-grid--main" hidden>
+                                <?php foreach ($main_icon_options as $icon_value => $icon_label) : ?>
                                     <button type="button" class="fp-cta-bar-icon-option<?php echo $main_icon === $icon_value ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
                                         <span class="fp-cta-bar-icon-option-visual" aria-hidden="true"><?php \FP\CtaBar\IconSvg::echo_admin_icon($icon_value); ?></span>
                                         <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>
@@ -133,7 +134,7 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                        <span class="fpctabar-hint"><?php esc_html_e('Solo emoji di sistema (Unicode) o incolla un URL immagine per un’icona personalizzata.', 'fp-cta-bar'); ?> <?php esc_html_e('Per nascondere il testo attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
+                        <span class="fpctabar-hint"><?php esc_html_e('Icone vettoriali dedicate al bottone principale (contatti, prenotazione, CTA…), non emoji. Nei link del pannello restano emoji e WhatsApp.', 'fp-cta-bar'); ?> <?php esc_html_e('Per nascondere il testo attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
                     </div>
                 </div>
 
@@ -415,7 +416,7 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                     <div class="fpctabar-link-field fpctabar-link-field--icon fpctabar-link-field--cell-icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
                                         <label><?php esc_html_e('Icona', 'fp-cta-bar'); ?></label>
                                         <?php $saved_icon = (string) ($link['icon'] ?? ''); ?>
-                                        <?php $saved_icon_label = isset($icon_options[$saved_icon]) ? $icon_options[$saved_icon] : __('Personalizzata salvata', 'fp-cta-bar'); ?>
+                                        <?php $saved_icon_label = isset($link_icon_options[$saved_icon]) ? $link_icon_options[$saved_icon] : __('Personalizzata salvata', 'fp-cta-bar'); ?>
                                         <div class="fpctabar-icon-picker fp-cta-bar-icon-picker">
                                             <input type="hidden" class="fp-cta-bar-icon-input" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][icon]" value="<?php echo esc_attr($saved_icon); ?>">
                                             <button type="button" class="fpctabar-btn fpctabar-btn-secondary fp-cta-bar-icon-trigger" aria-expanded="false">
@@ -423,8 +424,8 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                                 <span class="fp-cta-bar-icon-trigger-label"><?php echo esc_html($saved_icon_label); ?></span>
                                                 <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
                                             </button>
-                                            <div class="fp-cta-bar-icon-grid" hidden>
-                                                <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                                            <div class="fp-cta-bar-icon-grid fp-cta-bar-icon-grid--links" hidden>
+                                                <?php foreach ($link_icon_options as $icon_value => $icon_label) : ?>
                                                     <button type="button" class="fp-cta-bar-icon-option<?php echo $saved_icon === $icon_value ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
                                                         <span class="fp-cta-bar-icon-option-visual" aria-hidden="true"><?php \FP\CtaBar\IconSvg::echo_admin_icon($icon_value); ?></span>
                                                         <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>
@@ -493,8 +494,8 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                         <span class="fp-cta-bar-icon-trigger-label"><?php esc_html_e('Nessuna', 'fp-cta-bar'); ?></span>
                                         <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
                                     </button>
-                                    <div class="fp-cta-bar-icon-grid" hidden>
-                                        <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                                    <div class="fp-cta-bar-icon-grid fp-cta-bar-icon-grid--links" hidden>
+                                        <?php foreach ($link_icon_options as $icon_value => $icon_label) : ?>
                                             <button type="button" class="fp-cta-bar-icon-option<?php echo $icon_value === '' ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
                                                 <span class="fp-cta-bar-icon-option-visual" aria-hidden="true"><?php \FP\CtaBar\IconSvg::echo_admin_icon($icon_value); ?></span>
                                                 <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>

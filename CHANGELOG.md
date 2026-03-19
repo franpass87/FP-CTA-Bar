@@ -2,6 +2,18 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.8.0] - 2026-03-19
+### Added
+- `IconSvg::settings_main_icon_options()` — catalogo **SVG line-art** per il **bottone principale** con etichette esplicative (categorie: Principale, Prenota, Contatti, Vendita, Media, ecc.)
+
+### Changed
+- Selettore **icona principale** (admin): solo icone vettoriali dedicate, **non** emoji / WhatsApp
+- Selettore **icone dei link**: invariato (emoji + WhatsApp); metodo rinominato `settings_link_icon_options()` (sostituisce `settings_icon_options()`)
+- Griglia admin icona principale a 4 colonne per etichette più lunghe (classe `fp-cta-bar-icon-grid--main`)
+
+### Note
+- Valori `main_icon` già salvati come emoji/URL restano validi sul sito; in admin possono comparire come «Icona personalizzata…» finché non scegli un preset dalla nuova lista
+
 ## [1.7.1] - 2026-03-19
 ### Added
 - Selettore admin: voce **WhatsApp (logo)** (`fpctabar-whatsapp`, SVG verde da `icon-brand-svgs.php`) subito dopo «Nessuna»

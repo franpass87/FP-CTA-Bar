@@ -738,6 +738,13 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Icona principale: etichette esplicative più lunghe */
+.fp-cta-bar-icon-grid--main {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: min(520px, 100%);
+    min-width: 280px;
+}
+
 /* Colonna icona stretta nel repeater: griglia più larga del trigger, non “a colonna unica” */
 .fpctabar-link-field--icon .fp-cta-bar-icon-grid {
     left: 0;
@@ -905,6 +912,10 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
         width: min(100%, calc(100vw - 48px)) !important;
         min-width: 0 !important;
         max-height: 240px;
+    }
+
+    .fp-cta-bar-icon-grid--main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .fpctabar-link-field--icon .fp-cta-bar-icon-grid {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FP\CtaBar;
 
 /**
- * Icone: emoji preset (`fpctabar-emoji-*`), WhatsApp in selettore admin, SVG line-art e altri brand solo per valori già salvati in DB.
+ * Icone: SVG line-art (INNER), emoji, brand; selettori admin separati per bottone principale vs link.
  */
 final class IconSvg {
 
@@ -54,11 +54,11 @@ final class IconSvg {
     }
 
     /**
-     * Opzioni per il selettore in admin: «Nessuna», eventuali brand extra (es. WhatsApp), poi tutte le emoji.
+     * Opzioni selettore **link** nel pannello: «Nessuna», WhatsApp (logo), emoji.
      *
      * @return array<string, string>
      */
-    public static function settings_icon_options(): array {
+    public static function settings_link_icon_options(): array {
         $head = ['' => __('Nessuna', 'fp-cta-bar')];
         $brandExtras = [];
         if (array_key_exists('fpctabar-whatsapp', self::brands())) {
@@ -74,6 +74,15 @@ final class IconSvg {
         }
 
         return array_merge($head, $brandExtras, $emojiOpts);
+    }
+
+    /**
+     * @deprecated 1.8.0 Usare {@see self::settings_link_icon_options()}.
+     *
+     * @return array<string, string>
+     */
+    public static function settings_icon_options(): array {
+        return self::settings_link_icon_options();
     }
 
     /**
@@ -158,6 +167,65 @@ final class IconSvg {
         'dashicons dashicons-format-status' => '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
         'dashicons dashicons-beer'         => '<path d="M8 22h8"/><path d="M7 10h10v9a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-9Z"/><path d="M12 15v-3.5"/><path d="M8 2h8l1 6H7l1-6Z"/>',
     ];
+
+    /**
+     * Catalogo icone per il **bottone principale**: solo SVG line-art, etichette esplicative (ordine griglia admin).
+     *
+     * @return array<string, string>
+     */
+    private static function main_icon_catalog(): array {
+        return [
+            'dashicons dashicons-megaphone'     => __('Principale · Annuncio / CTA', 'fp-cta-bar'),
+            'dashicons dashicons-calendar'     => __('Prenota · Calendario', 'fp-cta-bar'),
+            'dashicons dashicons-calendar-alt'  => __('Prenota · Calendario dettaglio', 'fp-cta-bar'),
+            'dashicons dashicons-phone'         => __('Contatti · Telefono', 'fp-cta-bar'),
+            'dashicons dashicons-smartphone'    => __('Contatti · Smartphone', 'fp-cta-bar'),
+            'dashicons dashicons-email'         => __('Contatti · Email', 'fp-cta-bar'),
+            'dashicons dashicons-format-chat'   => __('Contatti · Chat / messaggi', 'fp-cta-bar'),
+            'dashicons dashicons-location'      => __('Dove siamo · Pin', 'fp-cta-bar'),
+            'dashicons dashicons-location-alt'  => __('Dove siamo · Pin alternativo', 'fp-cta-bar'),
+            'dashicons dashicons-marker'        => __('Mappa · Segnaposto', 'fp-cta-bar'),
+            'dashicons dashicons-admin-site'    => __('Web · Sito / globo', 'fp-cta-bar'),
+            'dashicons dashicons-admin-home'    => __('Navigazione · Home', 'fp-cta-bar'),
+            'dashicons dashicons-external'      => __('Azione · Apri link esterno', 'fp-cta-bar'),
+            'dashicons dashicons-share'         => __('Social · Condividi', 'fp-cta-bar'),
+            'dashicons dashicons-cart'          => __('Vendita · Carrello', 'fp-cta-bar'),
+            'dashicons dashicons-store'         => __('Vendita · Negozio', 'fp-cta-bar'),
+            'dashicons dashicons-products'      => __('Vendita · Catalogo', 'fp-cta-bar'),
+            'dashicons dashicons-tickets-alt'   => __('Eventi · Biglietti', 'fp-cta-bar'),
+            'dashicons dashicons-money-alt'     => __('Vendita · Prezzi / pagamento', 'fp-cta-bar'),
+            'dashicons dashicons-admin-users'   => __('Chi siamo · Team / persone', 'fp-cta-bar'),
+            'dashicons dashicons-star-filled'   => __('Evidenza · Stella', 'fp-cta-bar'),
+            'dashicons dashicons-heart'         => __('Evidenza · Cuore', 'fp-cta-bar'),
+            'dashicons dashicons-clock'         => __('Servizio · Orari', 'fp-cta-bar'),
+            'dashicons dashicons-info'          => __('Aiuto · Informazioni', 'fp-cta-bar'),
+            'dashicons dashicons-warning'       => __('Importante · Avviso', 'fp-cta-bar'),
+            'dashicons dashicons-yes-alt'       => __('Stato · OK / conferma', 'fp-cta-bar'),
+            'dashicons dashicons-plus-alt'      => __('Esplora · Altro / più', 'fp-cta-bar'),
+            'dashicons dashicons-camera'        => __('Media · Fotocamera', 'fp-cta-bar'),
+            'dashicons dashicons-format-image'  => __('Media · Galleria', 'fp-cta-bar'),
+            'dashicons dashicons-video-alt3'    => __('Media · Video', 'fp-cta-bar'),
+            'dashicons dashicons-microphone'    => __('Media · Voce / podcast', 'fp-cta-bar'),
+            'dashicons dashicons-format-status' => __('Novità · Aggiornamento', 'fp-cta-bar'),
+            'dashicons dashicons-beer'          => __('Locale · Ristorante / drink', 'fp-cta-bar'),
+        ];
+    }
+
+    /**
+     * Opzioni selettore **icona principale** (barra/bottone): solo SVG vettoriali esplicativi, no emoji.
+     *
+     * @return array<string, string>
+     */
+    public static function settings_main_icon_options(): array {
+        $out = ['' => __('Nessuna', 'fp-cta-bar')];
+        foreach (self::main_icon_catalog() as $key => $label) {
+            if (isset(self::INNER[$key])) {
+                $out[$key] = $label;
+            }
+        }
+
+        return $out;
+    }
 
     /**
      * SVG completo per la chiave preset, o stringa vuota.
