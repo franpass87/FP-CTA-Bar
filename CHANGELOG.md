@@ -2,6 +2,16 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.9] - 2026-03-19
+### Fixed
+- **Border radius**: molti temi applicano `border-radius` (spesso con `!important`) ai `button` e annullavano il valore impostato; ora `#fpctabar .fpctabar__btn` applica `var(--fpctabar-btn-radius)` con `!important`, con eccezione esplicita per il bottone tondo (icon-circle → `999px`)
+- **Full-width**: barra principale e pannello usano il raggio sui vertici superiori (prima ignorato)
+- **Pannello floating (button left/right)**: rimosso `max(16px, …)` che rendeva identici i raggi ≤16px; raggio = valore admin
+- **Sanitize**: `button_radius` ammette 0–48px (prima max 24)
+
+### Changed
+- Admin: hint sotto il campo border radius; input `max="48"`
+
 ## [1.3.8] - 2026-03-19
 ### Fixed
 - Dashicons su barra/bottone principale e nel pannello link: il glifo è su `::before` e molti temi impostano `.dashicons:before` (anche con `!important`) rendendo l’icona scura a dispetto del colore testo scelto in admin. Aggiunte regole ad alta specificità (`#fpctabar …`) che applicano `var(--fpctabar-text)` / `var(--fpctabar-panel-text)` anche al pseudo-elemento

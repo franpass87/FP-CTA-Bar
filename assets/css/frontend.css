@@ -255,6 +255,12 @@
     box-shadow: 0 -6px 28px rgba(0, 0, 0, 0.07);
 }
 
+/* Angoli superiori barra full-width = stesso raggio impostato in admin */
+#fpctabar.fpctabar--fullwidth .fpctabar__bar {
+    border-top-left-radius: var(--fpctabar-btn-radius, 14px) !important;
+    border-top-right-radius: var(--fpctabar-btn-radius, 14px) !important;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .fpctabar--fullwidth .fpctabar__bar:hover {
         filter: brightness(1.025);
@@ -299,6 +305,11 @@
     box-shadow:
         0 -20px 50px rgba(0, 0, 0, 0.07),
         0 -8px 24px rgba(0, 0, 0, 0.04);
+}
+
+#fpctabar.fpctabar--fullwidth .fpctabar__panel {
+    border-top-left-radius: var(--fpctabar-btn-radius, 14px) !important;
+    border-top-right-radius: var(--fpctabar-btn-radius, 14px) !important;
 }
 
 .fpctabar--fullwidth.fpctabar--open .fpctabar__panel {
@@ -372,7 +383,6 @@ body.fpctabar-body--fullwidth {
         box-shadow 0.22s var(--fpctabar-ease-soft),
         border-color 0.2s ease,
         background-color 0.2s ease;
-    border-radius: var(--fpctabar-btn-radius, 14px);
     white-space: nowrap;
     box-shadow:
         0 1px 2px rgba(0, 0, 0, 0.04),
@@ -401,13 +411,28 @@ body.fpctabar-body--fullwidth {
     outline-offset: 3px;
 }
 
+/*
+ * Border-radius: i temi spesso impostano button, .button, input[type=submit] { border-radius: … !important }.
+ * #fpctabar + !important rispetta il valore admin. Il bottone tondo (icon-circle) deve vincere.
+ */
+#fpctabar .fpctabar__btn {
+    border-radius: var(--fpctabar-btn-radius, 14px) !important;
+}
+
+#fpctabar.fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__btn {
+    border-radius: 999px !important;
+}
+
+#fpctabar.fpctabar--button .fpctabar__panel {
+    border-radius: var(--fpctabar-btn-radius, 14px) !important;
+}
+
 .fpctabar--button .fpctabar__panel {
     position: absolute;
     bottom: calc(100% + 16px);
     background: var(--fpctabar-panel-bg);
     color: var(--fpctabar-panel-text, var(--fpctabar-text));
     border: 1px solid color-mix(in srgb, currentColor 11%, transparent);
-    border-radius: max(16px, var(--fpctabar-btn-radius, 16px));
     padding: 12px 10px;
     display: flex;
     flex-direction: column;
@@ -459,7 +484,6 @@ body.fpctabar-body--fullwidth {
 .fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__btn {
     width: var(--fpctabar-btn-circle-size, 56px);
     height: var(--fpctabar-btn-circle-size, 56px);
-    border-radius: 999px;
     padding: 0;
     display: inline-flex;
     align-items: center;

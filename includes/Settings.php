@@ -71,7 +71,7 @@ class Settings {
             : $defaults['button_size'];
 
         $radius = isset($input['button_radius']) ? absint($input['button_radius']) : 4;
-        $clean['button_radius'] = ($radius >= 0 && $radius <= 24) ? $radius : 4;
+        $clean['button_radius'] = ($radius >= 0 && $radius <= 48) ? $radius : 4;
 
         $clean['close_on_link_click'] = !empty($input['close_on_link_click']);
 

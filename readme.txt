@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,9 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.3.9 = (2026-03-19)
+* Fixed: Border radius da admin rispettato (temi che forzano i button); full-width e pannello usano lo stesso raggio; rimosso minimo 16px sul pannello floating; hint in admin; max raggio 48px
 
 = 1.3.8 = (2026-03-19)
 * Fixed: Colore Dashicons (principale e link pannello) rispetta le impostazioni anche se il tema forza .dashicons:before scuro

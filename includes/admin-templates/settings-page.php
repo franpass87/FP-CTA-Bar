@@ -274,7 +274,8 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                     </div>
                     <div class="fpctabar-field">
                         <label><?php esc_html_e('Border radius bottone (px)', 'fp-cta-bar'); ?></label>
-                        <input type="number" name="<?php echo esc_attr($opt); ?>[button_radius]" value="<?php echo esc_attr($settings['button_radius'] ?? 4); ?>" min="0" max="24">
+                        <input type="number" name="<?php echo esc_attr($opt); ?>[button_radius]" value="<?php echo esc_attr($settings['button_radius'] ?? 4); ?>" min="0" max="48">
+                        <span class="fpctabar-hint"><?php esc_html_e('Si applica al bottone flottante, agli angoli superiori della barra full-width, al pannello aperto e al menu floating.', 'fp-cta-bar'); ?></span>
                     </div>
                     <div class="fpctabar-field">
                         <label><?php esc_html_e('Ritardo comparsa (sec)', 'fp-cta-bar'); ?></label>
