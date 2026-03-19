@@ -117,6 +117,7 @@ class Admin {
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'exportUrl' => add_query_arg(['action' => 'fp_cta_bar_export', 'nonce' => wp_create_nonce('fp_cta_bar_export')], admin_url('admin-ajax.php')),
             'importNonce' => wp_create_nonce('fp_cta_bar_import'),
+            'iconPresets' => IconSvg::presets_for_script(),
             'i18n' => [
                 'confirmRemove' => __('Rimuovere questo link?', 'fp-cta-bar'),
                 'importSuccess' => __('Importazione completata.', 'fp-cta-bar'),

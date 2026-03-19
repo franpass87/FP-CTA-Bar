@@ -256,12 +256,13 @@ class Frontend {
     }
 
     private function uses_dashicons() {
-        $main = $this->settings['main_icon'] ?? '';
-        if (stripos($main, 'dashicons') !== false) {
+        $main = trim((string) ($this->settings['main_icon'] ?? ''));
+        if ($main !== '' && !IconSvg::has_preset($main) && stripos($main, 'dashicons') !== false) {
             return true;
         }
         foreach ($this->settings['links'] ?? [] as $link) {
-            if (!empty($link['icon']) && stripos($link['icon'], 'dashicons') !== false) {
+            $ic = trim((string) ($link['icon'] ?? ''));
+            if ($ic !== '' && !IconSvg::has_preset($ic) && stripos($ic, 'dashicons') !== false) {
                 return true;
             }
         }
@@ -385,6 +386,10 @@ class Frontend {
         }
         if (preg_match('#^(https?:|/|data:)#i', $icon)) {
             return '<span class="fpctabar__icon fpctabar__icon--img"><img src="' . esc_url($icon) . '" alt="" aria-hidden="true"></span>';
+        }
+        $svg = IconSvg::inline($icon);
+        if ($svg !== '') {
+            return '<span class="fpctabar__icon fpctabar__icon--svg" aria-hidden="true">' . $svg . '</span>';
         }
         return '<span class="fpctabar__icon fpctabar__icon--class ' . esc_attr($icon) . '" aria-hidden="true"></span>';
     }

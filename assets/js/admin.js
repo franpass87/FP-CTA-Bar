@@ -187,10 +187,17 @@
                 }
             });
 
-            if (value && value.indexOf('dashicons') !== -1) {
-                $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon ' + value);
+            var presets = (typeof fpCtaBar !== 'undefined' && fpCtaBar.iconPresets) ? fpCtaBar.iconPresets : {};
+            $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon');
+            $triggerIcon.empty();
+            if (presets[value]) {
+                $triggerIcon.html(presets[value]);
+            } else if (value && value.indexOf('dashicons') !== -1) {
+                $triggerIcon.addClass(value);
+            } else if (!value) {
+                $triggerIcon.addClass('dashicons dashicons-minus fpctabar-admin-icon-fallback');
             } else {
-                $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon dashicons dashicons-minus');
+                $triggerIcon.addClass(value);
             }
 
             if (!matched) {

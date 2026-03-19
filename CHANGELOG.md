@@ -2,6 +2,17 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.4.0] - 2026-03-19
+### Added
+- Classe `IconSvg`: mappa ogni preset del selettore (stessa chiave `dashicons dashicons-*` salvata in DB) verso **SVG inline** line-art (path ispirati a [Lucide](https://lucide.dev), MIT)
+- Frontend: `icon_html()` usa gli SVG per i preset; classi Dashicons sconosciute o custom restano su `<span>` + font Dashicons come prima
+- Admin: griglia e trigger icone mostrano gli stessi SVG; `wp_localize_script` espone `fpCtaBar.iconPresets` per aggiornare il trigger dopo la scelta (JS)
+
+### Changed
+- `uses_dashicons()`: non carica più lo stylesheet Dashicons se tutte le icone in uso sono preset mappati su SVG
+- CSS frontend: tile morbido per icona nei link del pannello, link con padding/angoli leggermente più curati; regole colore anche per `.fpctabar__icon--svg`
+- CSS admin: dimensioni allineate per trigger/griglia SVG
+
 ## [1.3.9] - 2026-03-19
 ### Fixed
 - **Border radius**: molti temi applicano `border-radius` (spesso con `!important`) ai `button` e annullavano il valore impostato; ora `#fpctabar .fpctabar__btn` applica `var(--fpctabar-btn-radius)` con `!important`, con eccezione esplicita per il bottone tondo (icon-circle → `999px`)

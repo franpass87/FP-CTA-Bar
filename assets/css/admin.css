@@ -641,10 +641,35 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
 
 .fp-cta-bar-icon-trigger-icon {
     font-size: 18px;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     color: var(--fpdms-text-light);
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fp-cta-bar-icon-trigger-icon .fpctabar-admin-icon-svg,
+.fp-cta-bar-icon-trigger-icon .fpctabar-admin-icon-svg svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    color: var(--fpdms-text);
+}
+
+.fp-cta-bar-icon-option-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+}
+
+.fp-cta-bar-icon-option-visual .fpctabar-admin-icon-svg svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    color: #1d2327;
 }
 
 .fp-cta-bar-icon-trigger-label {
@@ -703,7 +728,8 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     background: #e8edff;
 }
 
-.fp-cta-bar-icon-option .dashicons {
+.fp-cta-bar-icon-option .dashicons,
+.fp-cta-bar-icon-option .fpctabar-admin-icon-fallback {
     font-size: 18px;
     width: 18px;
     height: 18px;

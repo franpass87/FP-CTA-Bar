@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.3.9-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -56,6 +56,9 @@ document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
     detail: { url: '...', label: '...' }
 }));
 ```
+
+### Icone (frontend)
+Le icone scelte dal selettore admin (preset) sono renderizzate come **SVG line-art** (stile moderno, `currentColor` per rispettare i colori barra/pannello). Le classi Dashicons personalizzate non in elenco restano su font Dashicons. I file immagine (URL) non cambiano.
 
 ### Filtri disponibili
 | Filtro | Descrizione |
