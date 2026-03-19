@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.8.2] - 2025-03-19
+### Fixed
+- Admin: `h1` come primo elemento nel `.wrap` (screen reader) e titolo visibile nel banner come `h2`, così le notice iniettate da terze parti con `$( '.wrap h1' ).after( … )` non finiscono più **dentro** il banner viola.
+
 ## [1.8.1] - 2026-03-19
 ### Fixed
 - Admin: rimosso `display:flex` / `order` su `#wpbody-content` che portava le **notice WordPress sotto** il contenuto del plugin (effetto “dentro” l’header viola); flusso DOM naturale + `margin-top` sul `.wrap` per menu top-level e sotto Impostazioni

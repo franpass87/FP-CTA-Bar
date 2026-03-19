@@ -86,7 +86,8 @@ body.settings_page_fp-cta-bar #wpbody-content > .wrap.fpctabar-admin-page {
     gap: 16px;
 }
 
-.fpctabar-page-header-content h1 {
+/* Titolo visibile nel banner (h2: l’h1 è .screen-reader-text per compat notice JS di terze parti) */
+.fpctabar-page-header-content .fpctabar-page-header-title {
     font-size: 26px;
     font-weight: 700;
     margin: 0 0 6px;
@@ -97,10 +98,20 @@ body.settings_page_fp-cta-bar #wpbody-content > .wrap.fpctabar-admin-page {
     gap: 10px;
 }
 
-.fpctabar-page-header-content h1 .dashicons {
+.fpctabar-page-header-content .fpctabar-page-header-title .dashicons {
     font-size: 28px;
     width: 28px;
     height: 28px;
+}
+
+/* Notice inserite dopo .wrap h1 da script esterni: fuori dal banner, layout stabile */
+.wrap.fpctabar-admin-page > .notice,
+.wrap.fpctabar-admin-page > div.updated,
+.wrap.fpctabar-admin-page > div.error {
+    float: none;
+    clear: both;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .fpctabar-page-header-content p {

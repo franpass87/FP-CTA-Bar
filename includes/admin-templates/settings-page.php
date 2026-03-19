@@ -28,6 +28,8 @@ $main_icon = (string) ($settings['main_icon'] ?? '');
 $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$main_icon] : __('Icona personalizzata (URL o valore precedente)', 'fp-cta-bar');
 ?>
 <div class="wrap fpctabar-admin-page">
+    <?php /* h1 primo nel .wrap: compat notice JS (es. jQuery('.wrap h1').after(...)). Titolo visibile = h2 nel banner. */ ?>
+    <h1 class="screen-reader-text"><?php esc_html_e('FP CTA Bar', 'fp-cta-bar'); ?></h1>
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
         <div class="notice notice-warning" style="margin: 15px 0 20px;">
             <p><strong><?php esc_html_e('La barra non è visibile sul sito.', 'fp-cta-bar'); ?></strong></p>
@@ -38,7 +40,7 @@ $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$m
     <!-- Page Header -->
     <div class="fpctabar-page-header">
         <div class="fpctabar-page-header-content">
-            <h1><span class="dashicons dashicons-megaphone"></span> <?php esc_html_e('FP CTA Bar', 'fp-cta-bar'); ?></h1>
+            <h2 class="fpctabar-page-header-title" aria-hidden="true"><span class="dashicons dashicons-megaphone"></span> <?php esc_html_e('FP CTA Bar', 'fp-cta-bar'); ?></h2>
             <p><?php esc_html_e('Configura la barra CTA fissa con link dinamici ITA/ENG.', 'fp-cta-bar'); ?></p>
         </div>
         <span class="fpctabar-page-header-badge">v<?php echo esc_html(FP_CTA_BAR_VERSION); ?></span>
