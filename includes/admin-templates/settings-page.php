@@ -15,8 +15,8 @@ $valid_links = 0;
 if (!empty($settings['links'])) {
     foreach ($settings['links'] as $link) {
         $url   = !empty($link['url_it']) || !empty($link['url_en']);
-        $label = !empty($link['label_it']) || !empty($link['label_en']);
-        if ($url && $label) {
+        $label_or_icon = !empty($link['label_it']) || !empty($link['label_en']) || !empty($link['icon']);
+        if ($url && $label_or_icon) {
             $valid_links++;
         }
     }
@@ -65,7 +65,7 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
         <div class="notice notice-warning" style="margin: 15px 0 20px;">
             <p><strong><?php esc_html_e('La barra non è visibile sul sito.', 'fp-cta-bar'); ?></strong></p>
-            <p><?php esc_html_e('Aggiungi almeno un link (con URL e etichetta) nella sezione "Link" qui sotto. Senza link la barra non viene mostrata.', 'fp-cta-bar'); ?></p>
+            <p><?php esc_html_e('Aggiungi almeno un link (con URL e almeno etichetta o icona) nella sezione "Link" qui sotto. Senza link validi la barra non viene mostrata.', 'fp-cta-bar'); ?></p>
         </div>
     <?php endif; ?>
 

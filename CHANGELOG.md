@@ -2,6 +2,11 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.2.2] - 2026-03-19
+### Fixed
+- Frontend: supporto link "solo icona" (URL + icona) anche senza etichetta, evitando che la CTA venga nascosta
+- Admin: conteggio/link validi aggiornato (URL + etichetta oppure URL + icona)
+
 ## [1.2.1] - 2026-03-19
 ### Added
 - Nuova icona "Vino" nel picker icone visuale (selezione rapida da griglia)

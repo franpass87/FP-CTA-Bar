@@ -334,15 +334,17 @@ class Frontend {
             $target = (isset($link['target']) && $link['target'] === '_self') ? '_self' : '_blank';
             $rel = ($target === '_blank') ? 'noopener noreferrer' : '';
             $icon = $this->icon_html($link['icon'] ?? '');
+            $has_icon = trim((string) ($link['icon'] ?? '')) !== '';
+            $has_label = trim((string) $label) !== '';
 
-            if (empty($url) || empty($label)) {
+            if (empty($url) || (!$has_label && !$has_icon)) {
                 continue;
             }
 
             // Tracking data attributes (only if tracking is enabled for this link)
             $track_attrs = '';
             if (!empty($link['track'])) {
-                $track_label    = !empty($link['track_label']) ? $link['track_label'] : $label;
+                $track_label    = !empty($link['track_label']) ? $link['track_label'] : ($has_label ? $label : $url);
                 $track_category = !empty($link['track_category']) ? $link['track_category'] : '';
                 $track_attrs = sprintf(
                     ' data-fp-track="1" data-fp-track-label="%s" data-fp-track-category="%s"',
@@ -351,8 +353,10 @@ class Frontend {
                 );
             }
 
-            $aria_label = sprintf(/* translators: link purpose for screen readers */ __('Apri link: %s', 'fp-cta-bar'), $label);
-            $inner = $icon . esc_html($label);
+            $aria_label = $has_label
+                ? sprintf(/* translators: link purpose for screen readers */ __('Apri link: %s', 'fp-cta-bar'), $label)
+                : __('Apri link CTA', 'fp-cta-bar');
+            $inner = $icon . ($has_label ? esc_html($label) : '<span class="fpctabar__sr-only">' . esc_html__('Apri link', 'fp-cta-bar') . '</span>');
             $html .= sprintf(
                 '<a href="%s" target="%s" rel="%s" aria-label="%s"%s>%s</a>',
                 esc_url($url),
