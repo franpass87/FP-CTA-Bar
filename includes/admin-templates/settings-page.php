@@ -254,6 +254,7 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                             <option value="mobile" <?php selected($settings['device_visibility'] ?? 'all', 'mobile'); ?>><?php esc_html_e('Solo mobile', 'fp-cta-bar'); ?></option>
                             <option value="desktop" <?php selected($settings['device_visibility'] ?? 'all', 'desktop'); ?>><?php esc_html_e('Solo desktop', 'fp-cta-bar'); ?></option>
                         </select>
+                        <p class="description"><?php esc_html_e('Sul telefono la CTA non compare se scegli «Solo desktop». Per il mobile usa «Tutti» o «Solo mobile».', 'fp-cta-bar'); ?></p>
                     </div>
                     <div class="fpctabar-field">
                         <label><?php esc_html_e('Dimensione font', 'fp-cta-bar'); ?></label>

@@ -213,6 +213,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .fpctabar--fullwidth .fpctabar__bar {
@@ -294,28 +295,40 @@
     text-align: center;
 }
 
-/* Body padding for full-width */
+/* Body padding for full-width (+ safe area iPhone / Android gesture bar) */
 body.fpctabar-body--fullwidth {
-    padding-bottom: 60px !important;
+    padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 /* ========================================================
    BUTTON MODE (left & right)
    ======================================================== */
 
+/*
+ * Modalità bottone: niente filter sul wrapper — su Safari/iOS il filter + fixed
+ * crea stacking context e può nascondere o “tagliare” il bottone sul mobile.
+ * L’ombra resta su .fpctabar__btn (box-shadow).
+ */
 .fpctabar--button {
     position: fixed;
-    bottom: 24px;
     z-index: var(--fpctabar-z, 99999);
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.1));
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    display: block;
+    width: max-content;
+    max-width: calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+    pointer-events: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .fpctabar--left {
-    left: 24px;
+    left: calc(24px + env(safe-area-inset-left, 0px));
+    right: auto;
 }
 
 .fpctabar--right {
-    right: 24px;
+    right: calc(24px + env(safe-area-inset-right, 0px));
+    left: auto;
 }
 
 .fpctabar__btn {
@@ -338,15 +351,19 @@ body.fpctabar-body--fullwidth {
     white-space: nowrap;
     box-shadow:
         0 1px 0 color-mix(in srgb, var(--fpctabar-text) 12%, transparent),
-        0 4px 14px rgba(0, 0, 0, 0.08);
+        0 4px 14px rgba(0, 0, 0, 0.08),
+        0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
-.fpctabar__btn:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 1px 0 color-mix(in srgb, var(--fpctabar-text) 18%, transparent),
-        0 12px 32px rgba(0, 0, 0, 0.12);
-    filter: brightness(1.03);
+@media (hover: hover) and (pointer: fine) {
+    .fpctabar__btn:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 1px 0 color-mix(in srgb, var(--fpctabar-text) 18%, transparent),
+            0 12px 32px rgba(0, 0, 0, 0.12),
+            0 16px 40px rgba(0, 0, 0, 0.08);
+        filter: brightness(1.03);
+    }
 }
 
 .fpctabar__btn:active {
@@ -452,15 +469,16 @@ body.fpctabar-body--fullwidth {
     }
 
     .fpctabar--button {
-        bottom: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        max-width: calc(100vw - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
     }
 
     .fpctabar--left {
-        left: 16px;
+        left: calc(16px + env(safe-area-inset-left, 0px));
     }
 
     .fpctabar--right {
-        right: 16px;
+        right: calc(16px + env(safe-area-inset-right, 0px));
     }
 
     .fpctabar__btn {

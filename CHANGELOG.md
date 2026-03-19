@@ -2,6 +2,18 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.6] - 2026-03-19
+### Fixed
+- Modalità bottone su mobile (Safari/iOS): `filter` sul wrapper `position: fixed` poteva nascondere o tagliare il bottone; ombra spostata su `.fpctabar__btn` con `box-shadow`
+- Posizionamento mobile: `env(safe-area-inset-*)` su wrapper bottone e body quando serve spazio per il pannello
+
+### Changed
+- Barra full-width: `padding-bottom` con safe-area per contenuti sopra la home indicator
+- Hover bottone con `transform`/`brightness` solo dove `@media (hover: hover) and (pointer: fine)` (evita effetti strani al touch)
+
+### Added
+- Admin: testo di aiuto sotto «Dispositivo» (Tutti / Solo mobile / Solo desktop)
+
 ## [1.3.5] - 2026-03-19
 ### Changed
 - Frontend: più spazio nel pannello link (larghezza min/max, padding, gap icona–testo) per ridurre testi tagliati o troppo stretti
