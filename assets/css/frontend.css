@@ -1,5 +1,6 @@
 /* ========================================================
    FP CTA Bar – Frontend
+   Tipografia: stack di sistema (nessun font esterno richiesto).
    ======================================================== */
 
 /* --- Reset & Base --- */
@@ -14,9 +15,11 @@
 }
 
 .fpctabar {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     z-index: var(--fpctabar-z, 99999);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 .fpctabar--mobile-only { display: block; }
@@ -83,22 +86,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .fpctabar__icon--img img {
-    max-height: 1.2em;
+    max-height: 1.25em;
     width: auto;
     vertical-align: middle;
 }
 
 .fpctabar__icon--class {
-    font-size: 1em;
+    font-size: 1.1em;
     line-height: 1;
 }
 
 .fpctabar__bar .fpctabar__icon,
 .fpctabar__btn .fpctabar__icon {
-    margin-right: 6px;
+    margin-right: 8px;
 }
 
 .fpctabar--icon-only .fpctabar__bar .fpctabar__icon,
@@ -106,22 +110,59 @@
     margin-right: 0;
 }
 
-.fpctabar a .fpctabar__icon {
-    margin-right: 6px;
+/* Link nel pannello: icone Dashicons proporzionate e allineate alla prima riga */
+.fpctabar__panel a .fpctabar__icon {
+    margin-right: 0;
+    width: 1.75rem;
+    min-height: 1.5rem;
+    align-self: flex-start;
+    margin-top: 0.12em;
+}
+
+.fpctabar__panel a .fpctabar__icon--class {
+    font-size: 1.25rem;
+}
+
+.fpctabar__panel a .fpctabar__icon--img img {
+    max-height: 1.35rem;
+}
+
+/* Testo link (multi-riga) */
+.fpctabar__link-label {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-align: left;
+    hyphens: auto;
+    word-break: break-word;
 }
 
 .fpctabar a {
     color: var(--fpctabar-text);
     text-decoration: none;
-    letter-spacing: 1px;
-    font-size: var(--fpctabar-font-size-link, 15px);
-    transition: opacity 0.2s;
-    display: inline-flex;
-    align-items: center;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.fpctabar a:hover {
-    opacity: 0.7;
+.fpctabar__panel a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem 0.75rem;
+    text-align: left;
+    letter-spacing: 0.01em;
+    font-size: var(--fpctabar-font-size-link, 15px);
+    border-radius: 10px;
+}
+
+.fpctabar__panel a:hover,
+.fpctabar__panel a:focus-visible {
+    outline: none;
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.fpctabar__panel a:focus-visible {
+    box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 35%, transparent);
 }
 
 /* ========================================================
@@ -137,21 +178,22 @@
 
 .fpctabar--fullwidth .fpctabar__bar {
     background: var(--fpctabar-bg);
-    border-top: 1px solid var(--fpctabar-border);
+    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 70%, transparent);
     text-align: center;
-    padding: 18px 0;
+    padding: 18px 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     user-select: none;
+    font-family: inherit;
 }
 
 .fpctabar--fullwidth .fpctabar__label {
     color: var(--fpctabar-text);
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.04em;
     font-size: var(--fpctabar-font-size-label, 18px);
     text-transform: uppercase;
 }
@@ -173,11 +215,12 @@
     left: 0;
     width: 100%;
     background: var(--fpctabar-panel-bg);
-    border-top: 1px solid var(--fpctabar-border);
-    padding: 25px 0;
+    border-top: 1px solid color-mix(in srgb, var(--fpctabar-border) 55%, transparent);
+    padding: 20px 18px 24px;
     text-align: center;
     transition: bottom 0.3s ease;
     z-index: -1;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.08);
 }
 
 .fpctabar--fullwidth.fpctabar--open .fpctabar__panel {
@@ -185,8 +228,17 @@
 }
 
 .fpctabar--fullwidth .fpctabar__panel a {
-    display: inline-block;
-    margin: 0 25px;
+    display: inline-flex;
+    max-width: 100%;
+    margin: 0 12px 8px;
+    padding: 10px 14px;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.fpctabar--fullwidth .fpctabar__panel a .fpctabar__link-label {
+    text-align: center;
 }
 
 /* Body padding for full-width */
@@ -202,6 +254,7 @@ body.fpctabar-body--fullwidth {
     position: fixed;
     bottom: 24px;
     z-index: var(--fpctabar-z, 99999);
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.12));
 }
 
 .fpctabar--left {
@@ -215,38 +268,51 @@ body.fpctabar-body--fullwidth {
 .fpctabar__btn {
     background: var(--fpctabar-bg);
     color: var(--fpctabar-text);
-    border: 1px solid var(--fpctabar-border);
+    border: 1px solid color-mix(in srgb, var(--fpctabar-border) 65%, transparent);
     padding: var(--fpctabar-btn-pad-y, 14px) var(--fpctabar-btn-pad-x, 28px);
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: inherit;
     font-size: var(--fpctabar-font-size-label, 15px);
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.2s;
-    border-radius: var(--fpctabar-btn-radius, 4px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    border-radius: var(--fpctabar-btn-radius, 10px);
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .fpctabar__btn:hover {
-    opacity: 0.85;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    opacity: 1;
+}
+
+.fpctabar__btn:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--fpctabar-text) 45%, transparent);
+    outline-offset: 3px;
 }
 
 .fpctabar--button .fpctabar__panel {
     position: absolute;
-    bottom: calc(100% + 12px);
+    bottom: calc(100% + 14px);
     background: var(--fpctabar-panel-bg);
-    border: 1px solid var(--fpctabar-border);
-    border-radius: var(--fpctabar-btn-radius, 6px);
-    padding: 16px 20px;
+    color: var(--fpctabar-text);
+    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    border-radius: max(12px, var(--fpctabar-btn-radius, 12px));
+    padding: 10px 8px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-width: 180px;
+    gap: 2px;
+    min-width: min(280px, calc(100vw - 48px));
+    max-width: min(320px, calc(100vw - 32px));
     opacity: 0;
     visibility: hidden;
-    transform: translateY(8px);
-    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+    transform: translateY(10px);
+    transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.14),
+        0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .fpctabar--left .fpctabar__panel {
@@ -264,10 +330,9 @@ body.fpctabar-body--fullwidth {
 }
 
 .fpctabar--button .fpctabar__panel a {
-    display: flex;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 14px;
+    margin: 0 4px;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
 }
 
 .fpctabar--button .fpctabar__panel a:last-child {
@@ -290,7 +355,7 @@ body.fpctabar-body--fullwidth {
 }
 
 .fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__icon--class {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .fpctabar--fullwidth.fpctabar--icon-only .fpctabar__bar {
@@ -307,13 +372,13 @@ body.fpctabar-body--fullwidth {
 
 @media (max-width: 600px) {
     .fpctabar--fullwidth .fpctabar__panel {
-        padding: 20px 16px;
+        padding: 18px 14px 22px;
     }
 
     .fpctabar--fullwidth .fpctabar__panel a {
-        display: block;
-        margin: 10px 0;
-        text-align: center;
+        display: flex;
+        margin: 6px auto;
+        max-width: 22rem;
     }
 
     .fpctabar--button {
@@ -334,6 +399,6 @@ body.fpctabar-body--fullwidth {
     }
 
     .fpctabar--button .fpctabar__panel {
-        min-width: 160px;
+        min-width: min(260px, calc(100vw - 32px));
     }
 }

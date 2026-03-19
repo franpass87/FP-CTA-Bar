@@ -2,6 +2,13 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.2] - 2026-03-19
+### Changed
+- Frontend: tipografia con stack di sistema (niente Playfair non caricata → fallback serif brutto)
+- Frontend: pannello link con ombre morbide, bordi e separatori derivati dal colore testo (`color-mix`), padding e larghezza minima migliori
+- Frontend: allineamento icone + etichette su più righe (wrapper `.fpctabar__link-label`, flex nel pannello)
+- Frontend: bottone floating con hover più curato (ombra, leggero sollevamento) e `drop-shadow` sul contenitore
+
 ## [1.3.1] - 2026-03-19
 ### Fixed
 - Inizializzazione frontend spostata su hook `wp` per valutare correttamente la visibilità (homepage/contesto) ed evitare falsi negativi

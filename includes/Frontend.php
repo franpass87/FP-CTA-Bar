@@ -418,7 +418,9 @@ class Frontend {
             $aria_label = $has_label
                 ? sprintf(/* translators: link purpose for screen readers */ __('Apri link: %s', 'fp-cta-bar'), $label)
                 : __('Apri link CTA', 'fp-cta-bar');
-            $inner = $icon . ($has_label ? esc_html($label) : '<span class="fpctabar__sr-only">' . esc_html__('Apri link', 'fp-cta-bar') . '</span>');
+            $inner = $icon . ($has_label
+                ? '<span class="fpctabar__link-label">' . esc_html($label) . '</span>'
+                : '<span class="fpctabar__sr-only">' . esc_html__('Apri link', 'fp-cta-bar') . '</span>');
             $html .= sprintf(
                 '<a href="%s" target="%s" rel="%s" aria-label="%s"%s>%s</a>',
                 esc_url($url),
