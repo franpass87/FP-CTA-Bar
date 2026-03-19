@@ -42,6 +42,7 @@
         $(document).on('change', '.fp-cta-bar-icon-select', function () {
             refreshRowIconPreview($(this).closest('.fp-cta-bar-link-row'));
         });
+        $(document).on('change', '.fp-cta-bar-main-icon-select', refreshMainIconPreview);
 
 
         // Remove link
@@ -107,6 +108,7 @@
             previewTimeout = setTimeout(updatePreview, 200);
         });
         updatePreview();
+        refreshMainIconPreview();
         $('#fp-cta-bar-links .fp-cta-bar-link-row').each(function () {
             refreshRowIconPreview($(this));
         });
@@ -140,6 +142,20 @@
             var $select = $row.find('.fp-cta-bar-icon-select').first();
             var value = ($select.val() || '').trim();
             var $preview = $row.find('.fpctabar-icon-preview > span').first();
+            if (!$preview.length) {
+                return;
+            }
+            if (value && value.indexOf('dashicons') !== -1) {
+                $preview.attr('class', value);
+                return;
+            }
+            $preview.attr('class', 'dashicons dashicons-minus');
+        }
+
+        function refreshMainIconPreview() {
+            var $select = $('.fp-cta-bar-main-icon-select').first();
+            var value = (($select.val() || '') + '').trim();
+            var $preview = $('.fpctabar-main-icon-preview > span').first();
             if (!$preview.length) {
                 return;
             }

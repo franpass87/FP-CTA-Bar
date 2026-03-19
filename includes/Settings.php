@@ -44,6 +44,8 @@ class Settings {
         $clean['main_label_it']  = isset($input['main_label_it']) ? sanitize_text_field($input['main_label_it']) : $defaults['main_label_it'];
         $clean['main_label_en']  = isset($input['main_label_en']) ? sanitize_text_field($input['main_label_en']) : $defaults['main_label_en'];
         $clean['main_icon']      = isset($input['main_icon']) ? $this->sanitize_icon($input['main_icon']) : '';
+        $clean['main_icon_only'] = !empty($input['main_icon_only']);
+        $clean['main_icon_circle'] = !empty($input['main_icon_circle']);
         $clean['bg_color']       = $this->sanitize_hex($input['bg_color'] ?? $defaults['bg_color']);
         $clean['text_color']     = $this->sanitize_hex($input['text_color'] ?? $defaults['text_color']);
         $clean['border_color']   = $this->sanitize_hex($input['border_color'] ?? $defaults['border_color']);

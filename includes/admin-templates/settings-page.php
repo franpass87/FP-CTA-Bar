@@ -57,6 +57,7 @@ $icon_options = [
     'dashicons dashicons-format-chat' => __('Chat', 'fp-cta-bar'),
     'dashicons dashicons-format-status' => __('Aggiornamento', 'fp-cta-bar'),
 ];
+$main_icon = (string) ($settings['main_icon'] ?? '');
 ?>
 <div class="wrap fpctabar-admin-page">
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
@@ -149,8 +150,47 @@ $icon_options = [
                     </div>
                     <div class="fpctabar-field" style="grid-column: 1 / -1;">
                         <label><?php esc_html_e('Icona principale', 'fp-cta-bar'); ?></label>
-                        <input type="text" name="<?php echo esc_attr($opt); ?>[main_icon]" value="<?php echo esc_attr($settings['main_icon'] ?? ''); ?>" placeholder="dashicons dashicons-calendar-alt oppure URL immagine">
-                        <span class="fpctabar-hint"><?php esc_html_e('Classe CSS (es. dashicons dashicons-calendar-alt) oppure URL immagine. Vuoto = nessuna icona.', 'fp-cta-bar'); ?></span>
+                        <div class="fpctabar-icon-picker">
+                            <select class="fp-cta-bar-main-icon-select" name="<?php echo esc_attr($opt); ?>[main_icon]">
+                                <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                                    <option value="<?php echo esc_attr($icon_value); ?>" <?php selected($main_icon, $icon_value); ?>>
+                                        <?php echo esc_html($icon_label); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                                <?php if ($main_icon !== '' && !array_key_exists($main_icon, $icon_options)) : ?>
+                                    <option value="<?php echo esc_attr($main_icon); ?>" selected>
+                                        <?php esc_html_e('Personalizzata salvata', 'fp-cta-bar'); ?>
+                                    </option>
+                                <?php endif; ?>
+                            </select>
+                            <span class="fpctabar-icon-preview fpctabar-main-icon-preview" aria-hidden="true">
+                                <span class="<?php echo esc_attr($main_icon !== '' ? $main_icon : 'dashicons dashicons-minus'); ?>"></span>
+                            </span>
+                        </div>
+                        <span class="fpctabar-hint"><?php esc_html_e('Seleziona un\'icona dal menu. Se vuoi nascondere il testo, attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="fpctabar-toggle-row">
+                        <div class="fpctabar-toggle-info">
+                            <strong><?php esc_html_e('Mostra solo icona', 'fp-cta-bar'); ?></strong>
+                            <span><?php esc_html_e('Nasconde il testo del bottone/barra principale e mostra solo l\'icona.', 'fp-cta-bar'); ?></span>
+                        </div>
+                        <label class="fpctabar-toggle">
+                            <input type="checkbox" name="<?php echo esc_attr($opt); ?>[main_icon_only]" value="1" <?php checked(!empty($settings['main_icon_only'])); ?>>
+                            <span class="fpctabar-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="fpctabar-toggle-row">
+                        <div class="fpctabar-toggle-info">
+                            <strong><?php esc_html_e('Bottone circolare (solo modalità bottone)', 'fp-cta-bar'); ?></strong>
+                            <span><?php esc_html_e('Quando "Mostra solo icona" è attivo, rende il bottone tondo in modalità left/right.', 'fp-cta-bar'); ?></span>
+                        </div>
+                        <label class="fpctabar-toggle">
+                            <input type="checkbox" name="<?php echo esc_attr($opt); ?>[main_icon_circle]" value="1" <?php checked(!empty($settings['main_icon_circle'])); ?>>
+                            <span class="fpctabar-toggle-slider"></span>
+                        </label>
                     </div>
                 </div>
             </div>

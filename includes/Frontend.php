@@ -254,6 +254,8 @@ class Frontend {
 
         $main_label = ($lang === 'en') ? $s['main_label_en'] : $s['main_label_it'];
         $main_icon = trim($s['main_icon'] ?? '');
+        $icon_only = !empty($s['main_icon_only']) && $main_icon !== '';
+        $icon_circle = !empty($s['main_icon_circle']);
 
         $links_html = $this->build_links_html($lang);
         if (empty($links_html)) {
@@ -301,10 +303,10 @@ class Frontend {
         );
 
         if ($mode === 'full-width') {
-            $this->render_fullwidth($main_label, $main_icon, $links_html, $css_vars, $device_class, $close_on_click, $data_attrs);
+            $this->render_fullwidth($main_label, $main_icon, $links_html, $css_vars, $device_class, $close_on_click, $data_attrs, $icon_only);
         } else {
             $position = ($mode === 'button-left') ? 'left' : 'right';
-            $this->render_button($main_label, $main_icon, $links_html, $css_vars, $position, $device_class, $close_on_click, $data_attrs);
+            $this->render_button($main_label, $main_icon, $links_html, $css_vars, $position, $device_class, $close_on_click, $data_attrs, $icon_only, $icon_circle);
         }
 
         $custom_css = trim($s['custom_css'] ?? '');
@@ -364,14 +366,19 @@ class Frontend {
         return $html;
     }
 
-    private function render_fullwidth($label, $main_icon, $links_html, $css_vars, $device_class = '', $close_on_link_click = true, $data_attrs = '') {
+    private function render_fullwidth($label, $main_icon, $links_html, $css_vars, $device_class = '', $close_on_link_click = true, $data_attrs = '', bool $icon_only = false) {
         $icon_html = $this->icon_html($main_icon);
+        $label = trim((string) $label);
+        $icon_only_class = $icon_only ? ' fpctabar--icon-only' : '';
+        $sr_label = $label !== '' ? $label : __('Apri menu CTA', 'fp-cta-bar');
         ?>
-        <div id="fpctabar" class="fpctabar fpctabar--fullwidth<?php echo esc_attr($device_class); ?>" style="<?php echo $css_vars; ?>" data-mode="fullwidth" data-close-on-link-click="<?php echo $close_on_link_click ? '1' : '0'; ?>" <?php echo $data_attrs; ?>>
+        <div id="fpctabar" class="fpctabar fpctabar--fullwidth<?php echo esc_attr($device_class . $icon_only_class); ?>" style="<?php echo $css_vars; ?>" data-mode="fullwidth" data-close-on-link-click="<?php echo $close_on_link_click ? '1' : '0'; ?>" <?php echo $data_attrs; ?>>
             <span class="fpctabar__sr-only" aria-live="polite" aria-atomic="true" id="fpctabar-announcer"></span>
-            <div class="fpctabar__bar" role="button" tabindex="0" aria-expanded="false" aria-controls="fpctabar-panel">
+            <div class="fpctabar__bar" role="button" tabindex="0" aria-expanded="false" aria-controls="fpctabar-panel" aria-label="<?php echo esc_attr($sr_label); ?>">
                 <?php echo $icon_html; ?>
-                <span class="fpctabar__label"><?php echo esc_html($label); ?></span>
+                <?php if (!$icon_only) : ?>
+                    <span class="fpctabar__label"><?php echo esc_html($label); ?></span>
+                <?php endif; ?>
                 <span class="fpctabar__arrow">&#9650;</span>
             </div>
             <div id="fpctabar-panel" class="fpctabar__panel" aria-hidden="true">
@@ -381,14 +388,20 @@ class Frontend {
         <?php
     }
 
-    private function render_button($label, $main_icon, $links_html, $css_vars, $position, $device_class = '', $close_on_link_click = true, $data_attrs = '') {
+    private function render_button($label, $main_icon, $links_html, $css_vars, $position, $device_class = '', $close_on_link_click = true, $data_attrs = '', bool $icon_only = false, bool $icon_circle = false) {
         $icon_html = $this->icon_html($main_icon);
+        $label = trim((string) $label);
+        $icon_only_class = $icon_only ? ' fpctabar--icon-only' : '';
+        $icon_circle_class = ($icon_only && $icon_circle) ? ' fpctabar--icon-circle' : '';
+        $sr_label = $label !== '' ? $label : __('Apri menu CTA', 'fp-cta-bar');
         ?>
-        <div id="fpctabar" class="fpctabar fpctabar--button fpctabar--<?php echo esc_attr($position); ?><?php echo esc_attr($device_class); ?>" style="<?php echo $css_vars; ?>" data-mode="button" data-close-on-link-click="<?php echo $close_on_link_click ? '1' : '0'; ?>" <?php echo $data_attrs; ?>>
+        <div id="fpctabar" class="fpctabar fpctabar--button fpctabar--<?php echo esc_attr($position); ?><?php echo esc_attr($device_class . $icon_only_class . $icon_circle_class); ?>" style="<?php echo $css_vars; ?>" data-mode="button" data-close-on-link-click="<?php echo $close_on_link_click ? '1' : '0'; ?>" <?php echo $data_attrs; ?>>
             <span class="fpctabar__sr-only" aria-live="polite" aria-atomic="true" id="fpctabar-announcer"></span>
-            <button class="fpctabar__btn" aria-expanded="false" aria-controls="fpctabar-panel">
+            <button class="fpctabar__btn" aria-expanded="false" aria-controls="fpctabar-panel" aria-label="<?php echo esc_attr($sr_label); ?>">
                 <?php echo $icon_html; ?>
-                <span class="fpctabar__label"><?php echo esc_html($label); ?></span>
+                <?php if (!$icon_only) : ?>
+                    <span class="fpctabar__label"><?php echo esc_html($label); ?></span>
+                <?php endif; ?>
             </button>
             <div id="fpctabar-panel" class="fpctabar__panel" aria-hidden="true">
                 <?php echo $links_html; ?>

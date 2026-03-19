@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.1.0] - 2026-03-19
+### Added
+- Nuova opzione "Mostra solo icona" per il bottone/barra principale (testo non obbligatorio)
+- Nuova opzione "Bottone circolare" in modalità bottone (left/right) quando è attiva la modalità solo icona
+
+### Changed
+- Icona principale ora selezionabile da menu con anteprima, senza dover scrivere classi manuali
+
 ## [1.0.7] - 2026-03-19
 ### Changed
 - Aggiunte molte nuove icone Dashicons nel selettore "Icona" dei link (telefono, smartphone, casa, pagamento, warning, chat, video e altre)

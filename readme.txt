@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.0.7
+Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,11 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.1.0 = (2026-03-19)
+* Added: Opzione "Mostra solo icona" per bottone/barra principale (testo non obbligatorio)
+* Added: Opzione "Bottone circolare" in modalità bottone quando è attiva la modalità solo icona
+* Changed: Icona principale selezionabile da menu con anteprima
 
 = 1.0.7 = (2026-03-19)
 * Changed: Aggiunte molte nuove icone Dashicons nel selettore "Icona" dei link

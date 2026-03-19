@@ -49,6 +49,8 @@ class Plugin {
             'main_label_it'          => 'PRENOTA',
             'main_label_en'          => 'BOOK NOW',
             'main_icon'              => '',
+            'main_icon_only'         => false,
+            'main_icon_circle'       => false,
             'bg_color'               => '#000000',
             'text_color'             => '#ffffff',
             'border_color'           => '#ffffff',
