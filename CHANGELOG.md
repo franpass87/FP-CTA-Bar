@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.1] - 2026-03-19
+### Fixed
+- Inizializzazione frontend spostata su hook `wp` per valutare correttamente la visibilità (homepage/contesto) ed evitare falsi negativi
+- Aggiunto fallback di rendering su `wp_body_open` (con guard anti-duplicazione) oltre a `wp_footer` per compatibilità con temi che gestiscono diversamente il footer
+
+### Changed
+- Requisito minimo PHP aggiornato a 8.0
+
 ## [1.3.0] - 2026-03-19
 ### Added
 - Nuova impostazione "Grandezza bottone" (Compatto / Medio / Grande)

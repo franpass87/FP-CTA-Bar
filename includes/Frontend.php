@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace FP\CtaBar;
 
@@ -6,6 +7,8 @@ class Frontend {
 
     private static $instance = null;
     private $settings = [];
+    private bool $bootstrapped = false;
+    private bool $rendered = false;
 
     public static function get_instance() {
         if (null === self::$instance) {
@@ -16,13 +19,25 @@ class Frontend {
 
     private function __construct() {
         $this->settings = Plugin::get_settings();
+        add_action('wp', [$this, 'maybe_bootstrap']);
+    }
+
+    /**
+     * Attiva il rendering automatico della barra quando il contesto WP e' disponibile.
+     *
+     * @return void
+     */
+    public function maybe_bootstrap(): void {
+        if ($this->bootstrapped) {
+            return;
+        }
+        $this->bootstrapped = true;
 
         if (empty($this->settings['links'])) {
             return;
         }
 
-        $use_shortcode = !empty($this->settings['use_shortcode']);
-        if ($use_shortcode) {
+        if (!empty($this->settings['use_shortcode'])) {
             return;
         }
 
@@ -35,7 +50,21 @@ class Frontend {
         }
 
         add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
-        add_action('wp_footer', [$this, 'render']);
+        add_action('wp_body_open', [$this, 'render_once']);
+        add_action('wp_footer', [$this, 'render_once']);
+    }
+
+    /**
+     * Evita rendering duplicato se wp_body_open e wp_footer sono entrambi presenti.
+     *
+     * @return void
+     */
+    public function render_once(): void {
+        if ($this->rendered) {
+            return;
+        }
+        $this->rendered = true;
+        $this->render();
     }
 
     private function cookie_consent_blocked() {
@@ -111,7 +140,10 @@ class Frontend {
             return true;
         }
 
-        if (is_front_page() && in_array('home', $visibility, true)) {
+        if ((is_front_page() || is_home()) && in_array('home', $visibility, true)) {
+            return true;
+        }
+        if (in_array('home', $visibility, true) && $this->is_home_request()) {
             return true;
         }
         if (is_singular('post') && in_array('single', $visibility, true)) {
@@ -131,6 +163,26 @@ class Frontend {
         }
 
         return false;
+    }
+
+    /**
+     * Fallback per homepage in contesti tema dove i conditional tag non riflettono la root URL.
+     *
+     * @return bool
+     */
+    private function is_home_request(): bool {
+        $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+        if ($uri === '') {
+            return false;
+        }
+
+        $path = (string) parse_url($uri, PHP_URL_PATH);
+        if ($path === '' || $path === '/') {
+            return true;
+        }
+
+        // Alcuni setup locale espongono querystring sulla root (es. '/?foo=bar').
+        return str_starts_with($uri, '/?');
     }
 
     /**

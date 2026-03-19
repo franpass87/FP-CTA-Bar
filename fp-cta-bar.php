@@ -3,7 +3,7 @@
  * Plugin Name: FP CTA Bar
  * Plugin URI: https://francescopasseri.com
  * Description: Barra/bottone CTA configurabile (full-width, bottom-left, bottom-right) con link dinamici ITA/ENG
- * Version: 1.3.0
+ * Version: 1.3.1
  * GitHub Plugin URI: franpass87/FP-CTA-Bar
  * Author: Francesco Passeri
  * Author URI: https://francescopasseri.com
@@ -12,14 +12,14 @@
  * Text Domain: fp-cta-bar
  * Domain Path: /languages
  * Requires at least: 6.0
- * Requires PHP: 7.4
+ * Requires PHP: 8.0
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-define('FP_CTA_BAR_VERSION', '1.3.0');
+define('FP_CTA_BAR_VERSION', '1.3.1');
 define('FP_CTA_BAR_DIR', dirname(__FILE__) . '/');
 define('FP_CTA_BAR_URL', plugin_dir_url(__FILE__));
 define('FP_CTA_BAR_FILE', __FILE__);
