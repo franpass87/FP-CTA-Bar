@@ -22,6 +22,20 @@ if (!empty($settings['links'])) {
     }
 }
 $bar_will_show = !$use_shortcode && $valid_links > 0;
+$icon_options = [
+    ''                                => __('Nessuna', 'fp-cta-bar'),
+    'dashicons dashicons-calendar'    => __('Calendario', 'fp-cta-bar'),
+    'dashicons dashicons-phone'       => __('Telefono', 'fp-cta-bar'),
+    'dashicons dashicons-email'       => __('Email', 'fp-cta-bar'),
+    'dashicons dashicons-location'    => __('Posizione', 'fp-cta-bar'),
+    'dashicons dashicons-admin-site'  => __('Sito', 'fp-cta-bar'),
+    'dashicons dashicons-tickets-alt' => __('Ticket', 'fp-cta-bar'),
+    'dashicons dashicons-cart'        => __('Carrello', 'fp-cta-bar'),
+    'dashicons dashicons-megaphone'   => __('Megafono', 'fp-cta-bar'),
+    'dashicons dashicons-star-filled' => __('Stella', 'fp-cta-bar'),
+    'dashicons dashicons-heart'       => __('Cuore', 'fp-cta-bar'),
+    'dashicons dashicons-clock'       => __('Orologio', 'fp-cta-bar'),
+];
 ?>
 <div class="wrap fpctabar-admin-page">
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
@@ -355,34 +369,51 @@ $bar_will_show = !$use_shortcode && $valid_links > 0;
                             <div class="fpctabar-link-row fp-cta-bar-link-row" data-index="<?php echo (int) $i; ?>">
                                 <div class="fpctabar-link-handle fp-cta-bar-link-handle" title="<?php esc_attr_e('Trascina per riordinare', 'fp-cta-bar'); ?>">&#9776;</div>
                                 <div class="fpctabar-link-fields fp-cta-bar-link-fields">
-                                    <div class="fpctabar-link-field fpctabar-link-field--icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
+                                    <div class="fpctabar-link-field fpctabar-link-field--icon fpctabar-link-field--cell-icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
                                         <label><?php esc_html_e('Icona', 'fp-cta-bar'); ?></label>
-                                        <input type="text" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][icon]" value="<?php echo esc_attr($link['icon'] ?? ''); ?>" placeholder="dashicons dashicons-...">
+                                        <?php $saved_icon = (string) ($link['icon'] ?? ''); ?>
+                                        <div class="fpctabar-icon-picker">
+                                            <select class="fp-cta-bar-icon-select" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][icon]">
+                                                <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                                                    <option value="<?php echo esc_attr($icon_value); ?>" <?php selected($saved_icon, $icon_value); ?>>
+                                                        <?php echo esc_html($icon_label); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                                <?php if ($saved_icon !== '' && !array_key_exists($saved_icon, $icon_options)) : ?>
+                                                    <option value="<?php echo esc_attr($saved_icon); ?>" selected>
+                                                        <?php esc_html_e('Personalizzata salvata', 'fp-cta-bar'); ?>
+                                                    </option>
+                                                <?php endif; ?>
+                                            </select>
+                                            <span class="fpctabar-icon-preview" aria-hidden="true">
+                                                <span class="<?php echo esc_attr($saved_icon !== '' ? $saved_icon : 'dashicons dashicons-minus'); ?>"></span>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="fpctabar-link-field fp-cta-bar-link-field">
+                                    <div class="fpctabar-link-field fpctabar-link-field--cell-label-it fp-cta-bar-link-field">
                                         <label><?php esc_html_e('Label ITA', 'fp-cta-bar'); ?></label>
                                         <input type="text" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][label_it]" value="<?php echo esc_attr($link['label_it']); ?>">
                                     </div>
-                                    <div class="fpctabar-link-field fp-cta-bar-link-field">
+                                    <div class="fpctabar-link-field fpctabar-link-field--cell-label-en fp-cta-bar-link-field">
                                         <label><?php esc_html_e('Label ENG', 'fp-cta-bar'); ?></label>
                                         <input type="text" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][label_en]" value="<?php echo esc_attr($link['label_en']); ?>">
                                     </div>
-                                    <div class="fpctabar-link-field fp-cta-bar-link-field">
-                                        <label><?php esc_html_e('URL ITA', 'fp-cta-bar'); ?></label>
-                                        <input type="url" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][url_it]" value="<?php echo esc_attr($link['url_it']); ?>">
-                                    </div>
-                                    <div class="fpctabar-link-field fp-cta-bar-link-field">
-                                        <label><?php esc_html_e('URL ENG', 'fp-cta-bar'); ?></label>
-                                        <input type="url" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][url_en]" value="<?php echo esc_attr($link['url_en']); ?>">
-                                    </div>
-                                    <div class="fpctabar-link-field fpctabar-link-field--small fp-cta-bar-link-field fp-cta-bar-link-field--small">
+                                    <div class="fpctabar-link-field fpctabar-link-field--small fpctabar-link-field--cell-target fp-cta-bar-link-field fp-cta-bar-link-field--small">
                                         <label><?php esc_html_e('Target', 'fp-cta-bar'); ?></label>
                                         <select name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][target]">
                                             <option value="_blank" <?php selected($link['target'], '_blank'); ?>>_blank</option>
                                             <option value="_self" <?php selected($link['target'], '_self'); ?>>_self</option>
                                         </select>
                                     </div>
-                                    <div class="fpctabar-link-field fpctabar-link-field--tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
+                                    <div class="fpctabar-link-field fpctabar-link-field--cell-url-it fp-cta-bar-link-field">
+                                        <label><?php esc_html_e('URL ITA', 'fp-cta-bar'); ?></label>
+                                        <input type="url" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][url_it]" value="<?php echo esc_attr($link['url_it']); ?>">
+                                    </div>
+                                    <div class="fpctabar-link-field fpctabar-link-field--cell-url-en fp-cta-bar-link-field">
+                                        <label><?php esc_html_e('URL ENG', 'fp-cta-bar'); ?></label>
+                                        <input type="url" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][url_en]" value="<?php echo esc_attr($link['url_en']); ?>">
+                                    </div>
+                                    <div class="fpctabar-link-field fpctabar-link-field--tracking fpctabar-link-field--cell-tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
                                         <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--fpdms-info);">
                                             <input type="checkbox" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][track]" value="1" <?php checked(!empty($link['track'])); ?>>
                                             &#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>
@@ -410,34 +441,43 @@ $bar_will_show = !$use_shortcode && $valid_links > 0;
                     <div class="fpctabar-link-row fp-cta-bar-link-row" data-index="{{INDEX}}">
                         <div class="fpctabar-link-handle fp-cta-bar-link-handle" title="<?php esc_attr_e('Trascina per riordinare', 'fp-cta-bar'); ?>">&#9776;</div>
                         <div class="fpctabar-link-fields fp-cta-bar-link-fields">
-                            <div class="fpctabar-link-field fpctabar-link-field--icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
+                            <div class="fpctabar-link-field fpctabar-link-field--icon fpctabar-link-field--cell-icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
                                 <label><?php esc_html_e('Icona', 'fp-cta-bar'); ?></label>
-                                <input type="text" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][icon]" value="" placeholder="dashicons dashicons-...">
+                                <div class="fpctabar-icon-picker">
+                                    <select class="fp-cta-bar-icon-select" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][icon]">
+                                        <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
+                                            <option value="<?php echo esc_attr($icon_value); ?>"><?php echo esc_html($icon_label); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <span class="fpctabar-icon-preview" aria-hidden="true">
+                                        <span class="dashicons dashicons-minus"></span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="fpctabar-link-field fp-cta-bar-link-field">
+                            <div class="fpctabar-link-field fpctabar-link-field--cell-label-it fp-cta-bar-link-field">
                                 <label><?php esc_html_e('Label ITA', 'fp-cta-bar'); ?></label>
                                 <input type="text" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][label_it]" value="">
                             </div>
-                            <div class="fpctabar-link-field fp-cta-bar-link-field">
+                            <div class="fpctabar-link-field fpctabar-link-field--cell-label-en fp-cta-bar-link-field">
                                 <label><?php esc_html_e('Label ENG', 'fp-cta-bar'); ?></label>
                                 <input type="text" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][label_en]" value="">
                             </div>
-                            <div class="fpctabar-link-field fp-cta-bar-link-field">
-                                <label><?php esc_html_e('URL ITA', 'fp-cta-bar'); ?></label>
-                                <input type="url" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][url_it]" value="">
-                            </div>
-                            <div class="fpctabar-link-field fp-cta-bar-link-field">
-                                <label><?php esc_html_e('URL ENG', 'fp-cta-bar'); ?></label>
-                                <input type="url" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][url_en]" value="">
-                            </div>
-                            <div class="fpctabar-link-field fpctabar-link-field--small fp-cta-bar-link-field fp-cta-bar-link-field--small">
+                            <div class="fpctabar-link-field fpctabar-link-field--small fpctabar-link-field--cell-target fp-cta-bar-link-field fp-cta-bar-link-field--small">
                                 <label><?php esc_html_e('Target', 'fp-cta-bar'); ?></label>
                                 <select name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][target]">
                                     <option value="_blank">_blank</option>
                                     <option value="_self">_self</option>
                                 </select>
                             </div>
-                            <div class="fpctabar-link-field fpctabar-link-field--tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
+                            <div class="fpctabar-link-field fpctabar-link-field--cell-url-it fp-cta-bar-link-field">
+                                <label><?php esc_html_e('URL ITA', 'fp-cta-bar'); ?></label>
+                                <input type="url" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][url_it]" value="">
+                            </div>
+                            <div class="fpctabar-link-field fpctabar-link-field--cell-url-en fp-cta-bar-link-field">
+                                <label><?php esc_html_e('URL ENG', 'fp-cta-bar'); ?></label>
+                                <input type="url" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][url_en]" value="">
+                            </div>
+                            <div class="fpctabar-link-field fpctabar-link-field--tracking fpctabar-link-field--cell-tracking fp-cta-bar-link-field fp-cta-bar-link-field--tracking">
                                 <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--fpdms-info);">
                                     <input type="checkbox" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][track]" value="1" class="fp-cta-bar-track-toggle">
                                     &#128202; <?php esc_html_e('Traccia click', 'fp-cta-bar'); ?>

@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.0.5-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.0.6-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---

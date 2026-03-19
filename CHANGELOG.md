@@ -2,6 +2,11 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.0.6] - 2026-03-19
+### Changed
+- Selettore icona nei link: ora scegli l'icona da menu (con anteprima) senza inserire classi manuali
+- Layout campi link riorganizzato in griglia per allineare meglio icona, label, URL, target e tracking
+
 ## [1.0.5] - 2026-03-19
 ### Changed
 - Notice admin quando nessun link configurato: chiarisce che la barra non appare senza almeno un link (URL + etichetta)
