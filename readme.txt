@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -41,12 +41,15 @@ FP CTA Bar aggiunge una barra fissa (full-width o bottone in basso a sinistra/de
 == Frequently Asked Questions ==
 
 = La barra non si vede =
-Verifica che "Solo shortcode" sia disattivato se vuoi la barra globale, oppure inserisci lo shortcode `[fp_cta_bar]` o il blocco "FP CTA Bar" dove desideri. Controlla anche "Mostra su" e la schedulazione (date inizio/fine).
+Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la barra non viene mai mostrata. Verifica anche: "Solo shortcode" disattivato per la barra globale; "Mostra su" include Home se vuoi vederla in homepage; schedulazione (date inizio/fine); dispositivo (Tutti/mobile/desktop).
 
 = Come tracciare i click? =
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.0.5 = (2026-03-19)
+* Changed: Notice e status bar quando nessun link configurato — guida l'utente ad aggiungere link
 
 = 1.0.4 = (2026-03-19)
 * Fixed: vendor incluso nel repo — in produzione (fp-git-updater) il plugin non caricava senza vendor

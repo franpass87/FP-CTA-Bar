@@ -2,6 +2,11 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.0.5] - 2026-03-19
+### Changed
+- Notice admin quando nessun link configurato: chiarisce che la barra non appare senza almeno un link (URL + etichetta)
+- Status bar: pill "Barra visibile" / "Aggiungi link per attivare" e conteggio link validi
+
 ## [1.0.4] - 2026-03-19
 ### Fixed
 - vendor/ incluso nel repo: in produzione (fp-git-updater) il plugin non aveva vendor e terminava senza caricare Admin/menu

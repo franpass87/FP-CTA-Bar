@@ -10,8 +10,27 @@ $opt      = \FP\CtaBar\Plugin::OPTION_KEY;
 
 $use_shortcode = !empty($settings['use_shortcode']);
 $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabled']) || !empty($settings['meta_enabled']);
+
+$valid_links = 0;
+if (!empty($settings['links'])) {
+    foreach ($settings['links'] as $link) {
+        $url   = !empty($link['url_it']) || !empty($link['url_en']);
+        $label = !empty($link['label_it']) || !empty($link['label_en']);
+        if ($url && $label) {
+            $valid_links++;
+        }
+    }
+}
+$bar_will_show = !$use_shortcode && $valid_links > 0;
 ?>
 <div class="wrap fpctabar-admin-page">
+    <?php if (!$use_shortcode && $valid_links === 0) : ?>
+        <div class="notice notice-warning" style="margin: 15px 0 20px;">
+            <p><strong><?php esc_html_e('La barra non è visibile sul sito.', 'fp-cta-bar'); ?></strong></p>
+            <p><?php esc_html_e('Aggiungi almeno un link (con URL e etichetta) nella sezione "Link" qui sotto. Senza link la barra non viene mostrata.', 'fp-cta-bar'); ?></p>
+        </div>
+    <?php endif; ?>
+
     <!-- Page Header -->
     <div class="fpctabar-page-header">
         <div class="fpctabar-page-header-content">
@@ -23,9 +42,13 @@ $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabl
 
     <!-- Status Bar -->
     <div class="fpctabar-status-bar">
-        <span class="fpctabar-status-pill <?php echo $use_shortcode ? 'is-missing' : 'is-active'; ?>">
+        <span class="fpctabar-status-pill <?php echo $bar_will_show ? 'is-active' : 'is-missing'; ?>">
             <span class="dot"></span>
-            <?php echo $use_shortcode ? esc_html__('Solo shortcode', 'fp-cta-bar') : esc_html__('Barra globale attiva', 'fp-cta-bar'); ?>
+            <?php echo $bar_will_show ? esc_html__('Barra visibile sul sito', 'fp-cta-bar') : ($use_shortcode ? esc_html__('Solo shortcode', 'fp-cta-bar') : esc_html__('Aggiungi link per attivare', 'fp-cta-bar')); ?>
+        </span>
+        <span class="fpctabar-status-pill <?php echo $valid_links > 0 ? 'is-active' : 'is-missing'; ?>">
+            <span class="dot"></span>
+            <?php echo esc_html(sprintf(_n('%d link configurato', '%d link configurati', $valid_links, 'fp-cta-bar'), $valid_links)); ?>
         </span>
         <span class="fpctabar-status-pill <?php echo $has_tracking ? 'is-active' : 'is-missing'; ?>">
             <span class="dot"></span>
@@ -66,30 +89,6 @@ $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabl
                         </label>
                     <?php endforeach; ?>
                 </fieldset>
-            </div>
-        </div>
-
-        <!-- Card: Schedulazione -->
-        <div class="fpctabar-card">
-            <div class="fpctabar-card-header">
-                <div class="fpctabar-card-header-left">
-                    <span class="dashicons dashicons-calendar-alt"></span>
-                    <h2><?php esc_html_e('Schedulazione', 'fp-cta-bar'); ?></h2>
-                </div>
-            </div>
-            <div class="fpctabar-card-body">
-                <div class="fpctabar-fields-grid">
-                    <div class="fpctabar-field">
-                        <label for="fp-cta-bar-schedule-start"><?php esc_html_e('Mostra dal', 'fp-cta-bar'); ?></label>
-                        <input type="date" id="fp-cta-bar-schedule-start" name="<?php echo esc_attr($opt); ?>[schedule_start]" value="<?php echo esc_attr($settings['schedule_start'] ?? ''); ?>">
-                        <span class="fpctabar-hint"><?php esc_html_e('Data inizio (Y-m-d). Vuoto = sempre visibile.', 'fp-cta-bar'); ?></span>
-                    </div>
-                    <div class="fpctabar-field">
-                        <label for="fp-cta-bar-schedule-end"><?php esc_html_e('Mostra al', 'fp-cta-bar'); ?></label>
-                        <input type="date" id="fp-cta-bar-schedule-end" name="<?php echo esc_attr($opt); ?>[schedule_end]" value="<?php echo esc_attr($settings['schedule_end'] ?? ''); ?>">
-                        <span class="fpctabar-hint"><?php esc_html_e('Data fine (Y-m-d). Vuoto = nessun limite.', 'fp-cta-bar'); ?></span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -231,31 +230,6 @@ $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabl
                             <?php echo esc_html($l); ?>
                         </label>
                     <?php endforeach; ?>
-                </div>
-
-                <p class="description" style="margin-top: 20px; margin-bottom: 8px;"><?php esc_html_e('Visibilità avanzata (opzionale)', 'fp-cta-bar'); ?></p>
-                <div class="fpctabar-fields-grid" style="margin-top: 8px;">
-                    <div class="fpctabar-field">
-                        <label><?php esc_html_e('Solo su questi post type', 'fp-cta-bar'); ?></label>
-                        <div style="display: flex; flex-wrap: wrap; gap: 8px 16px;">
-                            <?php
-                            $pt_vis = $settings['post_type_visibility'] ?? [];
-                            foreach (get_post_types(['public' => true], 'objects') as $pt) :
-                                $slug = $pt->name;
-                            ?>
-                                <label style="display: flex; align-items: center; gap: 4px;">
-                                    <input type="checkbox" name="<?php echo esc_attr($opt); ?>[post_type_visibility][]" value="<?php echo esc_attr($slug); ?>" <?php checked(in_array($slug, $pt_vis, true)); ?>>
-                                    <?php echo esc_html($pt->label); ?>
-                                </label>
-                            <?php endforeach; ?>
-                        </div>
-                        <span class="fpctabar-hint"><?php esc_html_e('Vuoto = tutti i tipi consentiti dalla visibilità sopra.', 'fp-cta-bar'); ?></span>
-                    </div>
-                    <div class="fpctabar-field">
-                        <label for="fp-cta-bar-term-visibility"><?php esc_html_e('Solo per questi term ID', 'fp-cta-bar'); ?></label>
-                        <input type="text" id="fp-cta-bar-term-visibility" name="<?php echo esc_attr($opt); ?>[term_visibility_raw]" value="<?php echo esc_attr(is_array($settings['term_visibility'] ?? null) ? implode(', ', array_map('absint', $settings['term_visibility'])) : ''); ?>" placeholder="es. 1, 5, 12">
-                        <span class="fpctabar-hint"><?php esc_html_e('ID termini separati da virgola. Solo su singoli post che hanno almeno uno di questi termini. Vuoto = nessun filtro.', 'fp-cta-bar'); ?></span>
-                    </div>
                 </div>
 
                 <div style="margin-top: 24px;">
@@ -526,13 +500,6 @@ $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabl
                 </div>
             </div>
             <div class="fpctabar-card-body">
-                <p class="fpctabar-preview-lang-row" style="margin-bottom: 12px;">
-                    <label for="fp-cta-bar-preview-lang"><?php esc_html_e('Anteprima in:', 'fp-cta-bar'); ?></label>
-                    <select id="fp-cta-bar-preview-lang" class="fpctabar-select">
-                        <option value="it">ITA</option>
-                        <option value="en">ENG</option>
-                    </select>
-                </p>
                 <div id="fp-cta-bar-preview" class="fpctabar-preview-wrap">
                     <div class="fpctabar fpctabar--preview fpctabar--fullwidth" id="fp-cta-bar-preview-box">
                         <div class="fpctabar__bar">
@@ -540,7 +507,7 @@ $has_tracking  = !empty($settings['ga4_enabled']) || !empty($settings['gtm_enabl
                             <span class="fpctabar__arrow">&#9650;</span>
                         </div>
                         <div class="fpctabar__panel fpctabar--open">
-                            <a href="#" id="fp-cta-bar-preview-link"><?php echo esc_html($settings['links'][0]['label_it'] ?? 'LINK'); ?></a>
+                            <a href="#"><?php echo esc_html($settings['links'][0]['label_it'] ?? 'LINK'); ?></a>
                         </div>
                     </div>
                 </div>
