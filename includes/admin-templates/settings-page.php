@@ -58,6 +58,7 @@ $icon_options = [
     'dashicons dashicons-format-status' => __('Aggiornamento', 'fp-cta-bar'),
 ];
 $main_icon = (string) ($settings['main_icon'] ?? '');
+$main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] : __('Personalizzata salvata', 'fp-cta-bar');
 ?>
 <div class="wrap fpctabar-admin-page">
     <?php if (!$use_shortcode && $valid_links === 0) : ?>
@@ -150,22 +151,21 @@ $main_icon = (string) ($settings['main_icon'] ?? '');
                     </div>
                     <div class="fpctabar-field" style="grid-column: 1 / -1;">
                         <label><?php esc_html_e('Icona principale', 'fp-cta-bar'); ?></label>
-                        <div class="fpctabar-icon-picker">
-                            <select class="fp-cta-bar-main-icon-select" name="<?php echo esc_attr($opt); ?>[main_icon]">
+                        <div class="fpctabar-icon-picker fp-cta-bar-icon-picker">
+                            <input type="hidden" class="fp-cta-bar-icon-input" name="<?php echo esc_attr($opt); ?>[main_icon]" value="<?php echo esc_attr($main_icon); ?>">
+                            <button type="button" class="fpctabar-btn fpctabar-btn-secondary fp-cta-bar-icon-trigger" aria-expanded="false">
+                                <span class="fp-cta-bar-icon-trigger-icon <?php echo esc_attr($main_icon !== '' ? $main_icon : 'dashicons dashicons-minus'); ?>" aria-hidden="true"></span>
+                                <span class="fp-cta-bar-icon-trigger-label"><?php echo esc_html($main_icon_label); ?></span>
+                                <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+                            </button>
+                            <div class="fp-cta-bar-icon-grid" hidden>
                                 <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
-                                    <option value="<?php echo esc_attr($icon_value); ?>" <?php selected($main_icon, $icon_value); ?>>
-                                        <?php echo esc_html($icon_label); ?>
-                                    </option>
+                                    <button type="button" class="fp-cta-bar-icon-option<?php echo $main_icon === $icon_value ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
+                                        <span class="<?php echo esc_attr($icon_value !== '' ? $icon_value : 'dashicons dashicons-minus'); ?>" aria-hidden="true"></span>
+                                        <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>
+                                    </button>
                                 <?php endforeach; ?>
-                                <?php if ($main_icon !== '' && !array_key_exists($main_icon, $icon_options)) : ?>
-                                    <option value="<?php echo esc_attr($main_icon); ?>" selected>
-                                        <?php esc_html_e('Personalizzata salvata', 'fp-cta-bar'); ?>
-                                    </option>
-                                <?php endif; ?>
-                            </select>
-                            <span class="fpctabar-icon-preview fpctabar-main-icon-preview" aria-hidden="true">
-                                <span class="<?php echo esc_attr($main_icon !== '' ? $main_icon : 'dashicons dashicons-minus'); ?>"></span>
-                            </span>
+                            </div>
                         </div>
                         <span class="fpctabar-hint"><?php esc_html_e('Seleziona un\'icona dal menu. Se vuoi nascondere il testo, attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
                     </div>
@@ -433,22 +433,22 @@ $main_icon = (string) ($settings['main_icon'] ?? '');
                                     <div class="fpctabar-link-field fpctabar-link-field--icon fpctabar-link-field--cell-icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
                                         <label><?php esc_html_e('Icona', 'fp-cta-bar'); ?></label>
                                         <?php $saved_icon = (string) ($link['icon'] ?? ''); ?>
-                                        <div class="fpctabar-icon-picker">
-                                            <select class="fp-cta-bar-icon-select" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][icon]">
+                                        <?php $saved_icon_label = isset($icon_options[$saved_icon]) ? $icon_options[$saved_icon] : __('Personalizzata salvata', 'fp-cta-bar'); ?>
+                                        <div class="fpctabar-icon-picker fp-cta-bar-icon-picker">
+                                            <input type="hidden" class="fp-cta-bar-icon-input" name="<?php echo esc_attr($opt); ?>[links][<?php echo (int) $i; ?>][icon]" value="<?php echo esc_attr($saved_icon); ?>">
+                                            <button type="button" class="fpctabar-btn fpctabar-btn-secondary fp-cta-bar-icon-trigger" aria-expanded="false">
+                                                <span class="fp-cta-bar-icon-trigger-icon <?php echo esc_attr($saved_icon !== '' ? $saved_icon : 'dashicons dashicons-minus'); ?>" aria-hidden="true"></span>
+                                                <span class="fp-cta-bar-icon-trigger-label"><?php echo esc_html($saved_icon_label); ?></span>
+                                                <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+                                            </button>
+                                            <div class="fp-cta-bar-icon-grid" hidden>
                                                 <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
-                                                    <option value="<?php echo esc_attr($icon_value); ?>" <?php selected($saved_icon, $icon_value); ?>>
-                                                        <?php echo esc_html($icon_label); ?>
-                                                    </option>
+                                                    <button type="button" class="fp-cta-bar-icon-option<?php echo $saved_icon === $icon_value ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
+                                                        <span class="<?php echo esc_attr($icon_value !== '' ? $icon_value : 'dashicons dashicons-minus'); ?>" aria-hidden="true"></span>
+                                                        <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>
+                                                    </button>
                                                 <?php endforeach; ?>
-                                                <?php if ($saved_icon !== '' && !array_key_exists($saved_icon, $icon_options)) : ?>
-                                                    <option value="<?php echo esc_attr($saved_icon); ?>" selected>
-                                                        <?php esc_html_e('Personalizzata salvata', 'fp-cta-bar'); ?>
-                                                    </option>
-                                                <?php endif; ?>
-                                            </select>
-                                            <span class="fpctabar-icon-preview" aria-hidden="true">
-                                                <span class="<?php echo esc_attr($saved_icon !== '' ? $saved_icon : 'dashicons dashicons-minus'); ?>"></span>
-                                            </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="fpctabar-link-field fpctabar-link-field--cell-label-it fp-cta-bar-link-field">
@@ -504,15 +504,21 @@ $main_icon = (string) ($settings['main_icon'] ?? '');
                         <div class="fpctabar-link-fields fp-cta-bar-link-fields">
                             <div class="fpctabar-link-field fpctabar-link-field--icon fpctabar-link-field--cell-icon fp-cta-bar-link-field fp-cta-bar-link-field--icon">
                                 <label><?php esc_html_e('Icona', 'fp-cta-bar'); ?></label>
-                                <div class="fpctabar-icon-picker">
-                                    <select class="fp-cta-bar-icon-select" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][icon]">
+                                <div class="fpctabar-icon-picker fp-cta-bar-icon-picker">
+                                    <input type="hidden" class="fp-cta-bar-icon-input" name="<?php echo esc_attr($opt); ?>[links][{{INDEX}}][icon]" value="">
+                                    <button type="button" class="fpctabar-btn fpctabar-btn-secondary fp-cta-bar-icon-trigger" aria-expanded="false">
+                                        <span class="fp-cta-bar-icon-trigger-icon dashicons dashicons-minus" aria-hidden="true"></span>
+                                        <span class="fp-cta-bar-icon-trigger-label"><?php esc_html_e('Nessuna', 'fp-cta-bar'); ?></span>
+                                        <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="fp-cta-bar-icon-grid" hidden>
                                         <?php foreach ($icon_options as $icon_value => $icon_label) : ?>
-                                            <option value="<?php echo esc_attr($icon_value); ?>"><?php echo esc_html($icon_label); ?></option>
+                                            <button type="button" class="fp-cta-bar-icon-option<?php echo $icon_value === '' ? ' is-active' : ''; ?>" data-icon="<?php echo esc_attr($icon_value); ?>" data-label="<?php echo esc_attr($icon_label); ?>">
+                                                <span class="<?php echo esc_attr($icon_value !== '' ? $icon_value : 'dashicons dashicons-minus'); ?>" aria-hidden="true"></span>
+                                                <span class="fp-cta-bar-icon-option-label"><?php echo esc_html($icon_label); ?></span>
+                                            </button>
                                         <?php endforeach; ?>
-                                    </select>
-                                    <span class="fpctabar-icon-preview" aria-hidden="true">
-                                        <span class="dashicons dashicons-minus"></span>
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="fpctabar-link-field fpctabar-link-field--cell-label-it fp-cta-bar-link-field">

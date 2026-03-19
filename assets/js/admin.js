@@ -19,7 +19,7 @@
             var tpl = $('#tmpl-fp-cta-bar-link-row').html();
             tpl = tpl.replace(/\{\{INDEX\}\}/g, nextIndex);
             $('#fp-cta-bar-links').append(tpl);
-            refreshRowIconPreview($('#fp-cta-bar-links .fp-cta-bar-link-row').last());
+            refreshIconPickers($('#fp-cta-bar-links .fp-cta-bar-link-row').last());
         });
 
         // Duplicate link
@@ -36,14 +36,35 @@
                 }
             });
             $row.after($clone);
-            refreshRowIconPreview($clone);
+            refreshIconPickers($clone);
             reindexLinks();
         });
-        $(document).on('change', '.fp-cta-bar-icon-select', function () {
-            refreshRowIconPreview($(this).closest('.fp-cta-bar-link-row'));
+        $(document).on('click', '.fp-cta-bar-icon-trigger', function (e) {
+            e.preventDefault();
+            var $picker = $(this).closest('.fp-cta-bar-icon-picker');
+            var $grid = $picker.find('.fp-cta-bar-icon-grid').first();
+            var isOpen = !($grid.prop('hidden'));
+            closeAllIconPickers();
+            if (!isOpen) {
+                $grid.prop('hidden', false);
+                $(this).attr('aria-expanded', 'true');
+            }
         });
-        $(document).on('change', '.fp-cta-bar-main-icon-select', refreshMainIconPreview);
-
+        $(document).on('click', '.fp-cta-bar-icon-option', function (e) {
+            e.preventDefault();
+            var $option = $(this);
+            var $picker = $option.closest('.fp-cta-bar-icon-picker');
+            var $input = $picker.find('.fp-cta-bar-icon-input').first();
+            $input.val($option.attr('data-icon') || '');
+            syncIconPicker($picker);
+            closeAllIconPickers();
+            $input.trigger('change');
+        });
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.fp-cta-bar-icon-picker').length) {
+                closeAllIconPickers();
+            }
+        });
 
         // Remove link
         $(document).on('click', '.fp-cta-bar-link-remove', function () {
@@ -108,10 +129,7 @@
             previewTimeout = setTimeout(updatePreview, 200);
         });
         updatePreview();
-        refreshMainIconPreview();
-        $('#fp-cta-bar-links .fp-cta-bar-link-row').each(function () {
-            refreshRowIconPreview($(this));
-        });
+        refreshIconPickers($(document));
 
         function getNextIndex() {
             var max = -1;
@@ -135,35 +153,56 @@
             });
         }
 
-        function refreshRowIconPreview($row) {
-            if (!$row || !$row.length) {
-                return;
+        function refreshIconPickers($scope) {
+            var $pickers = $scope.find('.fp-cta-bar-icon-picker');
+            if ($scope.hasClass && $scope.hasClass('fp-cta-bar-icon-picker')) {
+                $pickers = $pickers.add($scope);
             }
-            var $select = $row.find('.fp-cta-bar-icon-select').first();
-            var value = ($select.val() || '').trim();
-            var $preview = $row.find('.fpctabar-icon-preview > span').first();
-            if (!$preview.length) {
-                return;
-            }
-            if (value && value.indexOf('dashicons') !== -1) {
-                $preview.attr('class', value);
-                return;
-            }
-            $preview.attr('class', 'dashicons dashicons-minus');
+            $pickers.each(function () {
+                syncIconPicker($(this));
+            });
         }
 
-        function refreshMainIconPreview() {
-            var $select = $('.fp-cta-bar-main-icon-select').first();
-            var value = (($select.val() || '') + '').trim();
-            var $preview = $('.fpctabar-main-icon-preview > span').first();
-            if (!$preview.length) {
+        function syncIconPicker($picker) {
+            if (!$picker || !$picker.length) {
                 return;
             }
+
+            var $input = $picker.find('.fp-cta-bar-icon-input').first();
+            var value = (($input.val() || '') + '').trim();
+            var $triggerIcon = $picker.find('.fp-cta-bar-icon-trigger-icon').first();
+            var $triggerLabel = $picker.find('.fp-cta-bar-icon-trigger-label').first();
+            var $options = $picker.find('.fp-cta-bar-icon-option');
+            var matched = false;
+
+            $options.removeClass('is-active').each(function () {
+                var $option = $(this);
+                if (($option.attr('data-icon') || '') === value) {
+                    matched = true;
+                    $option.addClass('is-active');
+                    $triggerLabel.text($option.attr('data-label') || '');
+                }
+            });
+
             if (value && value.indexOf('dashicons') !== -1) {
-                $preview.attr('class', value);
+                $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon ' + value);
+            } else {
+                $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon dashicons dashicons-minus');
+            }
+
+            if (!matched) {
+                $triggerLabel.text(value ? 'Personalizzata salvata' : 'Nessuna');
+                $options.filter('[data-icon=""]').addClass('is-active');
+            }
+        }
+
+        function closeAllIconPickers() {
+            var $pickers = $('.fp-cta-bar-icon-picker');
+            if (!$pickers.length) {
                 return;
             }
-            $preview.attr('class', 'dashicons dashicons-minus');
+            $pickers.find('.fp-cta-bar-icon-grid').prop('hidden', true);
+            $pickers.find('.fp-cta-bar-icon-trigger').attr('aria-expanded', 'false');
         }
     });
 })(jQuery);

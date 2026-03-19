@@ -2,6 +2,11 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.2.0] - 2026-03-19
+### Changed
+- Picker icone visuale in admin: scelta tramite griglia di icone cliccabili (non solo testo), per icona principale e icone link
+- Migliorata UX del selettore con pulsante preview, stato attivo e dropdown icone
+
 ## [1.1.0] - 2026-03-19
 ### Added
 - Nuova opzione "Mostra solo icona" per il bottone/barra principale (testo non obbligatorio)
