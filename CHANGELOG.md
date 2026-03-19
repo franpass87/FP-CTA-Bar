@@ -2,6 +2,11 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.7] - 2026-03-19
+### Changed
+- Modalità bottone (fixed): tipografia senza `uppercase` forzato e tracking più naturale; ombre a due strati più morbide; bordo più leggero; raggio di default 14px; hover senza `filter` (solo sollevamento + ombra); `:active` più compatto
+- Barra full-width: etichetta come sopra (nessun uppercase forzato); bordo superiore e ombra verso l’alto più soft; hover `brightness` solo con `@media (hover: hover) and (pointer: fine)`
+
 ## [1.3.6] - 2026-03-19
 ### Fixed
 - Modalità bottone su mobile (Safari/iOS): `filter` sul wrapper `position: fixed` poteva nascondere o tagliare il bottone; ombra spostata su `.fpctabar__btn` con `box-shadow`
