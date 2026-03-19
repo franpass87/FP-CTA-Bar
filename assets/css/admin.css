@@ -690,6 +690,13 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     color: #1d2327;
 }
 
+/* Icone brand colorate: niente forzatura colore admin su path con fill */
+.fp-cta-bar-icon-trigger-icon .fpctabar-admin-icon-svg--brand svg,
+.fp-cta-bar-icon-option-visual .fpctabar-admin-icon-svg--brand svg {
+    color: unset !important;
+    stroke: none !important;
+}
+
 .fp-cta-bar-icon-trigger-label {
     flex: 1;
     text-align: left;

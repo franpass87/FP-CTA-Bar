@@ -141,6 +141,18 @@
     stroke: var(--fpctabar-panel-text, var(--fpctabar-text)) !important;
 }
 
+/* Icone brand: colori fissi nel SVG — non forzare stroke/currentColor del tema */
+#fpctabar .fpctabar__bar .fpctabar__icon--svg.fpctabar__icon--brand svg,
+#fpctabar .fpctabar__btn .fpctabar__icon--svg.fpctabar__icon--brand svg {
+    color: unset !important;
+    stroke: none !important;
+}
+
+#fpctabar .fpctabar__panel a .fpctabar__icon--svg.fpctabar__icon--brand svg {
+    color: unset !important;
+    stroke: none !important;
+}
+
 /*
  * Dashicons: il glifo è su ::before. Temi usano spesso .dashicons:before o span.dashicons.dashicons-xxx:before
  * con !important: l’icona resta scura nonostante «Testo barra/bottone» bianco. #fpctabar alza la specificità.
@@ -612,5 +624,11 @@ body.fpctabar-body--fullwidth {
     #fpctabar .fpctabar__btn .fpctabar__icon--svg svg {
         color: var(--fpctabar-text) !important;
         stroke: var(--fpctabar-text) !important;
+    }
+
+    #fpctabar .fpctabar__bar .fpctabar__icon--svg.fpctabar__icon--brand svg,
+    #fpctabar .fpctabar__btn .fpctabar__icon--svg.fpctabar__icon--brand svg {
+        color: unset !important;
+        stroke: none !important;
     }
 }

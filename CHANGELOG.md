@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.5.0] - 2026-03-19
+### Added
+- Preset **icone brand a colori** (WhatsApp, Telegram, Messenger, Facebook, Instagram, Threads, X, LinkedIn, YouTube, TikTok, Pinterest, Spotify, Snapchat, Google, pin Maps, Booking.com, Airbnb, Tripadvisor) — file `includes/data/icon-brand-svgs.php`, chiavi `fpctabar-*`
+- `IconSvg::is_brand()`, classe frontend `fpctabar__icon--brand` e admin `fpctabar-admin-icon-svg--brand` per non forzare `stroke`/`currentColor` del tema sui SVG colorati
+- Admin JS: trigger icona avvolge gli SVG preset in `<span class="fpctabar-admin-icon-svg">` come il PHP (coerenza con icone brand)
+
 ## [1.4.2] - 2026-03-19
 ### Fixed
 - Icone **SVG** su **mobile** (soprattutto Safari / temi tipo Salient): il testo del bottone rispettava `--fpctabar-text` ma l’icona restava scura — molti temi applicano `button { color: … !important }` solo sotto breakpoint stretti; aggiunti `color` / `-webkit-text-fill-color` su `#fpctabar .fpctabar__btn` e **stroke** esplicito `var(--fpctabar-text)` sugli `<svg>` della barra/bottone; stesso schema per SVG nel pannello con `--fpctabar-panel-text`; rinforzo in `@media (max-width: 600px)`

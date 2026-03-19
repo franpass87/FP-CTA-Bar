@@ -57,6 +57,25 @@ $icon_options = [
     'dashicons dashicons-format-chat' => __('Chat', 'fp-cta-bar'),
     'dashicons dashicons-format-status' => __('Aggiornamento', 'fp-cta-bar'),
     'dashicons dashicons-beer'        => __('Vino', 'fp-cta-bar'),
+    // Brand / social (colori fissi, stile link-in-bio)
+    'fpctabar-whatsapp'     => __('WhatsApp (brand)', 'fp-cta-bar'),
+    'fpctabar-telegram'   => __('Telegram (brand)', 'fp-cta-bar'),
+    'fpctabar-messenger'  => __('Messenger (brand)', 'fp-cta-bar'),
+    'fpctabar-facebook'   => __('Facebook (brand)', 'fp-cta-bar'),
+    'fpctabar-instagram'  => __('Instagram (brand)', 'fp-cta-bar'),
+    'fpctabar-threads'    => __('Threads (brand)', 'fp-cta-bar'),
+    'fpctabar-x'          => __('X (brand)', 'fp-cta-bar'),
+    'fpctabar-linkedin'   => __('LinkedIn (brand)', 'fp-cta-bar'),
+    'fpctabar-youtube'    => __('YouTube (brand)', 'fp-cta-bar'),
+    'fpctabar-tiktok'     => __('TikTok (brand)', 'fp-cta-bar'),
+    'fpctabar-pinterest'  => __('Pinterest (brand)', 'fp-cta-bar'),
+    'fpctabar-spotify'    => __('Spotify (brand)', 'fp-cta-bar'),
+    'fpctabar-snapchat'   => __('Snapchat (brand)', 'fp-cta-bar'),
+    'fpctabar-google'     => __('Google (brand)', 'fp-cta-bar'),
+    'fpctabar-maps-pin'   => __('Google Maps (brand)', 'fp-cta-bar'),
+    'fpctabar-booking'    => __('Booking.com (brand)', 'fp-cta-bar'),
+    'fpctabar-airbnb'     => __('Airbnb (brand)', 'fp-cta-bar'),
+    'fpctabar-tripadvisor' => __('Tripadvisor (brand)', 'fp-cta-bar'),
 ];
 $main_icon = (string) ($settings['main_icon'] ?? '');
 $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] : __('Personalizzata salvata', 'fp-cta-bar');

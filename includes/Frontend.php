@@ -389,7 +389,9 @@ class Frontend {
         }
         $svg = IconSvg::inline($icon);
         if ($svg !== '') {
-            return '<span class="fpctabar__icon fpctabar__icon--svg" aria-hidden="true">' . $svg . '</span>';
+            $brandClass = IconSvg::is_brand($icon) ? ' fpctabar__icon--brand' : '';
+
+            return '<span class="fpctabar__icon fpctabar__icon--svg' . $brandClass . '" aria-hidden="true">' . $svg . '</span>';
         }
         return '<span class="fpctabar__icon fpctabar__icon--class ' . esc_attr($icon) . '" aria-hidden="true"></span>';
     }

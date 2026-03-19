@@ -5,10 +5,38 @@ declare(strict_types=1);
 namespace FP\CtaBar;
 
 /**
- * Icone SVG line-art per il frontend (sostituiscono le Dashicons preset).
- * Path derivati da Lucide (MIT) — solo output statico controllato.
+ * Icone SVG per il frontend: preset line-art (Lucide) e icone brand a colori fissi (data file).
  */
 final class IconSvg {
+
+    /**
+     * @var array<string, string>|null
+     */
+    private static ?array $brands = null;
+
+    /**
+     * Preset brand (chiavi `fpctabar-*`) caricati da `data/icon-brand-svgs.php`.
+     *
+     * @return array<string, string>
+     */
+    private static function brands(): array {
+        if (self::$brands === null) {
+            $path = __DIR__ . '/data/icon-brand-svgs.php';
+            $loaded = is_readable($path) ? require $path : [];
+            self::$brands = is_array($loaded) ? $loaded : [];
+        }
+
+        return self::$brands;
+    }
+
+    /**
+     * True se l’icona è un SVG brand con colori propri (non va forzato stroke/currentColor del tema).
+     */
+    public static function is_brand(string $iconKey): bool {
+        $k = trim($iconKey);
+
+        return $k !== '' && array_key_exists($k, self::brands());
+    }
 
     /**
      * Contenuto interno SVG (elementi path/line/circle/rect…) per chiave identica a quella salvata in opzioni.
@@ -56,14 +84,24 @@ final class IconSvg {
      */
     public static function inline(string $iconKey): string {
         $k = trim($iconKey);
-        if ($k === '' || !isset(self::INNER[$k])) {
+        if ($k === '') {
             return '';
         }
+        $brands = self::brands();
+        if (isset($brands[$k])) {
+            return $brands[$k];
+        }
+        if (!isset(self::INNER[$k])) {
+            return '';
+        }
+
         return self::wrap(self::INNER[$k]);
     }
 
     public static function has_preset(string $iconKey): bool {
-        return isset(self::INNER[trim($iconKey)]);
+        $k = trim($iconKey);
+
+        return isset(self::INNER[$k]) || array_key_exists($k, self::brands());
     }
 
     /**
@@ -77,7 +115,8 @@ final class IconSvg {
         }
         $svg = self::inline($iconClass);
         if ($svg !== '') {
-            echo '<span class="fpctabar-admin-icon-svg" aria-hidden="true">' . $svg . '</span>';
+            $brandClass = self::is_brand($iconClass) ? ' fpctabar-admin-icon-svg--brand' : '';
+            echo '<span class="fpctabar-admin-icon-svg' . $brandClass . '" aria-hidden="true">' . $svg . '</span>';
             return;
         }
         echo '<span class="' . esc_attr($iconClass) . ' fpctabar-admin-icon-fallback" aria-hidden="true"></span>';
@@ -93,6 +132,10 @@ final class IconSvg {
         foreach (array_keys(self::INNER) as $k) {
             $out[$k] = self::inline($k);
         }
+        foreach (array_keys(self::brands()) as $k) {
+            $out[$k] = self::inline($k);
+        }
+
         return $out;
     }
 
