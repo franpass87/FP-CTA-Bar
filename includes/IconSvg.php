@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FP\CtaBar;
 
 /**
- * Icone SVG per il frontend: preset line-art (Lucide) e icone brand a colori fissi (data file).
+ * Icone per il frontend: preset line-art SVG (Lucide), emoji Unicode (`fpctabar-emoji-*`), brand SVG legacy (file data).
  */
 final class IconSvg {
 
@@ -15,7 +15,45 @@ final class IconSvg {
     private static ?array $brands = null;
 
     /**
-     * Preset brand (chiavi `fpctabar-*`) caricati da `data/icon-brand-svgs.php`.
+     * @var array<string, string>|null
+     */
+    private static ?array $emojis = null;
+
+    /**
+     * Preset emoji (chiavi `fpctabar-emoji-*`) da `data/icon-emoji-presets.php`.
+     *
+     * @return array<string, string>
+     */
+    private static function emojis(): array {
+        if (self::$emojis === null) {
+            $path = __DIR__ . '/data/icon-emoji-presets.php';
+            $loaded = is_readable($path) ? require $path : [];
+            self::$emojis = is_array($loaded) ? $loaded : [];
+        }
+
+        return self::$emojis;
+    }
+
+    /**
+     * True se la chiave è un preset emoji (carattere Unicode, reso col font di sistema).
+     */
+    public static function is_emoji_preset(string $iconKey): bool {
+        $k = trim($iconKey);
+
+        return $k !== '' && array_key_exists($k, self::emojis());
+    }
+
+    /**
+     * Carattere emoji per la chiave, o stringa vuota.
+     */
+    public static function emoji_char(string $iconKey): string {
+        $k = trim($iconKey);
+
+        return self::emojis()[$k] ?? '';
+    }
+
+    /**
+     * Preset brand (chiavi `fpctabar-*` tranne emoji) caricati da `data/icon-brand-svgs.php`.
      *
      * @return array<string, string>
      */
@@ -35,7 +73,7 @@ final class IconSvg {
     public static function is_brand(string $iconKey): bool {
         $k = trim($iconKey);
 
-        return $k !== '' && array_key_exists($k, self::brands());
+        return $k !== '' && !self::is_emoji_preset($k) && array_key_exists($k, self::brands());
     }
 
     /**
@@ -87,6 +125,9 @@ final class IconSvg {
         if ($k === '') {
             return '';
         }
+        if (array_key_exists($k, self::emojis())) {
+            return '';
+        }
         $brands = self::brands();
         if (isset($brands[$k])) {
             return $brands[$k];
@@ -101,7 +142,7 @@ final class IconSvg {
     public static function has_preset(string $iconKey): bool {
         $k = trim($iconKey);
 
-        return isset(self::INNER[$k]) || array_key_exists($k, self::brands());
+        return isset(self::INNER[$k]) || array_key_exists($k, self::brands()) || array_key_exists($k, self::emojis());
     }
 
     /**
@@ -111,6 +152,10 @@ final class IconSvg {
         $iconClass = trim($iconClass);
         if ($iconClass === '') {
             echo '<span class="dashicons dashicons-minus fpctabar-admin-icon-fallback" aria-hidden="true"></span>';
+            return;
+        }
+        if (self::is_emoji_preset($iconClass)) {
+            echo '<span class="fpctabar-admin-icon-emoji" aria-hidden="true">' . esc_html(self::emoji_char($iconClass)) . '</span>';
             return;
         }
         $svg = self::inline($iconClass);
@@ -134,6 +179,9 @@ final class IconSvg {
         }
         foreach (array_keys(self::brands()) as $k) {
             $out[$k] = self::inline($k);
+        }
+        foreach (self::emojis() as $k => $ch) {
+            $out[$k] = $ch;
         }
 
         return $out;

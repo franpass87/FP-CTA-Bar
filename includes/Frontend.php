@@ -387,6 +387,9 @@ class Frontend {
         if (preg_match('#^(https?:|/|data:)#i', $icon)) {
             return '<span class="fpctabar__icon fpctabar__icon--img"><img src="' . esc_url($icon) . '" alt="" aria-hidden="true"></span>';
         }
+        if (IconSvg::is_emoji_preset($icon)) {
+            return '<span class="fpctabar__icon fpctabar__icon--emoji" aria-hidden="true">' . esc_html(IconSvg::emoji_char($icon)) . '</span>';
+        }
         $svg = IconSvg::inline($icon);
         if ($svg !== '') {
             $brandClass = IconSvg::is_brand($icon) ? ' fpctabar__icon--brand' : '';

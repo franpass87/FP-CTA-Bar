@@ -120,6 +120,15 @@
     flex-shrink: 0;
 }
 
+/* Emoji di sistema: niente stroke; dimensione allineata alle SVG */
+.fpctabar__icon--emoji {
+    font-size: 1.15em;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #fpctabar .fpctabar__bar .fpctabar__icon--svg,
 #fpctabar .fpctabar__btn .fpctabar__icon--svg {
     color: var(--fpctabar-text) !important;
@@ -208,6 +217,10 @@
 .fpctabar__panel a .fpctabar__icon--svg svg {
     width: 1.32rem;
     height: 1.32rem;
+}
+
+.fpctabar__panel a .fpctabar__icon--emoji {
+    font-size: 1.35rem;
 }
 
 .fpctabar__panel a .fpctabar__icon--img img {
@@ -560,6 +573,10 @@ body.fpctabar-body--fullwidth {
 .fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__icon--svg svg {
     width: 1.3em;
     height: 1.3em;
+}
+
+.fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__icon--emoji {
+    font-size: 1.35em;
 }
 
 .fpctabar--fullwidth.fpctabar--icon-only .fpctabar__bar {

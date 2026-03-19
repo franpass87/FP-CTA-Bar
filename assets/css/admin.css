@@ -697,6 +697,19 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     stroke: none !important;
 }
 
+.fp-cta-bar-icon-trigger-icon .fpctabar-admin-icon-emoji,
+.fp-cta-bar-icon-option-visual .fpctabar-admin-icon-emoji {
+    font-size: 20px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fp-cta-bar-icon-option-visual .fpctabar-admin-icon-emoji {
+    font-size: 18px;
+}
+
 .fp-cta-bar-icon-trigger-label {
     flex: 1;
     text-align: left;

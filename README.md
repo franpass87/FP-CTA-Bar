@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -16,7 +16,7 @@ FP CTA Bar aggiunge una barra fissa (in alto o in basso) con un bottone call-to-
 1. Vai su **FP CTA Bar** (menu laterale) o **Impostazioni → FP CTA Bar** nel pannello WordPress
 2. Configura:
    - **Testo bottone** e **URL destinazione**
-   - **Icona** del bottone da selettore (SVG line-art e **icone brand colorate** tipo link-in-bio) con anteprima
+   - **Icona** da selettore: SVG line-art, **emoji di sistema** (Unicode) o URL immagine; per asset esterni (es. marketplace di icone) verifica sempre **licenza e attribuzione**
    - **Grandezza bottone** (Compatto/Medio/Grande)
    - Opzione **solo icona** (senza testo) e stile **circolare** per modalità bottone
    - **Colori** sfondo e testo

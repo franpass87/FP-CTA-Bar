@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.6.0] - 2026-03-19
+### Added
+- Preset **emoji Unicode** (`fpctabar-emoji-*`, file `includes/data/icon-emoji-presets.php`): icone colorate native di OS/browser, senza CDN; `IconSvg::is_emoji_preset()`, `emoji_char()`; rendering frontend `fpctabar__icon--emoji`; admin/JS allineati
+
+### Changed
+- Selettore admin: meno duplicati (rimossi calendario/mappa “alt” e i **logo brand SVG** dalla lista); le chiavi brand già salvate restano supportate e continuano a rendersi da `icon-brand-svgs.php`
+- Etichette preset line-art suffisso “(linea)” per distinguerle dalle emoji
+
 ## [1.5.0] - 2026-03-19
 ### Added
 - Preset **icone brand a colori** (WhatsApp, Telegram, Messenger, Facebook, Instagram, Threads, X, LinkedIn, YouTube, TikTok, Pinterest, Spotify, Snapchat, Google, pin Maps, Booking.com, Airbnb, Tripadvisor) — file `includes/data/icon-brand-svgs.php`, chiavi `fpctabar-*`

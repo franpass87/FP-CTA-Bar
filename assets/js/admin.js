@@ -194,9 +194,13 @@
             $triggerIcon.attr('class', 'fp-cta-bar-icon-trigger-icon');
             $triggerIcon.empty();
             if (presets[value]) {
-                var isBrand = /^fpctabar-/.test(value);
-                var wrapClass = 'fpctabar-admin-icon-svg' + (isBrand ? ' fpctabar-admin-icon-svg--brand' : '');
-                $triggerIcon.html('<span class="' + wrapClass + '" aria-hidden="true">' + presets[value] + '</span>');
+                if (/^fpctabar-emoji-/.test(value)) {
+                    $triggerIcon.html('<span class="fpctabar-admin-icon-emoji" aria-hidden="true">' + presets[value] + '</span>');
+                } else {
+                    var isBrand = /^fpctabar-/.test(value);
+                    var wrapClass = 'fpctabar-admin-icon-svg' + (isBrand ? ' fpctabar-admin-icon-svg--brand' : '');
+                    $triggerIcon.html('<span class="' + wrapClass + '" aria-hidden="true">' + presets[value] + '</span>');
+                }
             } else if (value && value.indexOf('dashicons') !== -1) {
                 $triggerIcon.addClass(value);
             } else if (!value) {
