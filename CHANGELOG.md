@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.0.4] - 2026-03-19
+### Fixed
+- vendor/ incluso nel repo: in produzione (fp-git-updater) il plugin non aveva vendor e terminava senza caricare Admin/menu
+
 ## [1.0.3] - 2026-03-19
 ### Fixed
 - Menu admin non visibile: aggiunta voce top-level "FP CTA Bar" nella sidebar (icona megaphone). Rimane anche sotto Impostazioni.
