@@ -2,6 +2,16 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.4.1] - 2026-03-19
+### Fixed
+- Admin: le **card** usavano `overflow: hidden`, tagliando il dropdown icone (`position: absolute`)
+- Admin: **z-index** basso (`50`) faceva finire la griglia sotto righe successive / metabox; picker aperto ora `z-index: 100100` e riga/field genitore `100090` (classi `is-open`, `fpctabar-link-row--icon-open`, `fpctabar-field--icon-open` via JS)
+
+### Changed
+- Admin: griglia preset **6 colonne**, gap/padding ridotti, celle senza `min-height` eccessivo; etichette con clamp a 2 righe
+- Admin: nel repeater **link**, dropdown icone **largo min. 260px / max 400px** (non limitato alla colonna stretta)
+- Admin: JS unificato su selettore `.fpctabar-icon-picker` per close/refresh
+
 ## [1.4.0] - 2026-03-19
 ### Added
 - Classe `IconSvg`: mappa ogni preset del selettore (stessa chiave `dashicons dashicons-*` salvata in DB) verso **SVG inline** line-art (path ispirati a [Lucide](https://lucide.dev), MIT)

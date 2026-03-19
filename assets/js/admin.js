@@ -41,19 +41,22 @@
         });
         $(document).on('click', '.fp-cta-bar-icon-trigger', function (e) {
             e.preventDefault();
-            var $picker = $(this).closest('.fp-cta-bar-icon-picker');
+            var $picker = $(this).closest('.fpctabar-icon-picker');
             var $grid = $picker.find('.fp-cta-bar-icon-grid').first();
             var isOpen = !($grid.prop('hidden'));
             closeAllIconPickers();
             if (!isOpen) {
                 $grid.prop('hidden', false);
                 $(this).attr('aria-expanded', 'true');
+                $picker.addClass('is-open');
+                $picker.closest('.fpctabar-link-row').addClass('fpctabar-link-row--icon-open');
+                $picker.closest('.fpctabar-field').addClass('fpctabar-field--icon-open');
             }
         });
         $(document).on('click', '.fp-cta-bar-icon-option', function (e) {
             e.preventDefault();
             var $option = $(this);
-            var $picker = $option.closest('.fp-cta-bar-icon-picker');
+            var $picker = $option.closest('.fpctabar-icon-picker');
             var $input = $picker.find('.fp-cta-bar-icon-input').first();
             $input.val($option.attr('data-icon') || '');
             syncIconPicker($picker);
@@ -61,7 +64,7 @@
             $input.trigger('change');
         });
         $(document).on('click', function (e) {
-            if (!$(e.target).closest('.fp-cta-bar-icon-picker').length) {
+            if (!$(e.target).closest('.fpctabar-icon-picker').length) {
                 closeAllIconPickers();
             }
         });
@@ -207,12 +210,15 @@
         }
 
         function closeAllIconPickers() {
-            var $pickers = $('.fp-cta-bar-icon-picker');
+            var $pickers = $('.fpctabar-icon-picker');
             if (!$pickers.length) {
                 return;
             }
+            $pickers.removeClass('is-open');
             $pickers.find('.fp-cta-bar-icon-grid').prop('hidden', true);
             $pickers.find('.fp-cta-bar-icon-trigger').attr('aria-expanded', 'false');
+            $('.fpctabar-link-row--icon-open').removeClass('fpctabar-link-row--icon-open');
+            $('.fpctabar-field--icon-open').removeClass('fpctabar-field--icon-open');
         }
     });
 })(jQuery);
