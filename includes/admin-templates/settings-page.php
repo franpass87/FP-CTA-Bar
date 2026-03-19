@@ -56,6 +56,7 @@ $icon_options = [
     'dashicons dashicons-microphone'  => __('Microfono', 'fp-cta-bar'),
     'dashicons dashicons-format-chat' => __('Chat', 'fp-cta-bar'),
     'dashicons dashicons-format-status' => __('Aggiornamento', 'fp-cta-bar'),
+    'dashicons dashicons-beer'        => __('Vino', 'fp-cta-bar'),
 ];
 $main_icon = (string) ($settings['main_icon'] ?? '');
 $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] : __('Personalizzata salvata', 'fp-cta-bar');

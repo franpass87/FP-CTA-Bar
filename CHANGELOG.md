@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.2.1] - 2026-03-19
+### Added
+- Nuova icona "Vino" nel picker icone visuale (selezione rapida da griglia)
+
 ## [1.2.0] - 2026-03-19
 ### Changed
 - Picker icone visuale in admin: scelta tramite griglia di icone cliccabili (non solo testo), per icona principale e icone link

@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,9 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.2.1 = (2026-03-19)
+* Added: Nuova icona "Vino" nel picker icone visuale
 
 = 1.2.0 = (2026-03-19)
 * Changed: Picker icone visuale in admin con griglia di icone cliccabili (icona principale + icone link)
