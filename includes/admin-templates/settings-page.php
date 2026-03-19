@@ -258,6 +258,14 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                         </select>
                     </div>
                     <div class="fpctabar-field">
+                        <label><?php esc_html_e('Grandezza bottone', 'fp-cta-bar'); ?></label>
+                        <select name="<?php echo esc_attr($opt); ?>[button_size]">
+                            <option value="small" <?php selected($settings['button_size'] ?? 'medium', 'small'); ?>><?php esc_html_e('Compatto', 'fp-cta-bar'); ?></option>
+                            <option value="medium" <?php selected($settings['button_size'] ?? 'medium', 'medium'); ?>><?php esc_html_e('Medio', 'fp-cta-bar'); ?></option>
+                            <option value="large" <?php selected($settings['button_size'] ?? 'medium', 'large'); ?>><?php esc_html_e('Grande', 'fp-cta-bar'); ?></option>
+                        </select>
+                    </div>
+                    <div class="fpctabar-field">
                         <label><?php esc_html_e('Border radius bottone (px)', 'fp-cta-bar'); ?></label>
                         <input type="number" name="<?php echo esc_attr($opt); ?>[button_radius]" value="<?php echo esc_attr($settings['button_radius'] ?? 4); ?>" min="0" max="24">
                     </div>

@@ -64,6 +64,11 @@ class Settings {
             ? $input['font_size']
             : $defaults['font_size'];
 
+        $allowed_button_sizes = ['small', 'medium', 'large'];
+        $clean['button_size'] = (isset($input['button_size']) && in_array($input['button_size'], $allowed_button_sizes, true))
+            ? $input['button_size']
+            : $defaults['button_size'];
+
         $radius = isset($input['button_radius']) ? absint($input['button_radius']) : 4;
         $clean['button_radius'] = ($radius >= 0 && $radius <= 24) ? $radius : 4;
 

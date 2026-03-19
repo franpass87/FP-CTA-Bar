@@ -216,7 +216,7 @@ body.fpctabar-body--fullwidth {
     background: var(--fpctabar-bg);
     color: var(--fpctabar-text);
     border: 1px solid var(--fpctabar-border);
-    padding: 14px 28px;
+    padding: var(--fpctabar-btn-pad-y, 14px) var(--fpctabar-btn-pad-x, 28px);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: var(--fpctabar-font-size-label, 15px);
     font-weight: 600;
@@ -275,13 +275,13 @@ body.fpctabar-body--fullwidth {
 }
 
 .fpctabar--button.fpctabar--icon-only .fpctabar__btn {
-    padding: 12px;
+    padding: var(--fpctabar-btn-icon-only-pad, 12px);
     letter-spacing: 0;
 }
 
 .fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__btn {
-    width: 56px;
-    height: 56px;
+    width: var(--fpctabar-btn-circle-size, 56px);
+    height: var(--fpctabar-btn-circle-size, 56px);
     border-radius: 999px;
     padding: 0;
     display: inline-flex;

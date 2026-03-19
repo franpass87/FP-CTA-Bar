@@ -268,9 +268,15 @@ class Frontend {
             'large'  => ['label' => '22px', 'link' => '17px'],
         ];
         $fs = $font_sizes[$s['font_size'] ?? 'medium'] ?? $font_sizes['medium'];
+        $button_sizes = [
+            'small'  => ['pad_y' => '10px', 'pad_x' => '20px', 'icon_pad' => '9px', 'circle' => '46px'],
+            'medium' => ['pad_y' => '14px', 'pad_x' => '28px', 'icon_pad' => '12px', 'circle' => '56px'],
+            'large'  => ['pad_y' => '18px', 'pad_x' => '34px', 'icon_pad' => '14px', 'circle' => '66px'],
+        ];
+        $bs = $button_sizes[$s['button_size'] ?? 'medium'] ?? $button_sizes['medium'];
 
         $css_vars = sprintf(
-            '--fpctabar-bg:%s;--fpctabar-text:%s;--fpctabar-border:%s;--fpctabar-panel-bg:%s;--fpctabar-z:%d;--fpctabar-font-size-label:%s;--fpctabar-font-size-link:%s;--fpctabar-btn-radius:%dpx;',
+            '--fpctabar-bg:%s;--fpctabar-text:%s;--fpctabar-border:%s;--fpctabar-panel-bg:%s;--fpctabar-z:%d;--fpctabar-font-size-label:%s;--fpctabar-font-size-link:%s;--fpctabar-btn-radius:%dpx;--fpctabar-btn-pad-y:%s;--fpctabar-btn-pad-x:%s;--fpctabar-btn-icon-only-pad:%s;--fpctabar-btn-circle-size:%s;',
             esc_attr($s['bg_color']),
             esc_attr($s['text_color']),
             esc_attr($s['border_color']),
@@ -278,7 +284,11 @@ class Frontend {
             (int) ($s['z_index'] ?? 99999),
             esc_attr($fs['label']),
             esc_attr($fs['link']),
-            (int) ($s['button_radius'] ?? 4)
+            (int) ($s['button_radius'] ?? 4),
+            esc_attr($bs['pad_y']),
+            esc_attr($bs['pad_x']),
+            esc_attr($bs['icon_pad']),
+            esc_attr($bs['circle'])
         );
 
         $device_class = '';

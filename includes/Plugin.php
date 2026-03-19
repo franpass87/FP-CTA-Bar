@@ -60,6 +60,7 @@ class Plugin {
             'visibility'             => ['home', 'single', 'page', 'archive'],
             'device_visibility'      => 'all',
             'font_size'              => 'medium',
+            'button_size'            => 'medium',
             'button_radius'          => 4,
             'close_on_link_click'    => true,
             'delay_seconds'          => 0,

@@ -2,6 +2,13 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.0] - 2026-03-19
+### Added
+- Nuova impostazione "Grandezza bottone" (Compatto / Medio / Grande)
+
+### Changed
+- Frontend: la dimensione scelta scala padding del bottone e dimensione del bottone circolare in modalità solo icona
+
 ## [1.2.3] - 2026-03-19
 ### Fixed
 - Admin UI: risolto bug del picker icone che mostrava le griglie sempre aperte (layout "a cascata" sulle righe Link)
