@@ -246,7 +246,7 @@ class Frontend {
         $lang = $this->detect_lang();
         $click_endpoint = rest_url('fp/ctabar/v1/click');
         $click_nonce    = wp_create_nonce('fp_cta_bar_click');
-        // Tracking delegated to FP-Marketing-Tracking-Layer via fpCtaBarClick DOM event
+        // Tracking: FP Marketing Tracking Layer ascolta fpCtaBarClick (barra + link con «Traccia click»)
         wp_localize_script('fp-cta-bar-front', 'fpCtaBarTrack', [
             'eventName'     => $this->settings['gtm_event_name'] ?? $this->settings['ga4_event_name'] ?? 'cta_bar_click',
             'useFpLayer'    => true,
