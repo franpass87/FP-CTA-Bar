@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.5] - 2026-03-19
+### Changed
+- Frontend: più spazio nel pannello link (larghezza min/max, padding, gap icona–testo) per ridurre testi tagliati o troppo stretti
+- Frontend: etichette link con `overflow-wrap`, interlinea maggiore e freccia `›` non comprimibile (`flex-shrink: 0`)
+- Frontend: pannello full-width con padding orizzontale fluido e link fino a ~36rem; barra principale con padding laterale e label che può andare a capo
+
 ## [1.3.4] - 2026-03-19
 ### Changed
 - Frontend: pannello floating con angoli più morbidi, ombre stratificate e leggero highlight interno
