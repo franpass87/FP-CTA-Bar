@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.0.7] - 2026-03-19
+### Changed
+- Aggiunte molte nuove icone Dashicons nel selettore "Icona" dei link (telefono, smartphone, casa, pagamento, warning, chat, video e altre)
+
 ## [1.0.6] - 2026-03-19
 ### Changed
 - Selettore icona nei link: ora scegli l'icona da menu (con anteprima) senza inserire classi manuali
