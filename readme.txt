@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.2.0
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -36,7 +36,7 @@ FP CTA Bar aggiunge una barra fissa (full-width o bottone in basso a sinistra/de
 1. Carica la cartella del plugin in `wp-content/plugins/` (o installa via fp-git-updater).
 2. Assicurati che nella cartella del plugin sia presente `vendor/` (esegui `composer install --no-dev` se necessario).
 3. Attiva il plugin da **Plugin** nel menu WordPress.
-4. Vai su **Impostazioni → FP CTA Bar** per configurare testo, link, colori e visibilità.
+4. Vai su **FP CTA Bar** (menu laterale) o **Impostazioni → FP CTA Bar** per configurare testo, link, colori e visibilità.
 
 == Frequently Asked Questions ==
 
@@ -47,6 +47,9 @@ Verifica che "Solo shortcode" sia disattivato se vuoi la barra globale, oppure i
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.0.3 = (2026-03-19)
+* Fixed: Menu admin non visibile — aggiunta voce top-level "FP CTA Bar" nella sidebar
 
 = 1.2.0 = (2026-03-18)
 * Added: Filtro `fp_cta_bar_lang` e integrazione FP-Multilanguage

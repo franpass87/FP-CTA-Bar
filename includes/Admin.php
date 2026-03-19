@@ -52,18 +52,37 @@ class Admin {
         wp_send_json_success(['redirect' => admin_url('options-general.php?page=fp-cta-bar&imported=1')]);
     }
 
-    public function add_menu() {
-        $this->page_hook = add_options_page(
-            __('FP CTA Bar', 'fp-cta-bar'),
-            __('FP CTA Bar', 'fp-cta-bar'),
-            'manage_options',
-            'fp-cta-bar',
-            [$this, 'render_page']
+    /**
+     * Registra la voce di menu admin (top-level + Impostazioni).
+     */
+    public function add_menu(): void {
+        $page_title = __('FP CTA Bar', 'fp-cta-bar');
+        $menu_title = __('FP CTA Bar', 'fp-cta-bar');
+        $capability = 'manage_options';
+        $menu_slug  = 'fp-cta-bar';
+        $callback   = [$this, 'render_page'];
+
+        // Menu top-level nella sidebar (visibile)
+        $this->page_hook = add_menu_page(
+            $page_title,
+            $menu_title,
+            $capability,
+            $menu_slug,
+            $callback,
+            'dashicons-megaphone',
+            30
         );
+
+        // Anche sotto Impostazioni per retrocompatibilità
+        add_options_page($page_title, $menu_title, $capability, $menu_slug, $callback);
     }
 
     public function enqueue_assets($hook) {
-        if ($hook !== $this->page_hook) {
+        $allowed_hooks = [
+            $this->page_hook,
+            'settings_page_fp-cta-bar',
+        ];
+        if (!in_array($hook, $allowed_hooks, true)) {
             return;
         }
 
