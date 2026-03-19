@@ -22,73 +22,7 @@ if (!empty($settings['links'])) {
     }
 }
 $bar_will_show = !$use_shortcode && $valid_links > 0;
-$icon_options = [
-    ''                                => __('Nessuna', 'fp-cta-bar'),
-    // Line-art SVG (Lucide-style)
-    'dashicons dashicons-calendar'   => __('Calendario (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-phone'     => __('Telefono (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-smartphone' => __('Smartphone (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-email'     => __('Email (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-location'  => __('Posizione (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-admin-site' => __('Sito (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-admin-home' => __('Casa (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-admin-users' => __('Utenti (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-tickets-alt' => __('Ticket (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-cart'      => __('Carrello (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-products'  => __('Prodotti (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-store'     => __('Store (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-money-alt' => __('Pagamento (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-megaphone' => __('Megafono (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-info'      => __('Info (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-warning'   => __('Attenzione (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-yes-alt'   => __('Conferma (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-plus-alt'  => __('Più (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-external'  => __('Link esterno (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-share'     => __('Condividi (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-star-filled' => __('Stella (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-heart'     => __('Cuore (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-clock'     => __('Orologio (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-marker'    => __('Marker (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-camera'    => __('Camera (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-format-image' => __('Immagine (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-video-alt3' => __('Video (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-microphone' => __('Microfono (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-format-chat' => __('Chat (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-format-status' => __('Aggiornamento (linea)', 'fp-cta-bar'),
-    'dashicons dashicons-beer'      => __('Vino (linea)', 'fp-cta-bar'),
-    // Emoji di sistema (Unicode — aspetto colorato dipende da OS/browser)
-    'fpctabar-emoji-phone'    => __('Emoji · Telefono', 'fp-cta-bar'),
-    'fpctabar-emoji-mobile'   => __('Emoji · Cellulare', 'fp-cta-bar'),
-    'fpctabar-emoji-email'    => __('Emoji · Email', 'fp-cta-bar'),
-    'fpctabar-emoji-web'      => __('Emoji · Web', 'fp-cta-bar'),
-    'fpctabar-emoji-calendar' => __('Emoji · Calendario', 'fp-cta-bar'),
-    'fpctabar-emoji-location' => __('Emoji · Pin', 'fp-cta-bar'),
-    'fpctabar-emoji-map'      => __('Emoji · Mappa', 'fp-cta-bar'),
-    'fpctabar-emoji-chat'     => __('Emoji · Chat', 'fp-cta-bar'),
-    'fpctabar-emoji-plane'    => __('Emoji · Aereo / viaggi', 'fp-cta-bar'),
-    'fpctabar-emoji-hotel'    => __('Emoji · Hotel', 'fp-cta-bar'),
-    'fpctabar-emoji-star'     => __('Emoji · Stella', 'fp-cta-bar'),
-    'fpctabar-emoji-heart'    => __('Emoji · Cuore', 'fp-cta-bar'),
-    'fpctabar-emoji-megaphone' => __('Emoji · Megafono', 'fp-cta-bar'),
-    'fpctabar-emoji-music'    => __('Emoji · Musica', 'fp-cta-bar'),
-    'fpctabar-emoji-camera'   => __('Emoji · Fotocamera', 'fp-cta-bar'),
-    'fpctabar-emoji-video'    => __('Emoji · Cinema', 'fp-cta-bar'),
-    'fpctabar-emoji-mic'      => __('Emoji · Microfono', 'fp-cta-bar'),
-    'fpctabar-emoji-cart'     => __('Emoji · Carrello', 'fp-cta-bar'),
-    'fpctabar-emoji-bag'      => __('Emoji · Shopping', 'fp-cta-bar'),
-    'fpctabar-emoji-ticket'   => __('Emoji · Biglietto', 'fp-cta-bar'),
-    'fpctabar-emoji-users'    => __('Emoji · Persone', 'fp-cta-bar'),
-    'fpctabar-emoji-building' => __('Emoji · Edificio', 'fp-cta-bar'),
-    'fpctabar-emoji-play'     => __('Emoji · Play', 'fp-cta-bar'),
-    'fpctabar-emoji-link'     => __('Emoji · Link', 'fp-cta-bar'),
-    'fpctabar-emoji-sparkle'  => __('Emoji · Sparkle', 'fp-cta-bar'),
-    'fpctabar-emoji-check'    => __('Emoji · Spunta', 'fp-cta-bar'),
-    'fpctabar-emoji-info'     => __('Emoji · Info', 'fp-cta-bar'),
-    'fpctabar-emoji-warning'  => __('Emoji · Avviso', 'fp-cta-bar'),
-    'fpctabar-emoji-party'    => __('Emoji · Festa', 'fp-cta-bar'),
-    'fpctabar-emoji-food'     => __('Emoji · Ristorante', 'fp-cta-bar'),
-    'fpctabar-emoji-coffee'   => __('Emoji · Caffè', 'fp-cta-bar'),
-];
+$icon_options  = \FP\CtaBar\IconSvg::settings_icon_options();
 $main_icon = (string) ($settings['main_icon'] ?? '');
 $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] : __('Personalizzata salvata', 'fp-cta-bar');
 ?>
@@ -199,7 +133,7 @@ $main_icon_label = isset($icon_options[$main_icon]) ? $icon_options[$main_icon] 
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                        <span class="fpctabar-hint"><?php esc_html_e('Preset linea, emoji di sistema (Unicode) o URL immagine. Per icone da marketplace esterni verifica licenza e attribuzione.', 'fp-cta-bar'); ?> <?php esc_html_e('Per nascondere il testo attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
+                        <span class="fpctabar-hint"><?php esc_html_e('Solo emoji di sistema (Unicode) o incolla un URL immagine per un’icona personalizzata.', 'fp-cta-bar'); ?> <?php esc_html_e('Per nascondere il testo attiva "Mostra solo icona".', 'fp-cta-bar'); ?></span>
                     </div>
                 </div>
 

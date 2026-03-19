@@ -2,6 +2,19 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.7.0] - 2026-03-19
+### Added
+- Oltre **60 nuove emoji** nel preset; file `icon-emoji-presets.php` con struttura `char` + `label` (msgid i18n)
+- `IconSvg::settings_icon_options()` per la griglia admin solo-emoji
+
+### Changed
+- Selettore icone in admin: **solo «Nessuna» + emoji** (niente più line-art né brand in elenco)
+- Hint icona principale aggiornato
+- Admin: griglia icone `max-height` 320px (scroll con elenco più lungo)
+
+### Note
+- Chiavi **dashicons** / **fpctabar-*** (brand SVG) già salvate restano supportate in frontend e in anteprima admin (`iconPresets` + `IconSvg`)
+
 ## [1.6.0] - 2026-03-19
 ### Added
 - Preset **emoji Unicode** (`fpctabar-emoji-*`, file `includes/data/icon-emoji-presets.php`): icone colorate native di OS/browser, senza CDN; `IconSvg::is_emoji_preset()`, `emoji_char()`; rendering frontend `fpctabar__icon--emoji`; admin/JS allineati

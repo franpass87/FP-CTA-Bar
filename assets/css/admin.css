@@ -724,7 +724,7 @@ body.settings_page_fp-cta-bar #wpbody-content > .settings-error {
     left: 0;
     right: 0;
     z-index: 2;
-    max-height: 220px;
+    max-height: 320px;
     overflow-x: hidden;
     overflow-y: auto;
     display: grid;

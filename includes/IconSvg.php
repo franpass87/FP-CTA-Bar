@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FP\CtaBar;
 
 /**
- * Icone per il frontend: preset line-art SVG (Lucide), emoji Unicode (`fpctabar-emoji-*`), brand SVG legacy (file data).
+ * Icone: emoji preset (`fpctabar-emoji-*`), SVG line-art e brand legacy solo per valori già salvati in DB.
  */
 final class IconSvg {
 
@@ -15,23 +15,60 @@ final class IconSvg {
     private static ?array $brands = null;
 
     /**
-     * @var array<string, string>|null
+     * Definizioni emoji da `data/icon-emoji-presets.php` (char + label i18n).
+     *
+     * @var array<string, array<string, string>>|null
      */
-    private static ?array $emojis = null;
+    private static ?array $emoji_definitions = null;
 
     /**
-     * Preset emoji (chiavi `fpctabar-emoji-*`) da `data/icon-emoji-presets.php`.
+     * @return array<string, array<string, string>>
+     */
+    private static function emoji_definitions(): array {
+        if (self::$emoji_definitions === null) {
+            $path = __DIR__ . '/data/icon-emoji-presets.php';
+            $loaded = is_readable($path) ? require $path : [];
+            self::$emoji_definitions = is_array($loaded) ? $loaded : [];
+        }
+
+        return self::$emoji_definitions;
+    }
+
+    /**
+     * Mappa chiave preset → carattere emoji.
      *
      * @return array<string, string>
      */
     private static function emojis(): array {
-        if (self::$emojis === null) {
-            $path = __DIR__ . '/data/icon-emoji-presets.php';
-            $loaded = is_readable($path) ? require $path : [];
-            self::$emojis = is_array($loaded) ? $loaded : [];
+        static $chars = null;
+        if ($chars === null) {
+            $chars = [];
+            foreach (self::emoji_definitions() as $key => $row) {
+                if (is_array($row) && isset($row['char'])) {
+                    $chars[$key] = (string) $row['char'];
+                }
+            }
         }
 
-        return self::$emojis;
+        return $chars;
+    }
+
+    /**
+     * Opzioni per il selettore in admin: solo «Nessuna» + emoji.
+     *
+     * @return array<string, string>
+     */
+    public static function settings_icon_options(): array {
+        $out = ['' => __('Nessuna', 'fp-cta-bar')];
+        foreach (self::emoji_definitions() as $key => $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $label = isset($row['label']) ? (string) $row['label'] : '';
+            $out[$key] = $label !== '' ? __($label, 'fp-cta-bar') : $key;
+        }
+
+        return $out;
     }
 
     /**
