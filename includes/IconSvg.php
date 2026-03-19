@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FP\CtaBar;
 
 /**
- * Icone: emoji preset (`fpctabar-emoji-*`), SVG line-art e brand legacy solo per valori già salvati in DB.
+ * Icone: emoji preset (`fpctabar-emoji-*`), WhatsApp in selettore admin, SVG line-art e altri brand solo per valori già salvati in DB.
  */
 final class IconSvg {
 
@@ -54,21 +54,26 @@ final class IconSvg {
     }
 
     /**
-     * Opzioni per il selettore in admin: solo «Nessuna» + emoji.
+     * Opzioni per il selettore in admin: «Nessuna», eventuali brand extra (es. WhatsApp), poi tutte le emoji.
      *
      * @return array<string, string>
      */
     public static function settings_icon_options(): array {
-        $out = ['' => __('Nessuna', 'fp-cta-bar')];
+        $head = ['' => __('Nessuna', 'fp-cta-bar')];
+        $brandExtras = [];
+        if (array_key_exists('fpctabar-whatsapp', self::brands())) {
+            $brandExtras['fpctabar-whatsapp'] = __('WhatsApp (logo)', 'fp-cta-bar');
+        }
+        $emojiOpts = [];
         foreach (self::emoji_definitions() as $key => $row) {
             if (!is_array($row)) {
                 continue;
             }
             $label = isset($row['label']) ? (string) $row['label'] : '';
-            $out[$key] = $label !== '' ? __($label, 'fp-cta-bar') : $key;
+            $emojiOpts[$key] = $label !== '' ? __($label, 'fp-cta-bar') : $key;
         }
 
-        return $out;
+        return array_merge($head, $brandExtras, $emojiOpts);
     }
 
     /**

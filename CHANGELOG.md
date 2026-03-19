@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.7.1] - 2026-03-19
+### Added
+- Selettore admin: voce **WhatsApp (logo)** (`fpctabar-whatsapp`, SVG verde da `icon-brand-svgs.php`) subito dopo «Nessuna»
+
 ## [1.7.0] - 2026-03-19
 ### Added
 - Oltre **60 nuove emoji** nel preset; file `icon-emoji-presets.php` con struttura `char` + `label` (msgid i18n)
