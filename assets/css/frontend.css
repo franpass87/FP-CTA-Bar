@@ -107,6 +107,28 @@
     line-height: 1;
 }
 
+/*
+ * Dashicons: il glifo è su ::before. Temi usano spesso .dashicons:before o span.dashicons.dashicons-xxx:before
+ * con !important: l’icona resta scura nonostante «Testo barra/bottone» bianco. #fpctabar alza la specificità.
+ */
+#fpctabar .fpctabar__bar .fpctabar__icon.fpctabar__icon--class,
+#fpctabar .fpctabar__btn .fpctabar__icon.fpctabar__icon--class {
+    color: var(--fpctabar-text) !important;
+}
+
+#fpctabar .fpctabar__bar .fpctabar__icon.fpctabar__icon--class::before,
+#fpctabar .fpctabar__btn .fpctabar__icon.fpctabar__icon--class::before {
+    color: inherit !important;
+}
+
+#fpctabar .fpctabar__panel a .fpctabar__icon.fpctabar__icon--class {
+    color: var(--fpctabar-panel-text, var(--fpctabar-text)) !important;
+}
+
+#fpctabar .fpctabar__panel a .fpctabar__icon.fpctabar__icon--class::before {
+    color: inherit !important;
+}
+
 .fpctabar__bar .fpctabar__icon,
 .fpctabar__btn .fpctabar__icon {
     margin-right: 8px;

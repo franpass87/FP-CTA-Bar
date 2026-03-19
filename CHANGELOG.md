@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.3.8] - 2026-03-19
+### Fixed
+- Dashicons su barra/bottone principale e nel pannello link: il glifo è su `::before` e molti temi impostano `.dashicons:before` (anche con `!important`) rendendo l’icona scura a dispetto del colore testo scelto in admin. Aggiunte regole ad alta specificità (`#fpctabar …`) che applicano `var(--fpctabar-text)` / `var(--fpctabar-panel-text)` anche al pseudo-elemento
+
 ## [1.3.7] - 2026-03-19
 ### Changed
 - Modalità bottone (fixed): tipografia senza `uppercase` forzato e tracking più naturale; ombre a due strati più morbide; bordo più leggero; raggio di default 14px; hover senza `filter` (solo sollevamento + ombra); `:active` più compatto
