@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.4.2] - 2026-03-19
+### Fixed
+- Icone **SVG** su **mobile** (soprattutto Safari / temi tipo Salient): il testo del bottone rispettava `--fpctabar-text` ma l’icona restava scura — molti temi applicano `button { color: … !important }` solo sotto breakpoint stretti; aggiunti `color` / `-webkit-text-fill-color` su `#fpctabar .fpctabar__btn` e **stroke** esplicito `var(--fpctabar-text)` sugli `<svg>` della barra/bottone; stesso schema per SVG nel pannello con `--fpctabar-panel-text`; rinforzo in `@media (max-width: 600px)`
+
 ## [1.4.1] - 2026-03-19
 ### Fixed
 - Admin: le **card** usavano `overflow: hidden`, tagliando il dropdown icone (`position: absolute`)

@@ -125,8 +125,20 @@
     color: var(--fpctabar-text) !important;
 }
 
+/* stroke esplicito: su mobile Safari / temi che forzano color su button, currentColor sul SVG può restare nero */
+#fpctabar .fpctabar__bar .fpctabar__icon--svg svg,
+#fpctabar .fpctabar__btn .fpctabar__icon--svg svg {
+    color: var(--fpctabar-text) !important;
+    stroke: var(--fpctabar-text) !important;
+}
+
 #fpctabar .fpctabar__panel a .fpctabar__icon--svg {
     color: var(--fpctabar-panel-text, var(--fpctabar-text)) !important;
+}
+
+#fpctabar .fpctabar__panel a .fpctabar__icon--svg svg {
+    color: var(--fpctabar-panel-text, var(--fpctabar-text)) !important;
+    stroke: var(--fpctabar-panel-text, var(--fpctabar-text)) !important;
 }
 
 /*
@@ -294,6 +306,8 @@
 #fpctabar.fpctabar--fullwidth .fpctabar__bar {
     border-top-left-radius: var(--fpctabar-btn-radius, 14px) !important;
     border-top-right-radius: var(--fpctabar-btn-radius, 14px) !important;
+    color: var(--fpctabar-text) !important;
+    -webkit-text-fill-color: var(--fpctabar-text);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -452,6 +466,8 @@ body.fpctabar-body--fullwidth {
  */
 #fpctabar .fpctabar__btn {
     border-radius: var(--fpctabar-btn-radius, 14px) !important;
+    color: var(--fpctabar-text) !important;
+    -webkit-text-fill-color: var(--fpctabar-text);
 }
 
 #fpctabar.fpctabar--button.fpctabar--icon-only.fpctabar--icon-circle .fpctabar__btn {
@@ -584,5 +600,17 @@ body.fpctabar-body--fullwidth {
 
     .fpctabar--button .fpctabar__panel a {
         padding: 13px 14px;
+    }
+
+    /* Temi: regole mobile su button { color: … !important } — ripetiamo con contesto #fpctabar */
+    #fpctabar .fpctabar__btn {
+        color: var(--fpctabar-text) !important;
+        -webkit-text-fill-color: var(--fpctabar-text);
+    }
+
+    #fpctabar .fpctabar__bar .fpctabar__icon--svg svg,
+    #fpctabar .fpctabar__btn .fpctabar__icon--svg svg {
+        color: var(--fpctabar-text) !important;
+        stroke: var(--fpctabar-text) !important;
     }
 }
