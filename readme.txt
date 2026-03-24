@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.8.4
+Stable tag: 1.9.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,11 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.9.0 = (2026-03-24)
+* Added: Nuova pagina admin "Statistiche" con KPI click (totale, oggi, ultimi 7 giorni), tabella top link e reset dati.
+* Added: Persistenza aggregata click su `wp_options` tramite action `fp_cta_bar_clicked` (label, URL, lingua, primo/ultimo click).
+* Fixed: Allineamento icona + testo nel bottone CTA (`inline-flex` + `gap`) in modalità bottone.
 
 = 1.8.4 = (2026-03-19)
 * Fixed: Layout checkbox «Traccia click» in admin

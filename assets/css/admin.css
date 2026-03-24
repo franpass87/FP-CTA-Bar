@@ -950,6 +950,40 @@ body.settings_page_fp-cta-bar #wpbody-content > .wrap.fpctabar-admin-page {
 }
 
 /* ============================================================
+  STATS PAGE
+   ============================================================ */
+.fpctabar-stats-table-wrap {
+    overflow-x: auto;
+}
+
+.fpctabar-stats-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.fpctabar-stats-table thead th {
+    background: var(--fpdms-gradient-primary);
+    color: #fff;
+    border-bottom: none;
+    font-weight: 600;
+}
+
+.fpctabar-stats-table td,
+.fpctabar-stats-table th {
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+.fpctabar-stats-table td a {
+    color: var(--fpdms-primary-dark);
+    text-decoration: none;
+}
+
+.fpctabar-stats-table td a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 782px) {

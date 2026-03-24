@@ -2,6 +2,14 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.0] - 2026-03-24
+### Added
+- Nuova pagina admin **Statistiche** (`FP CTA Bar > Statistiche`) con KPI click (totale, oggi, ultimi 7 giorni), tabella top link e azione di reset protetta da nonce/capability.
+- Nuova classe `ClickStats` per persistenza aggregata dei click su `wp_options` (URL, label, lingua, primo/ultimo click, breakdown per giorno).
+
+### Fixed
+- Frontend (modalità bottone): allineamento icona + testo nel pulsante CTA migliorato con layout `inline-flex` e `gap`.
+
 ## [1.8.4] - 2026-03-19
 ### Fixed
 - Admin: checkbox «Traccia click» non usa più `width:100%` ereditata dai campi link (layout compatto, label + icona allineati).

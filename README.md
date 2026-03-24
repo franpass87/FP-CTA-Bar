@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.8.4-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.9.0-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -22,6 +22,7 @@ FP CTA Bar aggiunge una barra fissa (in alto o in basso) con un bottone call-to-
    - **Colori** sfondo e testo
    - **Posizione** (top / bottom)
    - **Tracking**: abilita l'invio eventi a GTM/Meta tramite FP Marketing Tracking Layer
+   - **Statistiche click**: pagina admin dedicata con totale click, ultimi 7 giorni e top link tracciati
 
 ### Requisiti
 - WordPress 6.0+

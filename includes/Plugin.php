@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace FP\CtaBar;
 
@@ -18,6 +19,7 @@ class Plugin {
     private function __construct() {
         add_action('rest_api_init', [$this, 'register_rest_routes']);
         add_action('init', [Block::class, 'register']);
+        ClickStats::get_instance();
 
         if (is_admin()) {
             Admin::get_instance();
