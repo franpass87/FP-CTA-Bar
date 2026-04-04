@@ -49,11 +49,13 @@ FP-CTA-Bar/
 ```
 
 ### Tracking
-Il plugin emette un `CustomEvent` JavaScript `fpCtaBarClick` all’apertura della barra/bottone e, **per ogni link con «Traccia click» attivo**, al click sul link. `fp-tracking.js` (FP Marketing Tracking Layer) intercetta l’evento e fa `dataLayer.push` con `cta_label`, `cta_action`, `cta_url`, `cta_category`.
+Il plugin emette un `CustomEvent` JavaScript `fpCtaBarClick` all’apertura della barra/bottone e, **per ogni link con «Traccia click» attivo**, al click sul link. `fp-tracking.js` (FP Marketing Tracking Layer) intercetta l’evento e fa `dataLayer.push` con **nome evento** uguale al campo *Nome evento* in admin (priorità: GTM, poi GA4; default `cta_bar_click`) e parametri **`cta_label`**, **`cta_action`**, **`cta_url`**, **`cta_category`** (derivati da «Label evento» / «Categoria» del link, o dal testo del link se la label è vuota).
+
+**GA4:** i parametri personalizzati **non** compaiono nei report finché non crei **dimensioni personalizzate** in Amministratore → Definizioni personalizzate (es. scope evento, parametro `cta_label`). In **GTM** usa variabili Data Layer omonime e mappale nel tag *Google Analytics: evento GA4*.
 
 ```javascript
 document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
-    detail: { label: '...', action: '...', url: '...', category: '...' }
+    detail: { eventName: 'cta_bar_click', label: '...', action: '...', url: '...', category: '...' }
 }));
 ```
 

@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.3] - 2026-04-04
+### Fixed
+- Il **nome evento** impostato in admin (GTM / GA4) viene passato nel `CustomEvent` e usato da `fp-tracking.js` nel `dataLayer.push` (prima era sempre `cta_bar_click`).
+### Changed
+- Testo guida in admin Tracking: parametri reali (`cta_label`, `cta_category`, `cta_url`) e promemoria dimensioni personalizzate GA4.
+
 ## [1.9.2] - 2026-04-04
 ### Changed
 - Click CTA: tracciamento marketing via **GTM/dataLayer** (`fpCtaBarClick` + `event_id` lato client). Rimosso `fp_tracking_enqueue_server_event` dal REST (niente doppio canale; beacon resta per statistiche interne e `fp_cta_bar_clicked` con argomenti extra `category`, `event_id` per hook personalizzati).

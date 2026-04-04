@@ -74,6 +74,9 @@
 
     function track(action, label, linkEl) {
         var cfg = typeof fpCtaBarTrack !== 'undefined' ? fpCtaBarTrack : {};
+        var rawEv = cfg.eventName && String(cfg.eventName).trim();
+        // Allineato a sanitize_key() lato PHP: solo [a-z0-9_] (GA4 event name)
+        var eventName = rawEv && /^[a-z0-9_]{1,40}$/i.test(rawEv) ? rawEv.toLowerCase() : 'cta_bar_click';
 
         // Read tracking data from the link element (set by PHP when "Traccia click" is enabled)
         var trackLabel    = (linkEl && linkEl.getAttribute('data-fp-track-label'))    || label || '';
@@ -87,6 +90,7 @@
         if (!linkEl) {
             document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
                 detail: {
+                    eventName: eventName,
                     label:    typeof label === 'string' ? label : '',
                     action:   action || '',
                     url:      '',
@@ -97,6 +101,7 @@
         } else if (isTracked) {
             document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
                 detail: {
+                    eventName: eventName,
                     label:    trackLabel || (typeof label === 'string' ? label : '') || '',
                     action:   action || '',
                     url:      href,

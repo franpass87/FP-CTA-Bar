@@ -369,7 +369,7 @@ $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$m
                         <div class="fpctabar-toggle-row" style="padding: 0; border: none;">
                             <div class="fpctabar-toggle-info">
                                 <strong><?php esc_html_e('Push su dataLayer', 'fp-cta-bar'); ?></strong>
-                                <span><?php esc_html_e('event + cta_bar_action, cta_bar_label', 'fp-cta-bar'); ?></span>
+                                <span><?php esc_html_e('FP Tracking: event + cta_label, cta_category, cta_url', 'fp-cta-bar'); ?></span>
                             </div>
                             <label class="fpctabar-toggle">
                                 <input type="checkbox" name="<?php echo esc_attr($opt); ?>[gtm_enabled]" value="1" <?php checked(!empty($settings['gtm_enabled'])); ?>>
@@ -393,6 +393,9 @@ $main_icon_label = isset($main_icon_options[$main_icon]) ? $main_icon_options[$m
                         <input type="text" name="<?php echo esc_attr($opt); ?>[meta_event_name]" value="<?php echo esc_attr($settings['meta_event_name'] ?? 'cta_bar_click'); ?>" placeholder="<?php esc_attr_e('Nome evento', 'fp-cta-bar'); ?>" style="margin-top: 8px;">
                     </div>
                 </div>
+                <p class="description" style="margin-top:12px;max-width:52rem;">
+                    <?php esc_html_e('Con FP Marketing Tracking Layer attivo, ogni link con «Traccia click» invia al dataLayer il nome evento impostato sopra (priorità: nome evento GTM, altrimenti GA4) e i parametri cta_label, cta_category, cta_url (label/categoria dei campi per link). In GTM crea variabili Data Layer con gli stessi nomi e nel tag GA4 aggiungi i parametri dell’evento. In GA4 → Amministratore → Definizioni personalizzate registra dimensioni personalizzate per cta_label e cta_category: senza questo passaggio i testi non compaiono nei report standard, anche se l’evento risulta raccolto.', 'fp-cta-bar'); ?>
+                </p>
             </div>
         </div>
 
