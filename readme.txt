@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.9.0
+Stable tag: 1.9.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,12 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.9.2 = (2026-04-04)
+* Changed: Click tracciati via GTM/client (`fpCtaBarClick`); REST non invia più enqueue server-side verso il layer. `fp_cta_bar_clicked` espone anche category ed event_id.
+
+= 1.9.1 = (2026-04-04)
+* Added: `event_id` allineato tra beacon e CustomEvent; enqueue server `cta_bar_click` (rimosso in 1.9.2 a favore del solo client/GTM).
 
 = 1.9.0 = (2026-03-24)
 * Added: Nuova pagina admin "Statistiche" con KPI click (totale, oggi, ultimi 7 giorni), tabella top link e reset dati.

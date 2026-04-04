@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.2] - 2026-04-04
+### Changed
+- Click CTA: tracciamento marketing via **GTM/dataLayer** (`fpCtaBarClick` + `event_id` lato client). Rimosso `fp_tracking_enqueue_server_event` dal REST (niente doppio canale; beacon resta per statistiche interne e `fp_cta_bar_clicked` con argomenti extra `category`, `event_id` per hook personalizzati).
+
 ## [1.9.1] - 2026-04-04
 ### Added
 - Beacon REST `/click`: payload con `event_id` condiviso col `CustomEvent` `fpCtaBarClick` e `fp_tracking_enqueue_server_event('cta_bar_click')` quando FP Marketing Tracking Layer è attivo (deduplica GA4 client/server).

@@ -85,7 +85,7 @@ final class ClickController {
     }
 
     /**
-     * Gestisce POST /click: sanitizza e invoca do_action('fp_cta_bar_clicked', $url, $label, $lang).
+     * Gestisce POST /click: sanitizza e invoca do_action('fp_cta_bar_clicked', …) (argomenti extra: category, event_id per hook esterni).
      *
      * @return WP_REST_Response
      */
@@ -105,21 +105,7 @@ final class ClickController {
         $category = is_string($category) ? sanitize_text_field($category) : '';
         $eventId  = is_string($eventId) ? sanitize_text_field($eventId) : '';
 
-        do_action('fp_cta_bar_clicked', $url, $label, $lang);
-
-        if (function_exists('fp_tracking_enqueue_server_event')) {
-            $referer = $request->get_header('referer');
-            $referer = is_string($referer) ? esc_url_raw($referer) : '';
-            fp_tracking_enqueue_server_event('cta_bar_click', [
-                'cta_url'       => $url,
-                'cta_label'     => $label,
-                'cta_action'    => 'link_click',
-                'cta_category'  => $category,
-                'event_id'      => $eventId !== '' ? $eventId : uniqid('fp_cta_', true),
-                'fp_source'     => 'fp_cta_bar',
-                'page_url'      => $referer,
-            ]);
-        }
+        do_action('fp_cta_bar_clicked', $url, $label, $lang, $category, $eventId);
 
         return new WP_REST_Response(null, 204);
     }
