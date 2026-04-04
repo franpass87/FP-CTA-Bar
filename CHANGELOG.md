@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.1] - 2026-04-04
+### Added
+- Beacon REST `/click`: payload con `event_id` condiviso col `CustomEvent` `fpCtaBarClick` e `fp_tracking_enqueue_server_event('cta_bar_click')` quando FP Marketing Tracking Layer è attivo (deduplica GA4 client/server).
+
 ## [1.9.0] - 2026-03-24
 ### Added
 - Nuova pagina admin **Statistiche** (`FP CTA Bar > Statistiche`) con KPI click (totale, oggi, ultimi 7 giorni), tabella top link e azione di reset protetta da nonce/capability.

@@ -81,6 +81,8 @@
         var isTracked     = linkEl && linkEl.getAttribute('data-fp-track') === '1';
         var href          = (linkEl && linkEl.getAttribute('href')) || '';
 
+        var eventId = 'fp_cta_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 11);
+
         // FP Marketing Tracking Layer (fp-tracking.js): solo click barra sempre; click su link solo se «Traccia click» attivo
         if (!linkEl) {
             document.dispatchEvent(new CustomEvent('fpCtaBarClick', {
@@ -89,6 +91,7 @@
                     action:   action || '',
                     url:      '',
                     category: '',
+                    eventId:  eventId,
                 }
             }));
         } else if (isTracked) {
@@ -98,6 +101,7 @@
                     action:   action || '',
                     url:      href,
                     category: trackCategory,
+                    eventId:  eventId,
                 }
             }));
         }
@@ -107,7 +111,14 @@
             var url   = linkEl.getAttribute('href') || '';
             var lbl   = trackLabel || (typeof label === 'string' ? label : '') || linkEl.textContent.trim();
             var lang  = container.getAttribute('data-lang') || '';
-            var body  = JSON.stringify({ url: url, label: lbl, lang: lang, nonce: cfg.clickNonce });
+            var body  = JSON.stringify({
+                url: url,
+                label: lbl,
+                lang: lang,
+                category: trackCategory,
+                event_id: eventId,
+                nonce: cfg.clickNonce
+            });
             if (typeof navigator.sendBeacon === 'function') {
                 navigator.sendBeacon(cfg.clickEndpoint, new Blob([body], { type: 'application/json' }));
             } else {

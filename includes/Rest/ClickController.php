@@ -49,6 +49,24 @@ final class ClickController {
                         return is_string($value) && strlen($value) <= 10;
                     },
                 ],
+                'category' => [
+                    'required'          => false,
+                    'type'              => 'string',
+                    'default'           => '',
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'validate_callback' => function ($value) {
+                        return is_string($value) && strlen($value) <= 200;
+                    },
+                ],
+                'event_id' => [
+                    'required'          => false,
+                    'type'              => 'string',
+                    'default'           => '',
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'validate_callback' => function ($value) {
+                        return is_string($value) && strlen($value) <= 120;
+                    },
+                ],
                 'nonce' => [
                     'required'          => true,
                     'type'              => 'string',
@@ -73,17 +91,35 @@ final class ClickController {
      */
     public function handle_click(WP_REST_Request $request) {
         $url   = $request->get_param('url');
-        $label = $request->get_param('label') ?? '';
-        $lang  = $request->get_param('lang') ?? '';
+        $label    = $request->get_param('label') ?? '';
+        $lang     = $request->get_param('lang') ?? '';
+        $category = $request->get_param('category') ?? '';
+        $eventId  = $request->get_param('event_id') ?? '';
 
         $url = is_string($url) ? esc_url_raw($url) : '';
         if ($url === '') {
             return new WP_REST_Response(null, 400);
         }
-        $label = is_string($label) ? sanitize_text_field($label) : '';
-        $lang  = is_string($lang) ? sanitize_text_field($lang) : '';
+        $label    = is_string($label) ? sanitize_text_field($label) : '';
+        $lang     = is_string($lang) ? sanitize_text_field($lang) : '';
+        $category = is_string($category) ? sanitize_text_field($category) : '';
+        $eventId  = is_string($eventId) ? sanitize_text_field($eventId) : '';
 
         do_action('fp_cta_bar_clicked', $url, $label, $lang);
+
+        if (function_exists('fp_tracking_enqueue_server_event')) {
+            $referer = $request->get_header('referer');
+            $referer = is_string($referer) ? esc_url_raw($referer) : '';
+            fp_tracking_enqueue_server_event('cta_bar_click', [
+                'cta_url'       => $url,
+                'cta_label'     => $label,
+                'cta_action'    => 'link_click',
+                'cta_category'  => $category,
+                'event_id'      => $eventId !== '' ? $eventId : uniqid('fp_cta_', true),
+                'fp_source'     => 'fp_cta_bar',
+                'page_url'      => $referer,
+            ]);
+        }
 
         return new WP_REST_Response(null, 204);
     }
