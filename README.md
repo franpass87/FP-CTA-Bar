@@ -2,7 +2,7 @@
 
 Barra CTA fissa per WordPress con bottone personalizzabile, tracking marketing integrato e routing eventi verso FP Marketing Tracking Layer.
 
-[![Version](https://img.shields.io/badge/version-1.9.4-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
+[![Version](https://img.shields.io/badge/version-1.9.5-blue.svg)](https://github.com/franpass87/FP-CTA-Bar)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
 ---
@@ -67,6 +67,7 @@ Le icone scelte dal selettore admin (preset) sono renderizzate come **SVG line-a
 |--------|-------------|
 | `fp_cta_bar_settings` | Modifica le impostazioni prima del rendering |
 | `fp_cta_bar_html` | Modifica l'HTML della barra |
+| `fp_cta_bar_hide_on_fp_experience_pages` | Default `true`: nasconde la barra su pagine FP Experiences (prenotazione). Restituire `false` per mostrarla comunque. |
 
 ### Installazione sviluppo
 ```bash

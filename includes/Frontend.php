@@ -41,6 +41,10 @@ class Frontend {
             return;
         }
 
+        if ($this->is_fp_experiences_booking_context()) {
+            return;
+        }
+
         if (!$this->should_show()) {
             return;
         }
@@ -90,6 +94,9 @@ class Frontend {
             return;
         }
         if (empty($instance->settings['links'])) {
+            return;
+        }
+        if ($instance->is_fp_experiences_booking_context()) {
             return;
         }
         if ($instance->cookie_consent_blocked()) {
@@ -159,6 +166,46 @@ class Frontend {
             return true;
         }
         if (is_404() && in_array('404', $visibility, true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Pagine flusso FP Experiences: non mostrare la CTA Bar (conflitti con sticky/privacy e fuori dal percorso acquisto).
+     *
+     * Rilevazione: singolo `fp_experience`, pagina con meta `_fp_experience_id`, o `post_content` con shortcode `fp_exp_page`.
+     *
+     * Filtro `fp_cta_bar_hide_on_fp_experience_pages` (default true): impostare false per forzare la barra anche lì.
+     *
+     * @return bool
+     */
+    private function is_fp_experiences_booking_context(): bool {
+        if (! \function_exists('is_singular') || ! is_singular()) {
+            return false;
+        }
+
+        if (true !== apply_filters('fp_cta_bar_hide_on_fp_experience_pages', true)) {
+            return false;
+        }
+
+        $post_id = (int) get_queried_object_id();
+        if ($post_id <= 0) {
+            return false;
+        }
+
+        if (is_singular('fp_experience')) {
+            return true;
+        }
+
+        $linked_experience = absint((string) get_post_meta($post_id, '_fp_experience_id', true));
+        if ($linked_experience > 0) {
+            return true;
+        }
+
+        $post = get_post($post_id);
+        if ($post instanceof \WP_Post && \function_exists('has_shortcode') && has_shortcode((string) $post->post_content, 'fp_exp_page')) {
             return true;
         }
 

@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.5] - 2026-04-05
+
+### Changed
+
+- **FP Experiences**: la barra non viene più mostrata sulle **pagine flusso prenotazione** (singolo `fp_experience`, pagine con meta `_fp_experience_id`, contenuto con shortcode `fp_exp_page`), per evitare sovrapposizioni con sticky/privacy e uscite fuori dal percorso acquisto. Vale anche per `[fp_cta_bar]` su quelle URL. Filtro: `fp_cta_bar_hide_on_fp_experience_pages` (default `true`).
+
 ## [1.9.4] - 2026-04-05
 ### Changed
 - Menu admin: posizione top-level allineata allo schema FP `'56.15'` (gruppo plugin FP tra Pagamenti e Marketing WooCommerce).
