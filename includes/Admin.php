@@ -76,7 +76,7 @@ class Admin {
             $menu_slug,
             $callback,
             'dashicons-megaphone',
-            30
+            '56.15'
         );
 
         // Anche sotto Impostazioni per retrocompatibilità

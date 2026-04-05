@@ -2,6 +2,10 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.9.4] - 2026-04-05
+### Changed
+- Menu admin: posizione top-level allineata allo schema FP `'56.15'` (gruppo plugin FP tra Pagamenti e Marketing WooCommerce).
+
 ## [1.9.3] - 2026-04-04
 ### Fixed
 - Il **nome evento** impostato in admin (GTM / GA4) viene passato nel `CustomEvent` e usato da `fp-tracking.js` nel `dataLayer.push` (prima era sempre `cta_bar_click`).
