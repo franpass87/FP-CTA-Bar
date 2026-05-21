@@ -2,6 +2,13 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.10.0] - 2026-05-21
+
+### Added
+
+- **API runtime diagnostics per FP Remote Bridge**: `includes/Services/Diagnostics/RuntimeDiagnostics.php` + `api.php` con `fp_ctabar_get_runtime_diagnostics()` e `fp_ctabar_get_runtime_diagnostics_sections()`.
+- **8 sezioni read-only**: `display_context`, `links_summary`, `click_stats` (URL mascherate), `settings`, `integrations`, `rest_health`, `cron`, `problems`.
+
 ## [1.9.5] - 2026-04-05
 
 ### Changed
