@@ -4,7 +4,7 @@ Contributors: franpass87
 Tags: cta, call to action, bar, megaphone, tracking, multilingual
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.10.0
+Stable tag: 1.10.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,9 @@ Aggiungi almeno un link con URL e etichetta nella sezione "Link". Senza link la 
 Abilita GA4, GTM e/o Meta nella card Tracking e, per ogni link, attiva "Traccia click". Gli eventi vengono inviati tramite FP Marketing Tracking Layer (CustomEvent `fpCtaBarClick`).
 
 == Changelog ==
+
+= 1.10.1 = (2026-05-21)
+* Added: API impostazioni remote per Bridge/MCP (`fp_ctabar_apply_settings`).
 
 = 1.10.0 = (2026-05-21)
 * Added: API runtime diagnostics per FP Remote Bridge (`fp_ctabar_get_runtime_diagnostics`).

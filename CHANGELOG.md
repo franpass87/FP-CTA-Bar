@@ -2,6 +2,12 @@
 
 All notable changes to FP CTA Bar will be documented in this file.
 
+## [1.10.1] - 2026-05-21
+
+### Added
+
+- **API impostazioni remote** (`SettingsRegistry` + `api.php`): `fp_ctabar_get_settings_builder_catalog()`, `fp_ctabar_apply_settings()` per Bridge/MCP `set_fp_cta_settings`.
+
 ## [1.10.0] - 2026-05-21
 
 ### Added
